@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
 import { Link } from 'expo-router';
 
 const categories = [
@@ -36,7 +37,11 @@ const categories = [
   },
 ];
 
-const ExploreHeader = () => {
+interface Props {
+  onCategoryChanged: (category: string) => void;
+}
+
+const ExploreHeader = ({ onCategoryChanged }: Props) => {
   const scrollRef = useRef<ScrollView>(null);
   const itemsRef = useRef<Array<TouchableOpacity | null>>([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -44,6 +49,12 @@ const ExploreHeader = () => {
   const selectCategory = (index: number) => {
     const selected = itemsRef.current[index];
     setActiveIndex(index);
+    selected?.measure((fx, fy, width, height, px, py) => {
+      scrollRef.current?.scrollTo({ x: px - 16, y: 0, animated: true });
+    });
+
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    onCategoryChanged(categories[index].name);
   };
 
   return (
@@ -69,19 +80,24 @@ const ExploreHeader = () => {
 
         <ScrollView
           horizontal
+          ref={scrollRef}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ alignItems: 'center', gap: 20, paddingHorizontal: 16 }}
+          contentContainerStyle={{
+            alignItems: 'center',
+            gap: 20,
+            paddingHorizontal: 16,
+          }}
         >
           {categories.map((item, index) => (
             <TouchableOpacity
-              onPress={() => selectCategory(index)}
-              key={{ index }}
               ref={(el) => (itemsRef.current[index] = el)}
+              key={index}
               style={activeIndex === index ? styles.categoriesBtnActive : styles.categoriesBtn}
+              onPress={() => selectCategory(index)}
             >
               <MaterialIcons
-                size={24}
                 name={item.icon as any}
+                size={24}
                 color={activeIndex === index ? '#000' : Colors.grey}
               />
               <Text style={activeIndex === index ? styles.categoryTextActive : styles.categoryText}>

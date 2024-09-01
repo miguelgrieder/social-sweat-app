@@ -14,4 +14,7 @@ export interface Listing {
   host_picture_url: string;
   host_name: string;
   host_since: string;
+  listing_url: string;
+  xl_picture_url: string;
+  guests_included: string;
 }

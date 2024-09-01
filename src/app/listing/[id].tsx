@@ -1,10 +1,16 @@
-import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
-import React from 'react';
 import { useLocalSearchParams } from 'expo-router';
+import React from 'react';
+import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity, Share } from 'react-native';
 import listingsData from 'assets/data/airbnb-listings.json';
-import Colors from '@/constants/Colors';
-import Animated, { SlideInDown } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
+import Colors from '@/constants/Colors';
+import Animated, {
+  SlideInDown,
+  interpolate,
+  useAnimatedRef,
+  useAnimatedStyle,
+  useScrollViewOffset,
+} from 'react-native-reanimated';
 import { defaultStyles } from '@/constants/Styles';
 import { Listing } from '@/interfaces/listing';
 
@@ -14,15 +20,46 @@ const IMG_HEIGHT = 300;
 const Page = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const listing: Listing = (listingsData as any[]).find((item) => item.id === id);
+  const scrollRef = useAnimatedRef<Animated.ScrollView>();
 
+
+  const scrollOffset = useScrollViewOffset(scrollRef);
+
+  const imageAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateY: interpolate(
+            scrollOffset.value,
+            [-IMG_HEIGHT, 0, IMG_HEIGHT, IMG_HEIGHT],
+            [-IMG_HEIGHT / 2, 0, IMG_HEIGHT * 0.75]
+          ),
+        },
+        {
+          scale: interpolate(scrollOffset.value, [-IMG_HEIGHT, 0, IMG_HEIGHT], [2, 1, 1]),
+        },
+      ],
+    };
+  });
+
+  const headerAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(scrollOffset.value, [0, IMG_HEIGHT / 1.5], [0, 1]),
+    };
+  }, []);
   return (
     <View style={styles.container}>
-      <Animated.ScrollView>
+      <Animated.ScrollView
+        contentContainerStyle={{ paddingBottom: 100 }}
+        ref={scrollRef}
+        scrollEventThrottle={16}
+      >
         <Animated.Image
           source={{ uri: listing.xl_picture_url }}
-          style={[styles.image]}
+          style={[styles.image, imageAnimatedStyle]}
           resizeMode="cover"
         />
+
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{listing.name}</Text>
           <Text style={styles.location}>

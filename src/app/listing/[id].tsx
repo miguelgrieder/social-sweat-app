@@ -1,5 +1,5 @@
-import { useLocalSearchParams } from 'expo-router';
-import React from 'react';
+import { useLocalSearchParams, useNavigation } from 'expo-router';
+import React, { useLayoutEffect } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity, Share } from 'react-native';
 import listingsData from 'assets/data/airbnb-listings.json';
 import { Ionicons } from '@expo/vector-icons';
@@ -20,8 +20,46 @@ const IMG_HEIGHT = 300;
 const Page = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const listing: Listing = (listingsData as any[]).find((item) => item.id === id);
+  const navigation = useNavigation();
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
 
+  const shareListing = async () => {
+    // Share functionality of header share button
+    try {
+      await Share.share({
+        title: listing.name,
+        url: listing.listing_url,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: '',
+      headerTransparent: true,
+
+      headerBackground: () => (
+        <Animated.View style={[headerAnimatedStyle, styles.header]}></Animated.View>
+      ), // Header opacity effect
+      headerRight: () => (
+        <View style={styles.bar}>
+          <TouchableOpacity style={styles.roundButton} onPress={shareListing}>
+            <Ionicons name="share-outline" size={22} color={'#000'} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.roundButton}>
+            <Ionicons name="heart-outline" size={22} color={'#000'} />
+          </TouchableOpacity>
+        </View> // Header share and hearth button
+      ),
+      headerLeft: () => (
+        <TouchableOpacity style={styles.roundButton} onPress={() => navigation.goBack()}>
+          <Ionicons name="chevron-back" size={24} color={'#000'} />
+        </TouchableOpacity> // Header back button
+      ),
+    });
+  }, []);
 
   const scrollOffset = useScrollViewOffset(scrollRef);
 

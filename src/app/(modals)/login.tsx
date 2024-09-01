@@ -71,7 +71,6 @@ const Page = () => {
       </View>
 
       <View style={{ gap: 20 }}>
-
         <TouchableOpacity style={styles.btnOutline} onPress={() => onSelectAuth(Strategy.Apple)}>
           <Ionicons name="logo-apple" size={24} style={defaultStyles.btnIcon} />
           <Text style={styles.btnOutlineText}>Continue with Apple</Text>

@@ -6,13 +6,14 @@ import Colors from '@/constants/Colors';
 import Animated, { SlideInDown } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
 import { defaultStyles } from '@/constants/Styles';
+import { Listing } from '@/interfaces/listing';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
 
 const Page = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const listing = (listingsData as any[]).find((item) => item.id === id);
+  const listing: Listing = (listingsData as any[]).find((item) => item.id === id);
 
   return (
     <View style={styles.container}>

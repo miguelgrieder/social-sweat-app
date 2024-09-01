@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import React, {useMemo, useState} from 'react';
+import React, { useMemo, useState } from 'react';
 import { Stack } from 'expo-router';
 import Listings from '@/components/Listings';
 import ExploreHeader from '@/components/ExploreHeader';
@@ -20,7 +20,7 @@ const Page = () => {
           header: () => <ExploreHeader onCategoryChanged={onDataChanged} />,
         }}
       />
-      <Listings listings={items} category={category}/>
+      <Listings listings={items} category={category} />
     </View>
   );
 };

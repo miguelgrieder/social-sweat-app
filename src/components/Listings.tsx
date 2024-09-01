@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  FlatList,
-  ListRenderItem,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, FlatList, ListRenderItem, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { defaultStyles } from '@/constants/Styles';
 import { Link } from 'expo-router';

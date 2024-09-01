@@ -1,6 +1,8 @@
-import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { useRef, useState } from 'react';
 import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 
 const categories = [
@@ -35,6 +37,15 @@ const categories = [
 ];
 
 const ExploreHeader = () => {
+  const scrollRef = useRef<ScrollView>(null);
+  const itemsRef = useRef<Array<TouchableOpacity | null>>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const selectCategory = (index: number) => {
+    const selected = itemsRef.current[index];
+    setActiveIndex(index);
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff', paddingTop: 29 }}>
       <View style={styles.container}>
@@ -55,6 +66,30 @@ const ExploreHeader = () => {
             <Ionicons name="options-outline" size={24} />
           </TouchableOpacity>
         </View>
+
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ alignItems: 'center', gap: 20, paddingHorizontal: 16 }}
+        >
+          {categories.map((item, index) => (
+            <TouchableOpacity
+              onPress={() => selectCategory(index)}
+              key={{ index }}
+              ref={(el) => (itemsRef.current[index] = el)}
+              style={activeIndex === index ? styles.categoriesBtnActive : styles.categoriesBtn}
+            >
+              <MaterialIcons
+                size={24}
+                name={item.icon as any}
+                color={activeIndex === index ? '#000' : Colors.grey}
+              />
+              <Text style={activeIndex === index ? styles.categoryTextActive : styles.categoryText}>
+                {item.name}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
       </View>
     </SafeAreaView>
   );

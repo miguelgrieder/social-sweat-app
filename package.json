@@ -8,8 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "eslint .",
-    "lintFixAll": "eslint 'app/**/*.{js,jsx,ts,tsx}'",
-    "prettierFixAll": "prettier --write 'app/**/*.{js,jsx,ts,tsx}'",
+    "lintFixAll": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "prettierFixAll": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
     "fix:lintPrettier": "npm prettierFixAll && npm lintFixAll"
   },
   "jest": {

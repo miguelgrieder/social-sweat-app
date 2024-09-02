@@ -4,6 +4,10 @@ import { Stack } from 'expo-router';
 import Listings from '@/components/Listings';
 import ExploreHeader from '@/components/ExploreHeader';
 import listingsData from 'assets/data/airbnb-listings.json';
+import listingsDataGeo from 'assets/data/airbnb-listings.geo.json';
+import ListingsMap from '@/components/ListingsMap';
+import ListingsBottomSheet from '@/components/ListingsBottomSheet';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const Page = () => {
   const [category, setCategory] = useState<string>('Tiny homes');
@@ -20,7 +24,10 @@ const Page = () => {
           header: () => <ExploreHeader onCategoryChanged={onDataChanged} />,
         }}
       />
-      <Listings listings={items} category={category} />
+      <GestureHandlerRootView>
+        <ListingsMap listings={listingsDataGeo} />
+        <ListingsBottomSheet listings={items} category={category} />
+      </GestureHandlerRootView>
     </View>
   );
 };

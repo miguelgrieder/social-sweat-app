@@ -1,15 +1,16 @@
-import { View, Text, FlatList, ListRenderItem, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, ListRenderItem, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { defaultStyles } from '@/constants/Styles';
 import { Link } from 'expo-router';
 import { Listing } from '@/interfaces/listing';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
+import { FlatList } from 'react-native-gesture-handler';
+
 interface Props {
   listings: any[];
   category: string;
 }
-
 const Listings = ({ listings: items, category }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const listRef = useRef<FlatList>(null);

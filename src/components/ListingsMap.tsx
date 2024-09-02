@@ -1,10 +1,12 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { PROVIDER_GOOGLE } from 'react-native-maps';
 import { defaultStyles } from '@/constants/Styles';
 import { Marker } from 'react-native-maps';
 import { ListingGeo } from '@/interfaces/listingGeo';
 import { router } from 'expo-router';
+import MapView from 'react-native-map-clustering';
+
 interface Props {
   listings: any;
 }
@@ -29,6 +31,10 @@ const ListingsMap = ({ listings }: Props) => {
         showsUserLocation
         showsMyLocationButton
         initialRegion={INITIAL_REGION}
+        animationEnabled={false}
+        clusterColor='#fff'
+        clusterTextColor='#000'
+        clusterFontFamily='mon-sb'
       >
         {listings.features.map((item: ListingGeo) => (
           <Marker

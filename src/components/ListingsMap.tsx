@@ -23,7 +23,6 @@ const onMarkerSelected = (event: any) => {
 };
 
 const ListingsMap = ({ listings }: Props) => {
-
   const renderCluster = (cluster: any) => {
     const { id, geometry, onPress, properties } = cluster;
 

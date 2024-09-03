@@ -5,7 +5,7 @@ import { Link } from 'expo-router';
 import { Listing } from '@/interfaces/listing';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
-import { FlatList } from 'react-native-gesture-handler';
+import { BottomSheetFlatList, BottomSheetFlatListMethods } from '@gorhom/bottom-sheet';
 
 interface Props {
   listings: any[];
@@ -14,7 +14,7 @@ interface Props {
 }
 const Listings = ({ listings: items, category, refresh }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const listRef = useRef<FlatList>(null);
+  const listRef = useRef<BottomSheetFlatListMethods>(null);
 
   // Update the view to scroll the list back top
   useEffect(() => {
@@ -58,7 +58,7 @@ const Listings = ({ listings: items, category, refresh }: Props) => {
   );
   return (
     <View style={defaultStyles.container}>
-      <FlatList
+      <BottomSheetFlatList
         renderItem={renderRow}
         ref={listRef}
         data={loading ? [] : items}

@@ -15,6 +15,10 @@ const ListingsBottomSheet = ({ listings, category }: Props) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['10%', '100%'], []);
 
+  const onShowMap = () => {
+    bottomSheetRef.current?.collapse();
+  };
+
   return (
     <BottomSheet
       index={1}
@@ -27,7 +31,7 @@ const ListingsBottomSheet = ({ listings, category }: Props) => {
       <View style={styles.contentContainer}>
         <Listings listings={listings} category={category} />
         <View style={styles.absoluteView}>
-          <TouchableOpacity style={styles.btn}>
+          <TouchableOpacity style={styles.btn} onPress={onShowMap}>
             <Text style={{ fontFamily: 'mon-sb', color: '#fff' }}>Map</Text>
             <Ionicons name="map" size={20} style={{ marginLeft: 10 }} color={'#fff'} />
           </TouchableOpacity>

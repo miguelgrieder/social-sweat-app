@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  TextInput,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useAuth, useUser } from '@clerk/clerk-expo';
@@ -31,7 +32,23 @@ const Page = () => {
     setLastName(user.lastName);
     setEmail(user.emailAddresses[0].emailAddress);
   }, [user]);
-  const onSaveUser = async () => {};
+
+  // Update Clerk user data
+  const onSaveUser = async () => {
+    try {
+      if (!firstName || !lastName) return;
+
+      await user?.update({
+        firstName: firstName!,
+        lastName: lastName!,
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setEdit(false);
+    }
+  };
+
   const onCaptureImage = async () => {};
 
   return (
@@ -47,17 +64,36 @@ const Page = () => {
             <Image source={{ uri: user?.imageUrl }} style={styles.avatar} />
           </TouchableOpacity>
 
-          {edit ? (<Text>EDIT</Text>) : (
-              <View style={styles.editRow}>
-                <Text style={{ fontFamily: 'mon-b', fontSize: 22 }}>
-                  {firstName} {lastName}
-                </Text>
-                <TouchableOpacity onPress={() => setEdit(true)}>
-                  <Ionicons name="create-outline" size={24} color={Colors.dark} />
-                </TouchableOpacity>
-              </View>
-            )}
-
+          {edit ? (
+            <View style={styles.editRow}>
+              <TextInput
+                placeholder="First Name"
+                value={firstName || ''}
+                onChangeText={setFirstName}
+                style={[defaultStyles.inputField, { width: 100 }]}
+              />
+              <TextInput
+                placeholder="Last Name"
+                value={lastName || ''}
+                onChangeText={setLastName}
+                style={[defaultStyles.inputField, { width: 100 }]}
+              />
+              <TouchableOpacity onPress={() => onSaveUser}>
+                <Ionicons name="checkmark-outline" size={24} color={Colors.dark} />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View style={styles.editRow}>
+              <Text style={{ fontFamily: 'mon-b', fontSize: 22 }}>
+                {firstName} {lastName}
+              </Text>
+              <TouchableOpacity onPress={() => setEdit(true)}>
+                <Ionicons name="create-outline" size={24} color={Colors.dark} />
+              </TouchableOpacity>
+            </View>
+          )}
+          <Text>{email}</Text>
+          <Text>Since {user?.createdAt!.toLocaleDateString()}</Text>
         </View>
       )}
 
@@ -107,6 +143,7 @@ const styles = StyleSheet.create({
   },
   editRow: {
     // flex: 1,
+    height: 50,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

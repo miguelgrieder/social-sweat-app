@@ -10,10 +10,18 @@ import { FlatList } from 'react-native-gesture-handler';
 interface Props {
   listings: any[];
   category: string;
+  refresh: number;
 }
-const Listings = ({ listings: items, category }: Props) => {
+const Listings = ({ listings: items, category, refresh }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const listRef = useRef<FlatList>(null);
+
+  // Update the view to scroll the list back top
+  useEffect(() => {
+    if (refresh) {
+      listRef.current?.scrollToOffset({ offset: 0, animated: true });
+    }
+  }, [refresh]);
 
   useEffect(() => {
     console.log('RELOADING LISTINGS: ', items.length);

@@ -46,6 +46,18 @@ const Page = () => {
           <TouchableOpacity onPress={onCaptureImage}>
             <Image source={{ uri: user?.imageUrl }} style={styles.avatar} />
           </TouchableOpacity>
+
+          {edit ? (<Text>EDIT</Text>) : (
+              <View style={styles.editRow}>
+                <Text style={{ fontFamily: 'mon-b', fontSize: 22 }}>
+                  {firstName} {lastName}
+                </Text>
+                <TouchableOpacity onPress={() => setEdit(true)}>
+                  <Ionicons name="create-outline" size={24} color={Colors.dark} />
+                </TouchableOpacity>
+              </View>
+            )}
+
         </View>
       )}
 

@@ -3,6 +3,7 @@ import React from 'react';
 import { useAuth } from '@clerk/clerk-expo';
 import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import Colors from '@/constants/Colors';
 import { defaultStyles } from '@/constants/Styles';
 
 const Page = () => {
@@ -15,10 +16,10 @@ const Page = () => {
         <Ionicons name="notifications-outline" size={26} />
       </View>
 
-      <Button title="Log out" onPress={() => signOut()} />
+      {isSignedIn && <Button title="Log Out" onPress={() => signOut()} color={Colors.dark} />}
       {!isSignedIn && (
-        <Link href={'/(modals)/login'}>
-          <Text>Login</Text>
+        <Link href={'/(modals)/login'} asChild>
+          <Button title="Log In" color={Colors.dark} />
         </Link>
       )}
     </SafeAreaView>

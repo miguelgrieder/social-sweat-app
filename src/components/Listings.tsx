@@ -58,7 +58,12 @@ const Listings = ({ listings: items, category, refresh }: Props) => {
   );
   return (
     <View style={defaultStyles.container}>
-      <FlatList renderItem={renderRow} ref={listRef} data={loading ? [] : items}></FlatList>
+      <FlatList
+        renderItem={renderRow}
+        ref={listRef}
+        data={loading ? [] : items}
+        ListHeaderComponent={<Text style={styles.info}>{items.length} homes</Text>}
+      />
     </View>
   );
 };

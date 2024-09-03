@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { memo } from 'react';
 import { PROVIDER_GOOGLE } from 'react-native-maps';
 import { defaultStyles } from '@/constants/Styles';
 import { Marker } from 'react-native-maps';
@@ -22,7 +22,7 @@ const onMarkerSelected = (event: any) => {
   router.push(`/listing/${event.properties.id}`);
 };
 
-const ListingsMap = ({ listings }: Props) => {
+const ListingsMap = memo(({ listings }: Props) => {
   const renderCluster = (cluster: any) => {
     const { id, geometry, onPress, properties } = cluster;
 
@@ -82,7 +82,7 @@ const ListingsMap = ({ listings }: Props) => {
       </MapView>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {

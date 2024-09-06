@@ -16,6 +16,9 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { places } from 'assets/data/places';
 
+// @ts-ignore
+import DatePicker from 'react-native-modern-datepicker';
+
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 const Page = () => {
@@ -107,9 +110,19 @@ const Page = () => {
             <Animated.Text entering={FadeIn} style={styles.cardHeader}>
               When's your trip?
             </Animated.Text>
-            <Animated.View style={styles.cardBody}>
-              <Text>WHEN</Text>
-            </Animated.View>
+          <Animated.View style={styles.cardBody}>
+            <DatePicker
+              options={{
+                defaultFont: 'mon',
+                headerFont: 'mon-sb',
+                mainColor: Colors.primary,
+                borderColor: 'transparent',
+              }}
+              current={today}
+              selected={today}
+              mode={'calendar'}
+            />
+          </Animated.View>
           </>
         )}
       </View>

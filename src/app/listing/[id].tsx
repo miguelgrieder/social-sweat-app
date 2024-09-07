@@ -133,11 +133,11 @@ const Page = () => {
         >
           <TouchableOpacity style={styles.footerText}>
             <Text style={styles.footerPrice}>€{listing.price}</Text>
-            <Text>night</Text>
+            <Text>registration</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={[defaultStyles.btn, { paddingRight: 20, paddingLeft: 20 }]}>
-            <Text style={defaultStyles.btnText}>Reserve</Text>
+            <Text style={defaultStyles.btnText}>Join Now</Text>
           </TouchableOpacity>
         </View>
       </Animated.View>

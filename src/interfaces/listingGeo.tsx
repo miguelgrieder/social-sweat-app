@@ -7,6 +7,7 @@ export interface ListingGeo {
 interface Properties {
   id: string;
   price: string;
+  sport_type: string;
   latitude: number;
   longitude: number;
 }

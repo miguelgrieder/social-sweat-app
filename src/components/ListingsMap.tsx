@@ -75,7 +75,7 @@ const ListingsMap = memo(({ listings }: Props) => {
             onPress={() => onMarkerSelected(item)}
           >
             <View style={styles.marker}>
-              <Text style={styles.markerText}>€ {item.properties.price}</Text>
+              <Text style={styles.markerText}>{item.properties.sport_type}</Text>
             </View>
           </Marker>
         ))}

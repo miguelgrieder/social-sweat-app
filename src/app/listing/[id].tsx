@@ -101,7 +101,7 @@ const Page = () => {
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{listing.name}</Text>
           <Text style={styles.location}>
-            {listing.room_type} in {listing.smart_location}
+            {listing.activity_type} in {listing.smart_location}
           </Text>
           <Text style={styles.rooms}>{listing.participants} participants</Text>
           <View style={{ flexDirection: 'row', gap: 4 }}>

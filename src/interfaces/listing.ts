@@ -4,7 +4,7 @@ export interface Listing {
   description: string;
   medium_url: string;
   review_scores_rating: string;
-  room_type: string;
+  activity_type: string;
   price: string;
   smart_location: string;
   number_of_reviews: string;

@@ -8,32 +8,32 @@ import { Link } from 'expo-router';
 
 const categories = [
   {
-    name: 'Tiny homes',
-    icon: 'home',
+    name: 'Soccer',
+    icon: 'sports-soccer',
   },
   {
-    name: 'Cabins',
-    icon: 'house-siding',
+    name: 'Baseball',
+    icon: 'sports-baseball',
+  },
+  {
+    name: 'Basketball',
+    icon: 'sports-basketball',
+  },
+  {
+    name: 'Football',
+    icon: 'sports-football',
+  },
+  {
+    name: 'Tennis',
+    icon: 'sports-tennis',
+  },
+  {
+    name: 'Golf',
+    icon: 'sports-golf',
   },
   {
     name: 'Trending',
-    icon: 'local-fire-department',
-  },
-  {
-    name: 'Play',
-    icon: 'videogame-asset',
-  },
-  {
-    name: 'City',
-    icon: 'apartment',
-  },
-  {
-    name: 'Beachfront',
-    icon: 'beach-access',
-  },
-  {
-    name: 'Countryside',
-    icon: 'nature-people',
+    icon: 'trending-up',
   },
 ];
 

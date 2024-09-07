@@ -62,7 +62,7 @@ const Listings = ({ listings: items, category, refresh }: Props) => {
         renderItem={renderRow}
         ref={listRef}
         data={loading ? [] : items}
-        ListHeaderComponent={<Text style={styles.info}>{items.length} homes</Text>}
+        ListHeaderComponent={<Text style={styles.info}>{items.length} Activities</Text>}
       />
     </View>
   );

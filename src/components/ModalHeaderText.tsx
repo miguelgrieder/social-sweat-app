@@ -15,7 +15,7 @@ const ModalHeaderText = () => {
             textDecorationLine: active == 0 ? 'underline' : 'none',
           }}
         >
-          Stays
+          Activities
         </Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => setActive(1)}>
@@ -27,7 +27,7 @@ const ModalHeaderText = () => {
             textDecorationLine: active == 1 ? 'underline' : 'none',
           }}
         >
-          Experiences
+          Coaches
         </Text>
       </TouchableOpacity>
     </View>

@@ -31,13 +31,6 @@ const Layout = () => {
         }}
       />
       <Tabs.Screen
-        name="trips"
-        options={{
-          tabBarLabel: 'Trips',
-          tabBarIcon: ({ size, color }) => <FontAwesome5 name="airbnb" size={size} color={color} />,
-        }}
-      />
-      <Tabs.Screen
         name="inbox"
         options={{
           tabBarLabel: 'Inbox',

@@ -9,7 +9,7 @@ import ListingsBottomSheet from '@/components/ListingsBottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const Page = () => {
-  const [category, setCategory] = useState<string>('Soccer');
+  const [category, setCategory] = useState<string>('Trending');
   const geoItems = useMemo(() => listingsDataGeo, []);
 
   const items = useMemo(() => listingsData as any, []);

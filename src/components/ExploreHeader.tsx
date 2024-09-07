@@ -8,6 +8,10 @@ import { Link } from 'expo-router';
 
 const categories = [
   {
+    name: 'Trending',
+    icon: 'trending-up',
+  },
+  {
     name: 'Soccer',
     icon: 'sports-soccer',
   },
@@ -30,10 +34,6 @@ const categories = [
   {
     name: 'Golf',
     icon: 'sports-golf',
-  },
-  {
-    name: 'Trending',
-    icon: 'trending-up',
   },
 ];
 

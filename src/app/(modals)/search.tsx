@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 import { BlurView } from 'expo-blur';
 import { defaultStyles } from '@/constants/Styles';
 import Animated, { FadeIn, FadeOut, SlideInDown } from 'react-native-reanimated';
-import { router, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { places } from 'assets/data/places';

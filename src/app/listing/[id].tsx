@@ -103,7 +103,7 @@ const Page = () => {
           <Text style={styles.location}>
             {listing.activity_type} in {listing.smart_location}
           </Text>
-          <Text style={styles.rooms}>{listing.participants} participants</Text>
+          <Text style={styles.information}>{listing.participants} participants</Text>
           <View style={{ flexDirection: 'row', gap: 4 }}>
             <Ionicons name="star" size={16} />
             <Text style={styles.ratings}>
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontFamily: 'mon-sb',
   },
-  rooms: {
+  information: {
     fontSize: 16,
     color: Colors.grey,
     marginVertical: 4,

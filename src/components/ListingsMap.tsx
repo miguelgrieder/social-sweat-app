@@ -6,6 +6,7 @@ import { Marker } from 'react-native-maps';
 import { ListingGeo } from '@/interfaces/listingGeo';
 import { router } from 'expo-router';
 import MapView from 'react-native-map-clustering';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 interface Props {
   listings: any;
@@ -75,7 +76,7 @@ const ListingsMap = memo(({ listings }: Props) => {
             onPress={() => onMarkerSelected(item)}
           >
             <View style={styles.marker}>
-              <Text style={styles.markerText}>{item.properties.sport_type}</Text>
+              <MaterialCommunityIcons name={item.properties.sport_type} size={20} />
             </View>
           </Marker>
         ))}

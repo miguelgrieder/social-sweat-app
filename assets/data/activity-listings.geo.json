@@ -6,7 +6,7 @@
       "geometry": { "type": "Point", "coordinates": [13.34589882667451, 52.499586830677025] },
       "properties": {
         "id": "1563562",
-        "sport_type": "triathlon",
+        "sport_type": "run-fast",
         "latitude": "52.499586830677025",
         "longitude": "13.34589882667451",
         "price": 45
@@ -39,7 +39,7 @@
       "geometry": { "type": "Point", "coordinates": [13.362449647584155, 52.48895019165655] },
       "properties": {
         "id": "14864910",
-        "sport_type": "gym",
+        "sport_type": "weight-lifter",
         "latitude": "52.48895019165655",
         "longitude": "13.362449647584155",
         "price": 50

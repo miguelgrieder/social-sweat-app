@@ -127,7 +127,7 @@ const Page = () => {
         )}
       </View>
 
-      {/* Guests */}
+      {/* Activity */}
       <View style={styles.card}>
         {openCard != 2 && (
           <AnimatedTouchableOpacity
@@ -266,13 +266,6 @@ const styles = StyleSheet.create({
     fontFamily: 'mon-sb',
     fontSize: 14,
     color: Colors.dark,
-  },
-
-  guestItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 16,
   },
   itemBorder: {
     borderBottomWidth: StyleSheet.hairlineWidth,

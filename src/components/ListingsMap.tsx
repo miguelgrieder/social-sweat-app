@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React, { memo } from 'react';
-import { PROVIDER_GOOGLE } from 'react-native-maps';
 import { defaultStyles } from '@/constants/Styles';
 import { Marker } from 'react-native-maps';
 import { ListingGeo } from '@/interfaces/listingGeo';
@@ -55,7 +54,6 @@ const ListingsMap = memo(({ listings }: Props) => {
   return (
     <View style={defaultStyles.container}>
       <MapView
-        provider={PROVIDER_GOOGLE}
         style={StyleSheet.absoluteFill}
         showsUserLocation
         showsMyLocationButton

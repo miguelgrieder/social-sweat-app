@@ -50,7 +50,7 @@ const Listings = ({ listings: items, category, refresh }: Props) => {
           <Text style={{ fontFamily: 'mon' }}>{item.activity_type}</Text>
           <View style={{ flexDirection: 'row', gap: 4 }}>
             <Text style={{ fontFamily: 'mon-sb' }}>€ {item.price}</Text>
-            <Text style={{ fontFamily: 'mon' }}>night</Text>
+            <Text style={{ fontFamily: 'mon' }}>registration</Text>
           </View>
         </Animated.View>
       </TouchableOpacity>

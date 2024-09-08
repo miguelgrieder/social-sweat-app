@@ -21,42 +21,17 @@ import DatePicker from 'react-native-modern-datepicker';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
-const guestsGropus = [
-  {
-    name: 'Adults',
-    text: 'Ages 13 or above',
-    count: 0,
-  },
-  {
-    name: 'Children',
-    text: 'Ages 2-12',
-    count: 0,
-  },
-  {
-    name: 'Infants',
-    text: 'Under 2',
-    count: 0,
-  },
-  {
-    name: 'Pets',
-    text: 'Pets allowed',
-    count: 0,
-  },
-];
-
 const Page = () => {
   const router = useRouter();
 
   const [openCard, setOpenCard] = useState(0);
   const [selectedPlace, setSelectedPlace] = useState(0);
-  const [groups, setGroups] = useState(guestsGropus);
 
   const today = new Date().toISOString().substring(0, 10);
 
   const onClearAll = () => {
     setSelectedPlace(0);
     setOpenCard(0);
-    setGroups(guestsGropus);
   };
 
   return (
@@ -78,14 +53,14 @@ const Page = () => {
         {openCard == 0 && (
           <>
             <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-              Where to?
+              Have you exercised today?
             </Animated.Text>
             <Animated.View entering={FadeIn} exiting={FadeOut} style={styles.cardBody}>
               <View style={styles.searchSection}>
                 <Ionicons style={styles.searchIcon} name="search" size={20} color="#000" />
                 <TextInput
                   style={styles.inputField}
-                  placeholder="Search destinations"
+                  placeholder="Search activities"
                   placeholderTextColor={Colors.grey}
                 />
               </View>
@@ -126,14 +101,14 @@ const Page = () => {
             exiting={FadeOut.duration(200)}
           >
             <Text style={styles.previewText}>When</Text>
-            <Text style={styles.previewdData}>Any week</Text>
+            <Text style={styles.previewdData}>Any day</Text>
           </AnimatedTouchableOpacity>
         )}
 
         {openCard == 1 && (
           <>
             <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-              When's your trip?
+              When's your workout?
             </Animated.Text>
             <Animated.View style={styles.cardBody}>
               <DatePicker
@@ -161,80 +136,16 @@ const Page = () => {
             entering={FadeIn.duration(200)}
             exiting={FadeOut.duration(200)}
           >
-            <Text style={styles.previewText}>Who</Text>
-            <Text style={styles.previewdData}>Add guests</Text>
+            <Text style={styles.previewText}>What</Text>
+            <Text style={styles.previewdData}>Any activity</Text>
           </AnimatedTouchableOpacity>
         )}
 
         {openCard == 2 && (
           <>
             <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-              Who's coming?
+              What activity are you interested?
             </Animated.Text>
-            <Animated.View style={styles.cardBody}>
-              <Animated.View style={styles.cardBody}>
-                {groups.map((item, index) => (
-                  <View
-                    key={index}
-                    style={[
-                      styles.guestItem,
-                      index + 1 < guestsGropus.length ? styles.itemBorder : null,
-                    ]}
-                  >
-                    <View>
-                      <Text style={{ fontFamily: 'mon-sb', fontSize: 14 }}>{item.name}</Text>
-                      <Text style={{ fontFamily: 'mon', fontSize: 14, color: Colors.grey }}>
-                        {item.text}
-                      </Text>
-                    </View>
-
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        gap: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={() => {
-                          const newGroups = [...groups];
-                          newGroups[index].count =
-                            newGroups[index].count > 0 ? newGroups[index].count - 1 : 0;
-
-                          setGroups(newGroups);
-                        }}
-                      >
-                        <Ionicons
-                          name="remove-circle-outline"
-                          size={26}
-                          color={groups[index].count > 0 ? Colors.grey : '#cdcdcd'}
-                        />
-                      </TouchableOpacity>
-                      <Text
-                        style={{
-                          fontFamily: 'mon',
-                          fontSize: 16,
-                          minWidth: 18,
-                          textAlign: 'center',
-                        }}
-                      >
-                        {item.count}
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => {
-                          const newGroups = [...groups];
-                          newGroups[index].count++;
-                          setGroups(newGroups);
-                        }}
-                      >
-                        <Ionicons name="add-circle-outline" size={26} color={Colors.grey} />
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                ))}
-              </Animated.View>
-            </Animated.View>
           </>
         )}
       </View>

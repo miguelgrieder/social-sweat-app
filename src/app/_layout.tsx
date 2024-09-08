@@ -90,7 +90,7 @@ function RootLayoutNav() {
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="listing/[id]" options={{ headerTitle: '', headerTransparent: true }} />
       <Stack.Screen
-        name="(modals)/booking"
+        name="(modals)/filter"
         options={{
           presentation: 'transparentModal',
           animation: 'fade',

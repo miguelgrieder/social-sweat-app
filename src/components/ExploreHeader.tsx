@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 8,
+    paddingBottom: 4,
   },
   categoriesBtnActive: {
     flex: 1,
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderBottomColor: '#000',
     borderBottomWidth: 2,
-    paddingBottom: 8,
+    paddingBottom: 4,
   },
 });
 

@@ -33,14 +33,10 @@ export default observer(function Layout() {
         }}
       />
       <Tabs.Screen
-        name="community"
+        name="explore"
         options={{
-          href: "/community",
-          headerShown: false,
-          tabBarLabel: translate("demoNavigator.communityTab"),
-          tabBarIcon: ({ focused }) => (
-            <Icon icon="community" color={focused ? colors.tint : undefined} size={30} />
-          ),
+          tabBarLabel: "Explore",
+          tabBarIcon: ({ size, color }) => <Ionicons name="search" size={size} color={color} />,
         }}
       />
       <Tabs.Screen

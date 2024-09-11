@@ -6,6 +6,7 @@ import { translate } from "src/i18n"
 import { colors, spacing, typography } from "src/theme"
 import { TextStyle, ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { MaterialCommunityIcons } from "@expo/vector-icons"
 
 export default observer(function Layout() {
   const { bottom } = useSafeAreaInsets()
@@ -41,6 +42,15 @@ export default observer(function Layout() {
           tabBarLabel: translate("demoNavigator.communityTab"),
           tabBarIcon: ({ focused }) => (
             <Icon icon="community" color={focused ? colors.tint : undefined} size={30} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="inbox"
+        options={{
+          tabBarLabel: "Inbox",
+          tabBarIcon: ({ size, color }) => (
+            <MaterialCommunityIcons name="message-outline" size={size} color={color} />
           ),
         }}
       />

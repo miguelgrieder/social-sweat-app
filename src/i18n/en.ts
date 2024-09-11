@@ -47,6 +47,9 @@ const en = {
     communityTab: "Community",
     podcastListTab: "Podcast",
   },
+  inboxScreen: {
+    title: "Welcome to inboxScreen title",
+  },
   demoCommunityScreen: {
     title: "Connect with the community",
     tagLine:

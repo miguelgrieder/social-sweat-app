@@ -26,7 +26,9 @@ const en = {
       button: "Let's try this again",
     },
   },
-
+  profileScreen: {
+    title: "Welcome to profileScreen title",
+  },
   errors: {
     invalidEmail: "Invalid email address.",
   },

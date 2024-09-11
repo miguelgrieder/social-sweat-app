@@ -18,7 +18,7 @@ export default observer(function WelcomeScreen() {
   } = useStores()
 
   function goNext() {
-    router.replace("/showroom")
+    router.replace("/home")
   }
 
   useHeader(

@@ -6,7 +6,7 @@ import { translate } from "src/i18n"
 import { colors, spacing, typography } from "src/theme"
 import { TextStyle, ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { MaterialCommunityIcons } from "@expo/vector-icons"
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons"
 
 export default observer(function Layout() {
   const { bottom } = useSafeAreaInsets()
@@ -24,13 +24,11 @@ export default observer(function Layout() {
       }}
     >
       <Tabs.Screen
-        name="showroom"
+        name="home"
         options={{
-          href: "/showroom",
-          headerShown: false,
-          tabBarLabel: translate("demoNavigator.componentsTab"),
-          tabBarIcon: ({ focused }) => (
-            <Icon icon="components" color={focused ? colors.tint : undefined} size={30} />
+          tabBarLabel: "Home",
+          tabBarIcon: ({ size, color }) => (
+            <Ionicons name="home-outline" size={size} color={color} />
           ),
         }}
       />

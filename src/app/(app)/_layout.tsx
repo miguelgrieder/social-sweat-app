@@ -1,6 +1,5 @@
 import React from "react"
 import { observer } from "mobx-react-lite"
-import { useStores } from "src/models"
 import { customFontsToLoad } from "src/theme"
 import { useFonts } from "expo-font"
 import { SplashScreen, Stack, useRouter, Redirect } from "expo-router"
@@ -13,10 +12,6 @@ import ModalHeaderText from "src/components/ModalHeaderText"
 export default observer(function Layout() {
   const router = useRouter()
 
-  const {
-    authenticationStore: { isAuthenticated },
-  } = useStores()
-
   const [fontsLoaded, fontError] = useFonts(customFontsToLoad)
 
   React.useEffect(() => {
@@ -28,10 +23,6 @@ export default observer(function Layout() {
 
   if (!fontsLoaded && !fontError) {
     return null
-  }
-
-  if (!isAuthenticated) {
-    return <Redirect href="/log-in" />
   }
 
   return (

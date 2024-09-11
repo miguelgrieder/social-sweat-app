@@ -4,7 +4,6 @@ import React from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Text } from "src/components"
 import { isRTL } from "src/i18n"
-import { useStores } from "src/models"
 import { colors, spacing } from "src/theme"
 import { useHeader } from "src/utils/useHeader"
 import { useSafeAreaInsetsStyle } from "src/utils/useSafeAreaInsetsStyle"
@@ -13,10 +12,6 @@ const welcomeLogo = require("assets/images/logo.png")
 const welcomeFace = require("assets/images/welcome-face.png")
 
 export default observer(function WelcomeScreen() {
-  const {
-    authenticationStore: { logout },
-  } = useStores()
-
   function goNext() {
     router.replace("/home")
   }
@@ -24,9 +19,8 @@ export default observer(function WelcomeScreen() {
   useHeader(
     {
       rightTx: "common.logOut",
-      onRightPress: logout,
     },
-    [logout],
+    [],
   )
 
   const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])

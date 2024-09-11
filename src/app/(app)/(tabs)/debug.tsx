@@ -4,17 +4,12 @@ import { Linking, Platform, TextStyle, View, ViewStyle } from "react-native"
 import { Button, ListItem, Screen, Text } from "src/components"
 import { colors, spacing } from "src/theme"
 import { isRTL } from "src/i18n"
-import { useStores } from "src/models"
 
 function openLinkInBrowser(url: string) {
   Linking.canOpenURL(url).then((canOpen) => canOpen && Linking.openURL(url))
 }
 
 export default function DemoDebugScreen() {
-  const {
-    authenticationStore: { logout },
-  } = useStores()
-
   const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
   // @ts-expect-error
   const usingFabric = global.nativeFabricUIManager != null
@@ -101,7 +96,7 @@ export default function DemoDebugScreen() {
         <Text style={$hint} tx={`demoDebugScreen.${Platform.OS}ReactotronHint` as const} />
       </View>
       <View style={$buttonContainer}>
-        <Button style={$button} tx="common.logOut" onPress={logout} />
+        <Button style={$button} tx="common.logOut" />
       </View>
     </Screen>
   )

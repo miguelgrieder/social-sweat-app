@@ -1,4 +1,6 @@
 {
+  "name": "ExpoRouterDemo",
+  "displayName": "ExpoRouterDemo",
   "expo": {
     "name": "rental-map",
     "slug": "rental-map",

@@ -7,10 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "eslint .",
-    "lintFixAll": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
-    "prettierFixAll": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
-    "fix:lintPrettier": "npm prettierFixAll && npm lintFixAll"
+    "format": "prettier --write \"src/**/*.{js,jsx,json,md,ts,tsx}\"",
+    "lint": "eslint src test --fix --ext .js,.ts,.tsx && npm run format"
   },
   "jest": {
     "preset": "jest-expo"

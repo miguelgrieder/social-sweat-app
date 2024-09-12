@@ -1,11 +1,12 @@
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
 import React from 'react';
+import { Screen } from 'src/components/Screen';
 
 const Inbox = () => {
   return (
-    <View>
+    <Screen preset="fixed">
       <Text>Inbox</Text>
-    </View>
+    </Screen>
   );
 };
 

@@ -15,6 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { defaultStyles } from '@/constants/Styles';
 import * as ImagePicker from 'expo-image-picker';
+import { Screen } from 'src/components/Screen';
 
 const Page = () => {
   const { signOut, isSignedIn } = useAuth();
@@ -68,7 +69,7 @@ const Page = () => {
     }
   };
   return (
-    <SafeAreaView style={defaultStyles.container}>
+    <Screen preset="fixed" contentContainerStyle={defaultStyles.container} safeAreaEdges={['top']}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Profile</Text>
         <Ionicons name="notifications-outline" size={26} />
@@ -119,7 +120,7 @@ const Page = () => {
           <Button title="Log In" color={Colors.dark} />
         </Link>
       )}
-    </SafeAreaView>
+    </Screen>
   );
 };
 const styles = StyleSheet.create({

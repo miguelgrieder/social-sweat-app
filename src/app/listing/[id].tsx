@@ -13,6 +13,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { defaultStyles } from '@/constants/Styles';
 import { Listing } from '@/interfaces/listing';
+import { Screen } from 'src/components/Screen';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
@@ -86,7 +87,7 @@ const Page = () => {
     };
   }, []);
   return (
-    <View style={styles.container}>
+    <Screen preset="scroll" contentContainerStyle={styles.container}>
       <Animated.ScrollView
         contentContainerStyle={{ paddingBottom: 100 }}
         ref={scrollRef}
@@ -141,7 +142,7 @@ const Page = () => {
           </TouchableOpacity>
         </View>
       </Animated.View>
-    </View>
+    </Screen>
   );
 };
 

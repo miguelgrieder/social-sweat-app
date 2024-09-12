@@ -3,6 +3,7 @@ import { useOAuth } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { View, StyleSheet, TextInput, Text, TouchableOpacity } from 'react-native';
+import { Screen } from 'src/components/Screen';
 
 import { useWarmUpBrowser } from '@/hooks/useWarmUpBrowser';
 import { defaultStyles } from '@/constants/Styles';
@@ -41,7 +42,7 @@ const Page = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <Screen preset="auto" contentContainerStyle={styles.container}>
       <TextInput
         autoCapitalize="none"
         placeholder="Email"
@@ -86,7 +87,7 @@ const Page = () => {
           <Text style={styles.btnOutlineText}>Continue with Facebook</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </Screen>
   );
 };
 

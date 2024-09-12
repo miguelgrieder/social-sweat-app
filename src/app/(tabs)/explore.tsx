@@ -7,6 +7,8 @@ import listingsDataGeo from 'assets/data/activity-listings.geo.json';
 import ListingsMap from '@/components/ListingsMap';
 import ListingsBottomSheet from '@/components/ListingsBottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { defaultStyles } from '@/constants/Styles';
+import { Screen } from 'src/components/Screen';
 
 const Page = () => {
   const [category, setCategory] = useState<string>('Trending');
@@ -19,7 +21,7 @@ const Page = () => {
   };
 
   return (
-    <View style={{ flex: 1, marginTop: 80 }}>
+    <Screen preset="fixed" contentContainerStyle={{ flex: 1 }} safeAreaEdges={['top']}>
       <Stack.Screen
         options={{
           header: () => <ExploreHeader onCategoryChanged={onDataChanged} />,
@@ -29,7 +31,7 @@ const Page = () => {
         <ListingsMap listings={geoItems} />
         <ListingsBottomSheet listings={items} category={category} />
       </GestureHandlerRootView>
-    </View>
+    </Screen>
   );
 };
 

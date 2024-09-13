@@ -1,0 +1,24 @@
+{
+  "home_screen": {
+    "header": "Início",
+    "body": "Bem-vindo à página inicial"
+  },
+  "inbox_screen": {
+    "header": "Caixa de entrada",
+    "body": "Bem-vindo à página da caixa de entrada"
+  },
+  "common": {
+    "email": "Email",
+    "login": "Entrar",
+    "logout": "Sair",
+    "continue": "Continuar",
+    "or": "ou"
+  },
+  "profile_screen": {
+    "header": "Perfil"
+  },
+  "login_modal": {
+    "header": "Entrar ou cadastrar-se",
+    "continue_with": "Continuar com"
+  }
+}

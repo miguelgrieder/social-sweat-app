@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { TouchableOpacity } from 'react-native';
 import ModalHeaderText from '@/components/ModalHeaderText';
+import { useTranslation } from 'react-i18next';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 // Cache the Clerk JWT
@@ -62,6 +63,7 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const { isLoaded, isSignedIn } = useAuth();
   const router = useRouter();
+  const { t } = useTranslation();
 
   // Automatically open login if user is not authenticated
   useEffect(() => {
@@ -76,7 +78,7 @@ function RootLayoutNav() {
         name="(modals)/login"
         options={{
           presentation: 'modal',
-          title: 'Log in or sign up',
+          title: t('login_modal.header'),
           headerTitleStyle: {
             fontFamily: 'mon-sb',
           },

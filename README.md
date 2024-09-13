@@ -19,3 +19,4 @@ npx expo install expo-secure-store
 
 npx expo install expo-auth-session expo-crypto
 npx expo install expo-web-browser
+intl-pluralrules

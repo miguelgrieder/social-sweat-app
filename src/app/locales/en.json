@@ -1,0 +1,24 @@
+{
+  "home_screen": {
+    "header": "Home",
+    "body": "Welcome to the home page"
+  },
+  "inbox_screen": {
+    "header": "Inbox",
+    "body": "Welcome to the inbox page"
+  },
+  "common": {
+    "email": "Email",
+    "login": "Log In",
+    "logout": "Log Out",
+    "continue": "Continue",
+    "or": "or"
+  },
+  "profile_screen": {
+    "header": "Profile"
+  },
+  "login_modal": {
+    "header": "Log in or sign up",
+    "continue_with": "Continue with"
+  }
+}

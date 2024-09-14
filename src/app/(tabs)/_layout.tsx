@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { translate } from '@/app/services/translate';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 
@@ -17,7 +17,7 @@ const Layout = () => {
       <Tabs.Screen
         name="index"
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: translate('navbar.home'),
           tabBarIcon: ({ size, color }) => (
             <Ionicons name="home-outline" size={size} color={color} />
           ),
@@ -26,14 +26,14 @@ const Layout = () => {
       <Tabs.Screen
         name="explore"
         options={{
-          tabBarLabel: 'Explore',
+          tabBarLabel: translate('navbar.explore'),
           tabBarIcon: ({ size, color }) => <Ionicons name="search" size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="inbox"
         options={{
-          tabBarLabel: 'Inbox',
+          tabBarLabel: translate('navbar.inbox'),
           tabBarIcon: ({ size, color }) => (
             <MaterialCommunityIcons name="message-outline" size={size} color={color} />
           ),
@@ -42,7 +42,7 @@ const Layout = () => {
       <Tabs.Screen
         name="profile"
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: translate('navbar.profile'),
           headerShown: false,
           tabBarIcon: ({ size, color }) => (
             <Ionicons name="person-circle-outline" size={size} color={color} />

@@ -1,4 +1,10 @@
 {
+  "navbar": {
+    "home": "Home",
+    "explore": "Explore",
+    "inbox": "Inbox",
+    "profile": "Profile"
+  },
   "home_screen": {
     "header": "Home",
     "body": "Welcome to the home page"
@@ -16,7 +22,10 @@
     "in": "in"
   },
   "profile_screen": {
-    "header": "Profile"
+    "header": "Profile",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "since": "Since"
   },
   "login_modal": {
     "header": "Log in or sign up",

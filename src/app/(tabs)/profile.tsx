@@ -16,6 +16,7 @@ import Colors from '@/constants/Colors';
 import { defaultStyles } from '@/constants/Styles';
 import * as ImagePicker from 'expo-image-picker';
 import { Screen } from 'src/components/Screen';
+import { translate } from '@/app/services/translate';
 
 const Page = () => {
   const { signOut, isSignedIn } = useAuth();
@@ -71,7 +72,7 @@ const Page = () => {
   return (
     <Screen preset="fixed" contentContainerStyle={defaultStyles.container} safeAreaEdges={['top']}>
       <View style={styles.headerContainer}>
-        <Text style={styles.header}>Profile</Text>
+        <Text style={styles.header}>{translate('profile_screen.header')}</Text>
         <Ionicons name="notifications-outline" size={26} />
       </View>
 
@@ -84,13 +85,13 @@ const Page = () => {
           {edit ? (
             <View style={styles.editRow}>
               <TextInput
-                placeholder="First Name"
+                placeholder={translate('profile_screen.first_name')}
                 value={firstName || ''}
                 onChangeText={setFirstName}
                 style={[defaultStyles.inputField, { width: 100 }]}
               />
               <TextInput
-                placeholder="Last Name"
+                placeholder={translate('profile_screen.last_name')}
                 value={lastName || ''}
                 onChangeText={setLastName}
                 style={[defaultStyles.inputField, { width: 100 }]}
@@ -110,14 +111,18 @@ const Page = () => {
             </View>
           )}
           <Text>{email}</Text>
-          <Text>Since {user?.createdAt!.toLocaleDateString()}</Text>
+          <Text>
+            {translate('profile_screen.since')} {user?.createdAt!.toLocaleDateString()}
+          </Text>
         </View>
       )}
 
-      {isSignedIn && <Button title="Log Out" onPress={() => signOut()} color={Colors.dark} />}
+      {isSignedIn && (
+        <Button title={translate('common.logout')} onPress={() => signOut()} color={Colors.dark} />
+      )}
       {!isSignedIn && (
         <Link href={'/(modals)/login'} asChild>
-          <Button title="Log In" color={Colors.dark} />
+          <Button title={translate('common.login')} color={Colors.dark} />
         </Link>
       )}
     </Screen>

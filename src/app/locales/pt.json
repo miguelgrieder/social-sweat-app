@@ -1,4 +1,10 @@
 {
+  "navbar": {
+    "home": "Início",
+    "explore": "Explorar",
+    "inbox": "Conversas",
+    "profile": "Perfil"
+  },
   "home_screen": {
     "header": "Início",
     "body": "Bem-vindo à página inicial"
@@ -16,7 +22,10 @@
     "in": "em"
   },
   "profile_screen": {
-    "header": "Perfil"
+    "header": "Perfil",
+    "first_name": "Nome",
+    "last_name": "Sobrenome",
+    "since": "Desde"
   },
   "login_modal": {
     "header": "Entrar ou cadastrar-se",

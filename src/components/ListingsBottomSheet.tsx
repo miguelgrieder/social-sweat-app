@@ -5,6 +5,7 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import Listings from '@/components/Listings';
 import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
+import { translate } from '@/app/services/translate';
 
 interface Props {
   listings: Listing[];
@@ -35,7 +36,9 @@ const ListingsBottomSheet = ({ listings, category }: Props) => {
         <Listings listings={listings} category={category} refresh={refresh} />
         <View style={styles.absoluteView}>
           <TouchableOpacity style={styles.btn} onPress={onShowMap}>
-            <Text style={{ fontFamily: 'mon-sb', color: '#fff' }}>Map</Text>
+            <Text style={{ fontFamily: 'mon-sb', color: '#fff' }}>
+              {translate('explorer_screen.explorer_listing_bottom_sheet.map')}
+            </Text>
             <Ionicons name="map" size={20} style={{ marginLeft: 10 }} color={'#fff'} />
           </TouchableOpacity>
         </View>

@@ -14,6 +14,7 @@ import Animated, {
 import { defaultStyles } from '@/constants/Styles';
 import { Listing } from '@/interfaces/listing';
 import { Screen } from 'src/components/Screen';
+import { useTranslation } from 'react-i18next';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
@@ -23,6 +24,7 @@ const Page = () => {
   const listing: Listing = (listingsData as any[]).find((item) => item.id === id);
   const navigation = useNavigation();
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
+  const { t } = useTranslation();
 
   const shareListing = async () => {
     // Share functionality of header share button
@@ -102,13 +104,16 @@ const Page = () => {
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{listing.name}</Text>
           <Text style={styles.location}>
-            {listing.activity_type} in {listing.smart_location}
+            {listing.activity_type} {t('common.in')} {listing.smart_location}
           </Text>
-          <Text style={styles.information}>{listing.participants} participants</Text>
+          <Text style={styles.information}>
+            {listing.participants} {t('activity_screen.participants')}
+          </Text>
           <View style={{ flexDirection: 'row', gap: 4 }}>
             <Ionicons name="star" size={16} />
             <Text style={styles.ratings}>
-              {listing.review_scores_rating / 20} · {listing.number_of_reviews} reviews
+              {listing.review_scores_rating / 20} · {listing.number_of_reviews}
+              {t('activity_screen.reviews')}
             </Text>
           </View>
           <View style={styles.divider} />
@@ -117,7 +122,9 @@ const Page = () => {
             <Image source={{ uri: listing.host_picture_url }} style={styles.host} />
 
             <View>
-              <Text style={{ fontWeight: '500', fontSize: 16 }}>Hosted by {listing.host_name}</Text>
+              <Text style={{ fontWeight: '500', fontSize: 16 }}>
+                {t('activity_screen.hosted_by')} {listing.host_name}
+              </Text>
               <Text>Host since {listing.host_since}</Text>
             </View>
           </View>
@@ -134,11 +141,11 @@ const Page = () => {
         >
           <TouchableOpacity style={styles.footerText}>
             <Text style={styles.footerPrice}>€{listing.price}</Text>
-            <Text>registration</Text>
+            <Text>{t('activity_screen.registration')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={[defaultStyles.btn, { paddingRight: 20, paddingLeft: 20 }]}>
-            <Text style={defaultStyles.btnText}>Join Now</Text>
+            <Text style={defaultStyles.btnText}>{t('activity_screen.join_now')}</Text>
           </TouchableOpacity>
         </View>
       </Animated.View>

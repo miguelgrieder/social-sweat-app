@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import Colors from '@/constants/Colors';
+import { useTranslation } from 'react-i18next';
 
 const ModalHeaderText = () => {
   const [active, setActive] = useState(0);
+  const { t } = useTranslation();
+
   return (
     <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 10 }}>
       <TouchableOpacity onPress={() => setActive(0)}>
@@ -15,7 +18,7 @@ const ModalHeaderText = () => {
             textDecorationLine: active == 0 ? 'underline' : 'none',
           }}
         >
-          Activities
+          {t('explorer_screen.modal_header_text.activities')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => setActive(1)}>
@@ -27,7 +30,7 @@ const ModalHeaderText = () => {
             textDecorationLine: active == 1 ? 'underline' : 'none',
           }}
         >
-          Coaches
+          {t('explorer_screen.modal_header_text.coaches')}
         </Text>
       </TouchableOpacity>
     </View>

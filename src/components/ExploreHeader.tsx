@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { Link } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 const categories = [
   {
@@ -45,6 +46,7 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
   const scrollRef = useRef<ScrollView>(null);
   const itemsRef = useRef<Array<TouchableOpacity | null>>([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const { t } = useTranslation();
 
   const selectCategory = (index: number) => {
     const selected = itemsRef.current[index];
@@ -66,9 +68,12 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
               <View style={styles.searchBtn}>
                 <Ionicons name="search" size={24} />
                 <View>
-                  <Text style={{ fontFamily: 'mon-sb' }}>Search Experiences</Text>
+                  <Text style={{ fontFamily: 'mon-sb' }}>
+                    {t('explorer_screen.explorer_header.search')}
+                  </Text>
                   <Text style={{ color: Colors.grey, fontFamily: 'mon' }}>
-                    Any sport · Any location
+                    {t('explorer_screen.explorer_header.any_sport')} ·{' '}
+                    {t('explorer_screen.explorer_header.any_location')}
                   </Text>
                 </View>
               </View>

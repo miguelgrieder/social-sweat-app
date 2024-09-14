@@ -6,6 +6,7 @@ import { Listing } from '@/interfaces/listing';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 import { BottomSheetFlatList, BottomSheetFlatListMethods } from '@gorhom/bottom-sheet';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   listings: any[];
@@ -15,6 +16,7 @@ interface Props {
 const Listings = ({ listings: items, category, refresh }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const listRef = useRef<BottomSheetFlatListMethods>(null);
+  const { t } = useTranslation();
 
   // Update the view to scroll the list back top
   useEffect(() => {
@@ -50,7 +52,7 @@ const Listings = ({ listings: items, category, refresh }: Props) => {
           <Text style={{ fontFamily: 'mon' }}>{item.activity_type}</Text>
           <View style={{ flexDirection: 'row', gap: 4 }}>
             <Text style={{ fontFamily: 'mon-sb' }}>€ {item.price}</Text>
-            <Text style={{ fontFamily: 'mon' }}>registration</Text>
+            <Text style={{ fontFamily: 'mon' }}>{t('listings.registration')}</Text>
           </View>
         </Animated.View>
       </TouchableOpacity>
@@ -62,7 +64,11 @@ const Listings = ({ listings: items, category, refresh }: Props) => {
         renderItem={renderRow}
         ref={listRef}
         data={loading ? [] : items}
-        ListHeaderComponent={<Text style={styles.info}>{items.length} Activities</Text>}
+        ListHeaderComponent={
+          <Text style={styles.info}>
+            {items.length} {t('listings.activities')}
+          </Text>
+        }
       />
     </View>
   );

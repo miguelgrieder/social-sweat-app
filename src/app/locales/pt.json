@@ -12,7 +12,8 @@
     "login": "Entrar",
     "logout": "Sair",
     "continue": "Continuar",
-    "or": "ou"
+    "or": "ou",
+    "in": "em"
   },
   "profile_screen": {
     "header": "Perfil"
@@ -20,5 +21,47 @@
   "login_modal": {
     "header": "Entrar ou cadastrar-se",
     "continue_with": "Continuar com"
+  },
+  "explorer_screen": {
+    "explorer_header": {
+      "search": "Buscar Experiências",
+      "any_sport": "Qualquer esporte",
+      "any_location": "Qualquer local"
+    },
+    "explorer_listing_bottom_sheet": {
+      "map": "Mapa"
+    },
+    "search": {
+      "where": "Onde",
+      "im_flexible": "Estou flexível",
+      "title_have_you_exercised": "Você se exercitou hoje?",
+      "when": "Quando",
+      "any_day": "Qualquer dia",
+      "whens_your_workout": "Quando é o seu treino?",
+      "what": "O quê",
+      "any_activity": "Qualquer atividade",
+      "what_activity_are_you_interested": "Em qual atividade você está interessado?",
+      "clear_all": "Limpar tudo",
+      "search": "Buscar"
+    }
+  },
+  "listings": {
+    "registration": "Cadastro"
+  },
+  "activity_sports": {
+    "trending": "Em alta",
+    "soccer": "Futebol",
+    "baseball": "Beisebol",
+    "basketball": "Basquete",
+    "football": "Futebol",
+    "tennis": "Tênis",
+    "golf": "Golfe"
+  },
+  "activity_screen": {
+    "hosted_by": "Organizado por",
+    "reviews": "Avaliações",
+    "participants": "Participantes",
+    "host_since": "Organizador desde",
+    "join_now": "Junte-se Agora"
   }
 }

@@ -7,7 +7,7 @@ import { Screen } from 'src/components/Screen';
 
 import { useWarmUpBrowser } from '@/hooks/useWarmUpBrowser';
 import { defaultStyles } from '@/constants/Styles';
-import { useTranslation } from 'react-i18next';
+import { translate } from '@/app/services/translate';
 
 enum Strategy {
   Google = 'oauth_google',
@@ -17,7 +17,6 @@ enum Strategy {
 
 const Page = () => {
   useWarmUpBrowser();
-  const { t } = useTranslation();
 
   const router = useRouter();
   const { startOAuthFlow: googleAuth } = useOAuth({ strategy: 'oauth_google' });
@@ -47,12 +46,12 @@ const Page = () => {
     <Screen preset="auto" contentContainerStyle={styles.container}>
       <TextInput
         autoCapitalize="none"
-        placeholder={t('common.email')}
+        placeholder={translate('common.email')}
         style={[defaultStyles.inputField, { marginBottom: 30 }]}
       />
 
       <TouchableOpacity style={defaultStyles.btn}>
-        <Text style={defaultStyles.btnText}>{t('common.continue')}</Text>
+        <Text style={defaultStyles.btnText}>{translate('common.continue')}</Text>
       </TouchableOpacity>
 
       <View style={styles.seperatorView}>
@@ -63,7 +62,7 @@ const Page = () => {
             borderBottomWidth: StyleSheet.hairlineWidth,
           }}
         />
-        <Text style={styles.seperator}>{t('common.or')}</Text>
+        <Text style={styles.seperator}>{translate('common.or')}</Text>
         <View
           style={{
             flex: 1,
@@ -76,17 +75,19 @@ const Page = () => {
       <View style={{ gap: 20 }}>
         <TouchableOpacity style={styles.btnOutline} onPress={() => onSelectAuth(Strategy.Apple)}>
           <Ionicons name="logo-apple" size={24} style={defaultStyles.btnIcon} />
-          <Text style={styles.btnOutlineText}>{t('login_modal.continue_with')} Apple</Text>
+          <Text style={styles.btnOutlineText}>{translate('login_modal.continue_with')} Apple</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.btnOutline} onPress={() => onSelectAuth(Strategy.Google)}>
           <Ionicons name="logo-google" size={24} style={defaultStyles.btnIcon} />
-          <Text style={styles.btnOutlineText}>{t('login_modal.continue_with')} Google</Text>
+          <Text style={styles.btnOutlineText}>{translate('login_modal.continue_with')} Google</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.btnOutline} onPress={() => onSelectAuth(Strategy.Facebook)}>
           <Ionicons name="logo-facebook" size={24} style={defaultStyles.btnIcon} />
-          <Text style={styles.btnOutlineText}>{t('login_modal.continue_with')} Facebook</Text>
+          <Text style={styles.btnOutlineText}>
+            {translate('login_modal.continue_with')} Facebook
+          </Text>
         </TouchableOpacity>
       </View>
     </Screen>

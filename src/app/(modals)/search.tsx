@@ -15,7 +15,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { places } from 'assets/data/places';
-import { useTranslation } from 'react-i18next';
+import { translate } from '@/app/services/translate';
 
 // @ts-ignore
 import DatePicker from 'react-native-modern-datepicker';
@@ -24,7 +24,6 @@ const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpaci
 
 const Page = () => {
   const router = useRouter();
-  const { t } = useTranslation();
 
   const [openCard, setOpenCard] = useState(0);
   const [selectedPlace, setSelectedPlace] = useState(0);
@@ -47,15 +46,17 @@ const Page = () => {
             entering={FadeIn.duration(200)}
             exiting={FadeOut.duration(200)}
           >
-            <Text style={styles.previewText}>{t('explorer_screen.search.where')}</Text>
-            <Text style={styles.previewdData}>{t('explorer_screen.search.im_flexible')}</Text>
+            <Text style={styles.previewText}>{translate('explorer_screen.search.where')}</Text>
+            <Text style={styles.previewdData}>
+              {translate('explorer_screen.search.im_flexible')}
+            </Text>
           </AnimatedTouchableOpacity>
         )}
 
         {openCard == 0 && (
           <>
             <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-              {t('explorer_screen.search.title_have_you_exercised')}
+              {translate('explorer_screen.search.title_have_you_exercised')}
             </Animated.Text>
             <Animated.View entering={FadeIn} exiting={FadeOut} style={styles.cardBody}>
               <View style={styles.searchSection}>
@@ -102,15 +103,15 @@ const Page = () => {
             entering={FadeIn.duration(200)}
             exiting={FadeOut.duration(200)}
           >
-            <Text style={styles.previewText}>{t('explorer_screen.search.when')}</Text>
-            <Text style={styles.previewdData}>{t('explorer_screen.search.any_day')}</Text>
+            <Text style={styles.previewText}>{translate('explorer_screen.search.when')}</Text>
+            <Text style={styles.previewdData}>{translate('explorer_screen.search.any_day')}</Text>
           </AnimatedTouchableOpacity>
         )}
 
         {openCard == 1 && (
           <>
             <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-              {t('explorer_screen.search.whens_your_workout')}
+              {translate('explorer_screen.search.whens_your_workout')}
             </Animated.Text>
             <Animated.View style={styles.cardBody}>
               <DatePicker
@@ -138,15 +139,17 @@ const Page = () => {
             entering={FadeIn.duration(200)}
             exiting={FadeOut.duration(200)}
           >
-            <Text style={styles.previewText}>{t('explorer_screen.search.what')}</Text>
-            <Text style={styles.previewdData}>{t('explorer_screen.search.any_activity')}</Text>
+            <Text style={styles.previewText}>{translate('explorer_screen.search.what')}</Text>
+            <Text style={styles.previewdData}>
+              {translate('explorer_screen.search.any_activity')}
+            </Text>
           </AnimatedTouchableOpacity>
         )}
 
         {openCard == 2 && (
           <>
             <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-              {t('explorer_screen.search.what_activity_are_you_interested')}
+              {translate('explorer_screen.search.what_activity_are_you_interested')}
             </Animated.Text>
           </>
         )}
@@ -168,7 +171,7 @@ const Page = () => {
                 textDecorationLine: 'underline',
               }}
             >
-              {t('explorer_screen.search.clear_all')}
+              {translate('explorer_screen.search.clear_all')}
             </Text>
           </TouchableOpacity>
 
@@ -182,7 +185,7 @@ const Page = () => {
               style={defaultStyles.btnIcon}
               color={'#fff'}
             />
-            <Text style={defaultStyles.btnText}>{t('explorer_screen.search.search')}</Text>
+            <Text style={defaultStyles.btnText}>{translate('explorer_screen.search.search')}</Text>
           </TouchableOpacity>
         </View>
       </Animated.View>

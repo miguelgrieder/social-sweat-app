@@ -1,14 +1,12 @@
 import { Text, ViewStyle } from 'react-native';
 import React from 'react';
 import { Screen } from 'src/components/Screen';
-import { useTranslation } from 'react-i18next';
+import { translate } from '@/app/services/translate';
 
 const Inbox = () => {
-  const { t } = useTranslation();
-
   return (
     <Screen preset="fixed" contentContainerStyle={$container} safeAreaEdges={['top']}>
-      <Text>{t('inbox_screen.body')}</Text>
+      <Text>{translate('inbox_screen.body')}</Text>
     </Screen>
   );
 };

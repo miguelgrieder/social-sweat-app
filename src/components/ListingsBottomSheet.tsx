@@ -6,6 +6,7 @@ import Listings from '@/components/Listings';
 import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { translate } from '@/app/services/translate';
+import { spacing } from '@/constants/spacing';
 
 interface Props {
   listings: Listing[];
@@ -39,7 +40,7 @@ const ListingsBottomSheet = ({ listings, category }: Props) => {
             <Text style={{ fontFamily: 'mon-sb', color: '#fff' }}>
               {translate('explorer_screen.explorer_listing_bottom_sheet.map')}
             </Text>
-            <Ionicons name="map" size={20} style={{ marginLeft: 10 }} color={'#fff'} />
+            <Ionicons name="map" size={20} style={{ marginLeft: spacing.xs }} color={'#fff'} />
           </TouchableOpacity>
         </View>
       </View>
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: Colors.dark,
-    padding: 16,
+    padding: spacing.md,
     height: 50,
     borderRadius: 30,
     flexDirection: 'row',

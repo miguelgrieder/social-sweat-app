@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 import { BottomSheetFlatList, BottomSheetFlatListMethods } from '@gorhom/bottom-sheet';
 import { translate } from '@/app/services/translate';
+import { spacing } from '@/constants/spacing';
 
 interface Props {
   listings: any[];
@@ -75,7 +76,7 @@ const Listings = ({ listings: items, category, refresh }: Props) => {
 
 const styles = StyleSheet.create({
   listing: {
-    padding: 16,
+    padding: spacing.md,
     gap: 10,
   },
   image: {
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'mon-sb',
     fontSize: 16,
-    marginTop: 4,
+    marginTop: spacing.xxs,
   },
 });
 

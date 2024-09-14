@@ -6,6 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { Link } from 'expo-router';
 import { translate } from '@/app/services/translate';
+import { spacing } from '@/constants/spacing';
 
 const categories = [
   {
@@ -91,7 +92,7 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
           contentContainerStyle={{
             alignItems: 'center',
             gap: 20,
-            paddingHorizontal: 16,
+            paddingHorizontal: spacing.md,
           }}
         >
           {categories.map((item, index) => (
@@ -134,15 +135,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 24,
-    paddingBottom: 16,
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.md,
   },
 
   searchBtn: {
     backgroundColor: '#fff',
     flexDirection: 'row',
     gap: 10,
-    padding: 14,
+    padding: spacing.sm,
     alignItems: 'center',
     width: 280,
     borderWidth: StyleSheet.hairlineWidth,
@@ -158,10 +159,10 @@ const styles = StyleSheet.create({
     },
   },
   filterBtn: {
-    padding: 10,
+    padding: spacing.sm,
     borderWidth: 1,
     borderColor: '#A2A0A2',
-    borderRadius: 24,
+    borderRadius: spacing.lg,
   },
   categoryText: {
     fontSize: 14,
@@ -177,15 +178,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 4,
+    paddingBottom: spacing.xxs,
   },
   categoriesBtnActive: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     borderBottomColor: '#000',
-    borderBottomWidth: 2,
-    paddingBottom: 4,
+    borderBottomWidth: spacing.xxxs,
+    paddingBottom: spacing.xxs,
   },
 });
 

@@ -6,6 +6,7 @@ import { ListingGeo } from '@/interfaces/listingGeo';
 import { router } from 'expo-router';
 import MapView from 'react-native-map-clustering';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { spacing } from '@/constants/spacing';
 
 interface Props {
   listings: any;
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   marker: {
-    padding: 8,
+    padding: spacing.xs,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff',

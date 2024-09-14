@@ -8,6 +8,7 @@ import { Screen } from 'src/components/Screen';
 import { useWarmUpBrowser } from '@/hooks/useWarmUpBrowser';
 import { defaultStyles } from '@/constants/Styles';
 import { translate } from '@/app/services/translate';
+import { spacing } from '@/constants/spacing';
 
 enum Strategy {
   Google = 'oauth_google',
@@ -104,9 +105,9 @@ const styles = StyleSheet.create({
   },
   seperatorView: {
     flexDirection: 'row',
-    gap: 10,
+    gap: spacing.sm,
     alignItems: 'center',
-    marginVertical: 30,
+    marginVertical: spacing.xl,
   },
   seperator: {
     fontFamily: 'mon-sb',
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    paddingHorizontal: 10,
+    paddingHorizontal: spacing.sm,
   },
   btnOutlineText: {
     color: '#000',

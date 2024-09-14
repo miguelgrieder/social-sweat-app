@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import Colors from '@/constants/Colors';
 import { translate } from '@/app/services/translate';
+import { spacing } from '@/constants/spacing';
 
 const ModalHeaderText = () => {
   const [active, setActive] = useState(0);
 
   return (
-    <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 10 }}>
+    <View style={{ flexDirection: 'row', justifyContent: 'center', gap: spacing.sm }}>
       <TouchableOpacity onPress={() => setActive(0)}>
         <Text
           style={{

@@ -17,6 +17,7 @@ import { defaultStyles } from '@/constants/Styles';
 import * as ImagePicker from 'expo-image-picker';
 import { Screen } from 'src/components/Screen';
 import { translate } from '@/app/services/translate';
+import { spacing } from '@/constants/spacing';
 
 const Page = () => {
   const { signOut, isSignedIn } = useAuth();
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 24,
+    padding: spacing.lg,
   },
   header: {
     fontFamily: 'mon-b',
@@ -141,10 +142,10 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: '#fff',
-    padding: 24,
-    borderRadius: 16,
-    marginHorizontal: 24,
-    marginTop: 24,
+    padding: spacing.lg,
+    borderRadius: spacing.md,
+    marginHorizontal: spacing.lg,
+    marginTop: spacing.lg,
     elevation: 2,
     shadowColor: '#000',
     shadowOpacity: 0.2,
@@ -154,8 +155,8 @@ const styles = StyleSheet.create({
       height: 2,
     },
     alignItems: 'center',
-    gap: 14,
-    marginBottom: 24,
+    gap: spacing.sm,
+    marginBottom: spacing.lg,
   },
   avatar: {
     width: 100,
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 8,
+    gap: spacing.xs,
   },
 });
 

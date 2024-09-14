@@ -15,6 +15,7 @@ import { defaultStyles } from '@/constants/Styles';
 import { Listing } from '@/interfaces/listing';
 import { Screen } from 'src/components/Screen';
 import { translate } from '@/app/services/translate';
+import { spacing } from '@/constants/spacing';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
     width: width,
   },
   infoContainer: {
-    padding: 24,
+    padding: spacing.lg,
     backgroundColor: '#fff',
   },
   name: {
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
   },
   location: {
     fontSize: 18,
-    marginTop: 10,
+    marginTop: spacing.sm,
     fontFamily: 'mon-sb',
   },
   information: {
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
   divider: {
     height: StyleSheet.hairlineWidth,
     backgroundColor: Colors.grey,
-    marginVertical: 16,
+    marginVertical: spacing.md,
   },
   host: {
     width: 50,
@@ -225,7 +226,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 10,
+    gap: spacing.sm,
   },
   header: {
     backgroundColor: '#fff',
@@ -236,7 +237,7 @@ const styles = StyleSheet.create({
 
   description: {
     fontSize: 16,
-    marginTop: 10,
+    marginTop: spacing.sm,
     fontFamily: 'mon',
   },
 });

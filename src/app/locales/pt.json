@@ -72,5 +72,24 @@
     "participants": "Participantes",
     "host_since": "Organizador desde",
     "join_now": "Junte-se Agora"
+  },
+  "create_activity_screen": {
+    "title": "Criar Atividade",
+    "upload_photo": "Enviar Foto da Atividade",
+    "label_title": "Título",
+    "placeholder_title": "Insira o título da atividade",
+    "label_description": "Descrição",
+    "placeholder_description": "Insira a descrição da atividade",
+    "label_activity_type": "Tipo de Atividade",
+    "placeholder_activity_type": "Selecione o tipo de atividade",
+    "label_price": "Preço",
+    "placeholder_price": "R$ 0,00",
+    "label_date_time": "Data e Hora",
+    "placeholder_date_time": "Selecione a data e hora",
+    "label_location": "Localização",
+    "placeholder_location": "Insira a localização da atividade",
+    "label_sport": "Esporte",
+    "placeholder_sport": "Selecione o esporte",
+    "create": "Criar Atividade"
   }
 }

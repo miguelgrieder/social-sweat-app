@@ -1,12 +1,16 @@
-import { Text, ViewStyle } from 'react-native';
+import { Button, ViewStyle } from 'react-native';
 import React from 'react';
 import { Screen } from 'src/components/Screen';
 import { translate } from '@/app/services/translate';
+import { Link } from 'expo-router';
+import Colors from '@/constants/Colors';
 
 const Home = () => {
   return (
     <Screen preset="fixed" contentContainerStyle={$container} safeAreaEdges={['top']}>
-      <Text>{translate('home_screen.body')}</Text>
+      <Link href={'/(modals)/activity_creation'} asChild>
+        <Button title={'activity_creation.tsx'} color={Colors.dark} />
+      </Link>
     </Screen>
   );
 };

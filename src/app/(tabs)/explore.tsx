@@ -6,31 +6,21 @@ import ListingsMap from '@/components/ListingsMap';
 import ListingsBottomSheet from '@/components/ListingsBottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Screen } from 'src/components/Screen';
-import { create } from 'apisauce';
-
-const api = create({
-  baseURL: process.env.EXPO_PUBLIC_API_MICROSERVICE,
-});
+import { fetchActivities } from '@/api/filter_activities';
 
 const Page = () => {
   const [category, setCategory] = useState<string>('Trending');
   const [items, setItems] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getData = async () => {
       const filterBody = {
         activity_id: null,
       };
-
-      const response = await api.post('/activities', filterBody);
-
-      if (response.ok && response.data) {
-        setItems(response.data.activities);
-      } else {
-        console.error('Failed to fetch activities', response);
-      }
+      const activities = await fetchActivities(filterBody);
+      setItems(activities);
     };
-    fetchData();
+    getData();
   }, []);
 
   const geoItems = useMemo(() => listingsDataGeo, []);

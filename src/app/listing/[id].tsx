@@ -1,7 +1,6 @@
 import { useLocalSearchParams, useNavigation } from 'expo-router';
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity, Share } from 'react-native';
-import listingsData from 'assets/data/activity-listings.json';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import Animated, {
@@ -16,13 +15,25 @@ import { Listing } from '@/interfaces/listing';
 import { Screen } from 'src/components/Screen';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
+import { fetchActivities } from '@/api/filter_activities';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
 
 const Page = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const listing: Listing = (listingsData as any[]).find((item) => item.id === id);
+  const [listing, setListing] = useState<Listing>([]);
+  useEffect(() => {
+    const getData = async () => {
+      const filterBody = {
+        activity_id: id,
+      };
+      const activities = await fetchActivities(filterBody);
+      setListing(activities[0]);
+    };
+    getData();
+  }, []);
+
   const navigation = useNavigation();
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
 

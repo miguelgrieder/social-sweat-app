@@ -14,4 +14,9 @@ export interface Listing {
   listing_url: string;
   xl_picture_url: string;
   participants: string;
+  geometry: {
+    type: string;
+    coordinates: [number, number];
+  };
+  sport_type: string;
 }

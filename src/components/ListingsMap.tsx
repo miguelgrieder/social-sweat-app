@@ -2,14 +2,14 @@ import { View, Text, StyleSheet } from 'react-native';
 import React, { memo } from 'react';
 import { defaultStyles } from '@/constants/Styles';
 import { Marker } from 'react-native-maps';
-import { ListingGeo } from '@/interfaces/listingGeo';
+import { Listing } from '@/interfaces/listing';
 import { router } from 'expo-router';
 import MapView from 'react-native-map-clustering';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { spacing } from '@/constants/spacing';
 
 interface Props {
-  listings: any;
+  listings: Listing[] | null;
 }
 
 const INITIAL_REGION = {
@@ -52,6 +52,14 @@ const ListingsMap = memo(({ listings }: Props) => {
     );
   };
 
+  if (!listings) {
+    console.log('No listings for Map:', listings);
+  } else if (listings.length === 0) {
+    console.log('No listings available:', listings);
+  } else {
+    console.log('Listings loaded for the map:', listings.length);
+  }
+
   return (
     <View style={defaultStyles.container}>
       <MapView
@@ -65,17 +73,17 @@ const ListingsMap = memo(({ listings }: Props) => {
         clusterFontFamily="mon-sb"
         renderCluster={renderCluster}
       >
-        {listings.features.map((item: ListingGeo) => (
+        {listings.map((item: Listing) => (
           <Marker
             coordinate={{
-              latitude: +item.properties.latitude,
-              longitude: +item.properties.longitude,
+              latitude: +item.geometry.coordinates[1],
+              longitude: +item.geometry.coordinates[0],
             }}
-            key={item.properties.id}
+            key={item.id}
             onPress={() => onMarkerSelected(item)}
           >
             <View style={styles.marker}>
-              <MaterialCommunityIcons name={item.properties.sport_type} size={20} />
+              <MaterialCommunityIcons name={item.sport_type} size={20} />
             </View>
           </Marker>
         ))}

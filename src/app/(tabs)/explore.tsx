@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Stack } from 'expo-router';
 import ExploreHeader from '@/components/ExploreHeader';
-import listingsDataGeo from 'assets/data/activity-listings.geo.json';
 import ListingsMap from '@/components/ListingsMap';
 import ListingsBottomSheet from '@/components/ListingsBottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -23,8 +22,6 @@ const Page = () => {
     getData();
   }, []);
 
-  const geoItems = useMemo(() => listingsDataGeo, []);
-
   const onDataChanged = (category: string) => {
     setCategory(category);
   };
@@ -37,7 +34,7 @@ const Page = () => {
         }}
       />
       <GestureHandlerRootView>
-        <ListingsMap listings={geoItems} />
+        <ListingsMap listings={items} />
         <ListingsBottomSheet listings={items} category={category} />
       </GestureHandlerRootView>
     </Screen>

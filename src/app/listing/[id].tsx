@@ -42,7 +42,7 @@ const Page = () => {
     try {
       await Share.share({
         title: listing.name,
-        url: listing.listing_url,
+        url: listing.pictures[0],
       });
     } catch (err) {
       console.log(err);
@@ -107,7 +107,7 @@ const Page = () => {
         scrollEventThrottle={16}
       >
         <Animated.Image
-          source={{ uri: listing.xl_picture_url }}
+          source={{ uri: listing.pictures[0] }}
           style={[styles.image, imageAnimatedStyle]}
           resizeMode="cover"
         />
@@ -115,28 +115,28 @@ const Page = () => {
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{listing.name}</Text>
           <Text style={styles.location}>
-            {listing.activity_type} {translate('common.in')} {listing.smart_location}
+            {listing.activity_type} {translate('common.in')} {listing.location.smart_location}
           </Text>
           <Text style={styles.information}>
-            {listing.participants} {translate('activity_screen.participants')}
+            {listing.participants.current} {translate('activity_screen.participants')}
           </Text>
           <View style={{ flexDirection: 'row', gap: 4 }}>
             <Ionicons name="star" size={16} />
             <Text style={styles.ratings}>
-              {listing.review_scores_rating / 20} · {listing.number_of_reviews}
+              {listing.reviews.review_scores_rating / 20} · {listing.reviews.number_of_reviews}
               {translate('activity_screen.reviews')}
             </Text>
           </View>
           <View style={styles.divider} />
 
           <View style={styles.hostView}>
-            <Image source={{ uri: listing.host_picture_url }} style={styles.host} />
+            <Image source={{ uri: listing.host.host_picture_url }} style={styles.host} />
 
             <View>
               <Text style={{ fontWeight: '500', fontSize: 16 }}>
-                {translate('activity_screen.hosted_by')} {listing.host_name}
+                {translate('activity_screen.hosted_by')} {listing.host.host_name}
               </Text>
-              <Text>Host since {listing.host_since}</Text>
+              <Text>Host since {listing.host.host_since}</Text>
             </View>
           </View>
 
@@ -151,7 +151,10 @@ const Page = () => {
           style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}
         >
           <TouchableOpacity style={styles.footerText}>
-            <Text style={styles.footerPrice}>€{listing.price}</Text>
+            <Text style={styles.footerPrice}>
+              {listing.price.unit}
+              {listing.price.value}
+            </Text>
             <Text>{translate('activity_screen.registration')}</Text>
           </TouchableOpacity>
 

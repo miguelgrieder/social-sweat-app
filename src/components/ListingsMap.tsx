@@ -73,11 +73,11 @@ const ListingsMap = memo(({ listings }: Props) => {
         clusterFontFamily="mon-sb"
         renderCluster={renderCluster}
       >
-        {listings.map((item: Listing) => (
+        {listings?.map((item: Listing) => (
           <Marker
             coordinate={{
-              latitude: +item.geometry.coordinates[1],
-              longitude: +item.geometry.coordinates[0],
+              latitude: +item.location.geometry.coordinates.longitude,
+              longitude: +item.location.geometry.coordinates.latitude,
             }}
             key={item.id}
             onPress={() => onMarkerSelected(item)}

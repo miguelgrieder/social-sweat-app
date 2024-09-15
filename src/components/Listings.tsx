@@ -37,7 +37,7 @@ const Listings = ({ listings: items, category, refresh }: Props) => {
     <Link href={`/listing/${item.id}`} asChild>
       <TouchableOpacity>
         <Animated.View style={styles.listing} entering={FadeInRight} exiting={FadeOutLeft}>
-          <Animated.Image source={{ uri: item.medium_url }} style={styles.image} />
+          <Animated.Image source={{ uri: item.pictures[0] }} style={styles.image} />
           <TouchableOpacity style={{ position: 'absolute', right: 30, top: 30 }}>
             <Ionicons name="heart-outline" size={24} color="#000" />
           </TouchableOpacity>
@@ -46,12 +46,14 @@ const Listings = ({ listings: items, category, refresh }: Props) => {
             <Text style={{ fontSize: 16, fontFamily: 'mon-sb' }}>{item.name}</Text>
             <View style={{ flexDirection: 'row', gap: 4 }}>
               <Ionicons name="star" size={16} />
-              <Text style={{ fontFamily: 'mon-sb' }}>{item.review_scores_rating / 20}</Text>
+              <Text style={{ fontFamily: 'mon-sb' }}>{item.reviews.review_scores_rating / 20}</Text>
             </View>
           </View>
           <Text style={{ fontFamily: 'mon' }}>{item.activity_type}</Text>
           <View style={{ flexDirection: 'row', gap: 4 }}>
-            <Text style={{ fontFamily: 'mon-sb' }}>€ {item.price}</Text>
+            <Text style={{ fontFamily: 'mon-sb' }}>
+              {item.price.unit} {item.price.value}
+            </Text>
             <Text style={{ fontFamily: 'mon' }}>{translate('listings.registration')}</Text>
           </View>
         </Animated.View>

@@ -1,20 +1,39 @@
-import { View } from 'react-native';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Stack } from 'expo-router';
 import ExploreHeader from '@/components/ExploreHeader';
-import listingsData from 'assets/data/activity-listings.json';
 import listingsDataGeo from 'assets/data/activity-listings.geo.json';
 import ListingsMap from '@/components/ListingsMap';
 import ListingsBottomSheet from '@/components/ListingsBottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { defaultStyles } from '@/constants/Styles';
 import { Screen } from 'src/components/Screen';
+import { create } from 'apisauce';
+
+const api = create({
+  baseURL: process.env.EXPO_PUBLIC_API_MICROSERVICE,
+});
 
 const Page = () => {
   const [category, setCategory] = useState<string>('Trending');
-  const geoItems = useMemo(() => listingsDataGeo, []);
+  const [items, setItems] = useState<any[]>([]);
 
-  const items = useMemo(() => listingsData as any, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      const filterBody = {
+        activity_id: null,
+      };
+
+      const response = await api.post('/activities', filterBody);
+
+      if (response.ok && response.data) {
+        setItems(response.data.activities);
+      } else {
+        console.error('Failed to fetch activities', response);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const geoItems = useMemo(() => listingsDataGeo, []);
 
   const onDataChanged = (category: string) => {
     setCategory(category);

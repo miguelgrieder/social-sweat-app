@@ -20,9 +20,54 @@ import { fetchActivities } from '@/api/filter_activities';
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
 
+const dummy_listing = {
+  id: '',
+  name: '',
+  description: '',
+  activity_type: '',
+  sport_type: '',
+  price: {
+    value: 0,
+    unit: '',
+  },
+  location: {
+    country: '',
+    area: '',
+    city: '',
+    smart_location: '',
+    geometry: {
+      type: '',
+      coordinates: {
+        latitude: 0,
+        longitude: 0,
+      },
+    },
+  },
+  participants: {
+    current: 0,
+    max: null,
+  },
+  reviews: {
+    number_of_reviews: 0,
+    review_scores_rating: 0,
+  },
+  pictures: [],
+  host: {
+    host_picture_url: '',
+    host_name: '',
+    host_since: '',
+  },
+  datetimes: {
+    datetime_created: '',
+    datetime_deleted: null,
+    datetime_start: '',
+    datetime_finish: '',
+  },
+};
+
 const Page = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const [listing, setListing] = useState<Listing>([]);
+  const [listing, setListing] = useState<Listing>(dummy_listing);
   useEffect(() => {
     const getData = async () => {
       const filterBody = {

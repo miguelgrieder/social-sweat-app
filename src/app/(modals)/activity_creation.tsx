@@ -1,29 +1,30 @@
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
-import { Picker } from '@react-native-picker/picker'; // Corrected Picker import
+import { Picker } from '@react-native-picker/picker';
 import { useAuth } from '@clerk/clerk-expo';
 import { translate } from '@/app/services/translate';
 import * as ImagePicker from 'expo-image-picker';
-import { create } from 'apisauce';
 import { Screen } from 'src/components/Screen';
 import { spacing } from '@/constants/spacing';
 import Colors from '@/constants/Colors';
-
-// Apisauce setup
-const api = create({
-  baseURL: 'API_URL',
-  headers: { Accept: 'application/json' },
-});
+import { createActivity } from '@/api/create_activity';
 
 const CreateActivity = () => {
   const { signOut, isSignedIn } = useAuth();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [activityType, setActivityType] = useState('event'); // Dropdown default
-  const [price, setPrice] = useState('');
-  const [dateTime, setDateTime] = useState('');
-  const [location, setLocation] = useState('');
-  const [sport, setSport] = useState('soccer'); // Dropdown default
+  const [activityType, setActivityType] = useState('Public Spot');
+  const [priceValue, setPriceValue] = useState('');
+  const [priceUnit, setPriceUnit] = useState('$');
+  const [datetimeStart, setDatetimeStart] = useState('');
+  const [datetimeFinish, setDatetimeFinish] = useState('');
+  const [locationCountry, setLocationCountry] = useState('Brazil');
+  const [locationArea, setLocationArea] = useState('');
+  const [locationCity, setLocationCity] = useState('');
+  const [locationSmartLocation, setLocationSmartLocation] = useState('');
+  const [coordinatesLatitude, setCoordinatesLatitude] = useState('0.0');
+  const [coordinatesLongitude, setCoordinatesLongitude] = useState('0.0');
+  const [sport, setSport] = useState('soccer');
   const [image, setImage] = useState(null);
 
   const onCaptureImage = async () => {
@@ -43,32 +44,76 @@ const CreateActivity = () => {
   const onSubmit = async () => {
     try {
       const data = {
-        title,
-        description,
-        activityType,
-        price: parseFloat(price.replace('R$', '').trim()),
-        dateTime,
-        location,
-        sport,
-        image, // Send image as base64
+        id: Date.now().toString(), // Generate a unique ID for testing; replace with appropriate logic
+        enabled: true,
+        name: title,
+        description: description,
+        activity_type: activityType,
+        sport_type: sport,
+        price: {
+          value: parseFloat(priceValue.replace(/[^0-9.]/g, '')),
+          unit: priceUnit,
+        },
+        location: {
+          country: locationCountry,
+          area: locationArea,
+          city: locationCity,
+          smart_location: locationSmartLocation,
+          geometry: {
+            type: 'Point',
+            coordinates: {
+              latitude: coordinatesLatitude,
+              longitude: coordinatesLongitude,
+            },
+          },
+        },
+        participants: {
+          current: 0, // Default values for testing
+          max: 0,
+        },
+        reviews: {
+          number_of_reviews: 0, // Default values for testing
+          review_scores_rating: 0,
+        },
+        pictures: [image],
+        host: {
+          host_picture_url: image,
+          host_name: 'Test Host', // Default values for testing
+          host_since: '2024-01-01',
+        },
+        datetimes: {
+          datetime_created: datetimeStart,
+          datetime_deleted: null,
+          datetime_start: datetimeStart,
+          datetime_finish: datetimeFinish,
+        },
       };
 
-      const response = await api.post('/activities', data); // Replace `/activities` with your actual endpoint
-
-      if (response.ok) {
+      const result = await createActivity({ activity: data });
+      if (result) {
         // Handle success (e.g., show a success message, navigate back)
-        console.log('Activity created successfully:', response.data);
+        console.log('Activity created successfully:', result);
       } else {
         // Handle error (e.g., show an error message)
-        console.error('Failed to create activity:', response.problem);
+        console.error('Failed to create activity:', result);
       }
     } catch (error) {
       console.error('Error while creating activity:', error);
     }
   };
 
+  const renderTitle = (labelKey) => (
+    <Text style={styles.label}>{translate(`create_activity_screen.${labelKey}`)}</Text>
+  );
+
   return (
     <Screen preset="scroll" contentContainerStyle={styles.container} safeAreaEdges={['top']}>
+      <Button
+        title={translate('create_activity_screen.create')}
+        onPress={onSubmit}
+        color={Colors.dark}
+      />
+
       <Text style={styles.header}>{translate('create_activity_screen.title')}</Text>
 
       <TouchableOpacity style={styles.imageUpload} onPress={onCaptureImage}>
@@ -80,7 +125,7 @@ const CreateActivity = () => {
       </TouchableOpacity>
 
       {/* Title */}
-      <Text>{translate('create_activity_screen.label_title')}</Text>
+      {renderTitle('label_title')}
       <TextInput
         placeholder={translate('create_activity_screen.placeholder_title')}
         style={styles.input}
@@ -89,7 +134,7 @@ const CreateActivity = () => {
       />
 
       {/* Description */}
-      <Text>{translate('create_activity_screen.label_description')}</Text>
+      {renderTitle('label_description')}
       <TextInput
         placeholder={translate('create_activity_screen.placeholder_description')}
         style={styles.input}
@@ -97,50 +142,106 @@ const CreateActivity = () => {
         onChangeText={setDescription}
       />
 
-      {/* Activity Type Combobox */}
-      <Text>{translate('create_activity_screen.label_activity_type')}</Text>
+      {/* Activity Type */}
+      {renderTitle('label_activity_type')}
       <View style={styles.pickerContainer}>
         <Picker
           selectedValue={activityType}
           onValueChange={(itemValue) => setActivityType(itemValue)}
           style={styles.picker}
         >
-          <Picker.Item label="Spot" value="spot" />
-          <Picker.Item label="Session" value="session" />
-          <Picker.Item label="Event" value="event" />
+          <Picker.Item label="Public Spot" value="Public Spot" />
+          <Picker.Item label="Session" value="Session" />
+          <Picker.Item label="Event" value="Event" />
         </Picker>
       </View>
 
-      {/* Price with R$ */}
-      <Text>{translate('create_activity_screen.label_price')}</Text>
-      <TextInput
-        placeholder="R$ 0,00"
-        style={styles.input}
-        keyboardType="numeric"
-        value={price}
-        onChangeText={(text) => setPrice(`R$ ${text.replace(/\D/g, '')}`)} // Allow only numbers
-      />
+      {/* Price */}
+      {renderTitle('label_price')}
+      <View style={styles.pickerContainer}>
+        <TextInput
+          placeholder="0"
+          style={styles.input}
+          keyboardType="numeric"
+          value={priceValue}
+          onChangeText={(text) => setPriceValue(text.replace(/[^0-9.]/g, ''))}
+        />
+        <Picker
+          selectedValue={priceUnit}
+          onValueChange={(itemValue) => setPriceUnit(itemValue)}
+          style={styles.picker}
+        >
+          <Picker.Item label="$" value="$" />
+          <Picker.Item label="€" value="€" />
+          <Picker.Item label="R$" value="R$" />
+        </Picker>
+      </View>
 
       {/* Date & Time */}
-      <Text>{translate('create_activity_screen.label_date_time')}</Text>
+      {renderTitle('label_date_time')}
       <TextInput
-        placeholder={translate('create_activity_screen.placeholder_date_time')}
+        placeholder={translate('create_activity_screen.placeholder_datetime_start')}
         style={styles.input}
-        value={dateTime}
-        onChangeText={setDateTime}
+        value={datetimeStart}
+        onChangeText={setDatetimeStart}
+      />
+      <TextInput
+        placeholder={translate('create_activity_screen.placeholder_datetime_finish')}
+        style={styles.input}
+        value={datetimeFinish}
+        onChangeText={setDatetimeFinish}
       />
 
       {/* Location */}
-      <Text>{translate('create_activity_screen.label_location')}</Text>
+      {renderTitle('label_location')}
       <TextInput
-        placeholder={translate('create_activity_screen.placeholder_location')}
+        placeholder={translate('create_activity_screen.placeholder_country')}
         style={styles.input}
-        value={location}
-        onChangeText={setLocation}
+        value={locationCountry}
+        onChangeText={setLocationCountry}
+      />
+      <TextInput
+        placeholder={translate('create_activity_screen.placeholder_area')}
+        style={styles.input}
+        value={locationArea}
+        onChangeText={setLocationArea}
+      />
+      <TextInput
+        placeholder={translate('create_activity_screen.placeholder_city')}
+        style={styles.input}
+        value={locationCity}
+        onChangeText={setLocationCity}
+      />
+      <TextInput
+        placeholder={translate('create_activity_screen.placeholder_smart_location')}
+        style={styles.input}
+        value={locationSmartLocation}
+        onChangeText={setLocationSmartLocation}
+      />
+      {renderTitle('label_coordinates')}
+      <TextInput
+        placeholder={translate('create_activity_screen.placeholder_latitude')}
+        style={styles.input}
+        keyboardType="numeric"
+        value={coordinatesLatitude}
+        onChangeText={(text) => {
+          const formattedText = text.replace(/[^0-9.]/g, '');
+          setCoordinatesLatitude(formattedText);
+        }}
+      />
+      <TextInput
+        placeholder={translate('create_activity_screen.placeholder_longitude')}
+        style={styles.input}
+        keyboardType="numeric"
+        value={coordinatesLongitude}
+        onChangeText={(text) => {
+          const formattedText = text.replace(/[^0-9.]/g, '');
+          setCoordinatesLongitude(formattedText);
+        }}
       />
 
-      {/* Sport Combobox */}
-      <Text>{translate('create_activity_screen.label_sport')}</Text>
+      {/* Sport */}
+      {renderTitle('label_sport')}
       <View style={styles.pickerContainer}>
         <Picker
           selectedValue={sport}
@@ -153,16 +254,6 @@ const CreateActivity = () => {
           <Picker.Item label="Swimming" value="swimming" />
         </Picker>
       </View>
-
-      <Button
-        title={translate('create_activity_screen.create')}
-        onPress={onSubmit}
-        color={Colors.dark}
-      />
-
-      {isSignedIn && (
-        <Button title={translate('common.logout')} onPress={() => signOut()} color={Colors.dark} />
-      )}
     </Screen>
   );
 };

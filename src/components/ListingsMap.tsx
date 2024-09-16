@@ -19,8 +19,8 @@ const INITIAL_REGION = {
   longitudeDelta: 9,
 };
 
-const onMarkerSelected = (event: any) => {
-  router.push(`/listing/${event.id}`);
+const onMarkerSelected = (activity: Listing) => {
+  router.push(`/listing/${activity.id}`);
 };
 
 const ListingsMap = memo(({ listings }: Props) => {

@@ -103,7 +103,9 @@ const CreateActivity = () => {
   };
 
   const renderTitle = (labelKey) => (
-    <Text style={styles.label}>{translate(`create_activity_screen.${labelKey}`)}</Text>
+    <Text style={{ paddingLeft: spacing.xs }}>
+      {translate(`create_activity_screen.${labelKey}`)}
+    </Text>
   );
 
   return (
@@ -262,7 +264,6 @@ const styles = StyleSheet.create({
   container: {
     padding: spacing.lg,
     justifyContent: 'center',
-    alignItems: 'center',
   },
   header: {
     fontSize: 24,

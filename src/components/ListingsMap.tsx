@@ -20,7 +20,7 @@ const INITIAL_REGION = {
 };
 
 const onMarkerSelected = (event: any) => {
-  router.push(`/listing/${event.properties.id}`);
+  router.push(`/listing/${event.id}`);
 };
 
 const ListingsMap = memo(({ listings }: Props) => {

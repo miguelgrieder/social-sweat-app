@@ -8,6 +8,7 @@ import { Screen } from 'src/components/Screen';
 import { spacing } from '@/constants/spacing';
 import Colors from '@/constants/Colors';
 import { createActivity } from '@/api/create_activity';
+import MapView, { Marker } from 'react-native-maps'; // Import react-native-maps
 
 const CreateActivity = () => {
   const { signOut, isSignedIn } = useAuth();
@@ -27,6 +28,13 @@ const CreateActivity = () => {
   const [sport, setSport] = useState('soccer');
   const [image, setImage] = useState(null);
 
+  // State to store the selected coordinates
+  const [coordinates, setCoordinates] = useState({
+    latitude: 37.78825,
+    longitude: -122.4324, // Default coordinates (San Francisco)
+  });
+
+  // Function to handle selecting an image from the gallery
   const onCaptureImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -41,6 +49,13 @@ const CreateActivity = () => {
     }
   };
 
+  // Handle map press to update coordinates
+  const handleMapPress = (event) => {
+    const { latitude, longitude } = event.nativeEvent.coordinate;
+    setCoordinates({ latitude, longitude });
+  };
+
+  // Submit the form data, including the selected coordinates from the map
   const onSubmit = async () => {
     try {
       const data = {
@@ -62,8 +77,8 @@ const CreateActivity = () => {
           geometry: {
             type: 'Point',
             coordinates: {
-              latitude: coordinatesLatitude,
-              longitude: coordinatesLongitude,
+              latitude: coordinates.latitude,
+              longitude: coordinates.longitude,
             },
           },
         },
@@ -220,29 +235,25 @@ const CreateActivity = () => {
         value={locationSmartLocation}
         onChangeText={setLocationSmartLocation}
       />
-      {renderTitle('label_coordinates')}
-      <TextInput
-        placeholder={translate('create_activity_screen.placeholder_latitude')}
-        style={styles.input}
-        keyboardType="numeric"
-        value={coordinatesLatitude}
-        onChangeText={(text) => {
-          const formattedText = text.replace(/[^0-9.]/g, '');
-          setCoordinatesLatitude(formattedText);
+      {renderTitle('label_map')}
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          latitude: coordinates.latitude,
+          longitude: coordinates.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
         }}
-      />
-      <TextInput
-        placeholder={translate('create_activity_screen.placeholder_longitude')}
-        style={styles.input}
-        keyboardType="numeric"
-        value={coordinatesLongitude}
-        onChangeText={(text) => {
-          const formattedText = text.replace(/[^0-9.]/g, '');
-          setCoordinatesLongitude(formattedText);
-        }}
-      />
+        onPress={handleMapPress}
+      >
+        <Marker coordinate={coordinates} />
+      </MapView>
 
-      {/* Sport */}
+      <Text style={styles.coordinatesText}>
+        {translate('create_activity_screen.selected_coordinates')}: {coordinates.latitude},{' '}
+        {coordinates.longitude}
+      </Text>
+
       {renderTitle('label_sport')}
       <View style={styles.pickerContainer}>
         <Picker
@@ -300,6 +311,15 @@ const styles = StyleSheet.create({
   picker: {
     height: 50,
     width: '100%',
+  },
+  map: {
+    width: '100%',
+    height: 300,
+    marginBottom: spacing.md,
+  },
+  coordinatesText: {
+    textAlign: 'center',
+    marginBottom: spacing.md,
   },
 });
 

@@ -98,8 +98,8 @@
     "placeholder_city": "Enter the city",
     "placeholder_smart_location": "Enter the detailed location",
     "label_coordinates": "Coordinates",
-    "placeholder_latitude": "Enter latitude",
-    "placeholder_longitude": "Enter longitude",
+    "label_map": "Select the location",
+    "selected_coordinates": "Selected coordinates",
     "label_sport": "Sport",
     "create": "Create Activity"
   }

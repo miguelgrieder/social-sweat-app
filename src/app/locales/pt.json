@@ -92,8 +92,8 @@
     "placeholder_city": "Insira a cidade",
     "placeholder_smart_location": "Insira o local detalhado",
     "label_coordinates": "Coordenadas",
-    "placeholder_latitude": "Insira a latitude",
-    "placeholder_longitude": "Insira a longitude",
+    "label_map": "Selecione o Local",
+    "selected_coordinates": "Coordenadas selecionadas",
     "label_sport": "Esporte",
     "create": "Criar Atividade"
   }

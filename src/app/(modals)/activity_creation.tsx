@@ -1,14 +1,26 @@
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  Image,
+  Alert,
+} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { useAuth } from '@clerk/clerk-expo';
-import { translate } from '@/app/services/translate';
+import MapView, { Marker } from 'react-native-maps';
 import * as ImagePicker from 'expo-image-picker';
+import Geocoder from 'react-native-geocoding'; // Import Geocoding library
 import { Screen } from 'src/components/Screen';
 import { spacing } from '@/constants/spacing';
 import Colors from '@/constants/Colors';
 import { createActivity } from '@/api/create_activity';
-import MapView, { Marker } from 'react-native-maps'; // Import react-native-maps
+import { useAuth } from '@clerk/clerk-expo';
+import { translate } from '@/app/services/translate';
+
+Geocoder.init(process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY); // Replace with your Google API key
 
 const CreateActivity = () => {
   const { signOut, isSignedIn } = useAuth();
@@ -20,11 +32,8 @@ const CreateActivity = () => {
   const [datetimeStart, setDatetimeStart] = useState('');
   const [datetimeFinish, setDatetimeFinish] = useState('');
   const [locationCountry, setLocationCountry] = useState('Brazil');
-  const [locationArea, setLocationArea] = useState('');
   const [locationCity, setLocationCity] = useState('');
   const [locationSmartLocation, setLocationSmartLocation] = useState('');
-  const [coordinatesLatitude, setCoordinatesLatitude] = useState('0.0');
-  const [coordinatesLongitude, setCoordinatesLongitude] = useState('0.0');
   const [sport, setSport] = useState('soccer');
   const [image, setImage] = useState(null);
 
@@ -49,10 +58,39 @@ const CreateActivity = () => {
     }
   };
 
-  // Handle map press to update coordinates
-  const handleMapPress = (event) => {
-    const { latitude, longitude } = event.nativeEvent.coordinate;
+  // Function to handle the map press and update the coordinates and location information
+  const handleMapPress = async (e) => {
+    const { latitude, longitude } = e.nativeEvent.coordinate;
     setCoordinates({ latitude, longitude });
+
+    try {
+      // Reverse geocode to get the address (city, country, etc.)
+      const response = await Geocoder.from(latitude, longitude);
+
+      // Log the full response to check its structure
+      console.log('Geocoder response:', response);
+
+      // Check if the results exist and it's an array before accessing it
+      if (response.results && response.results.length > 0) {
+        const addressComponents = response.results[0].address_components;
+
+        // Extract city, country, and place name (smart location)
+        const city = addressComponents.find((c) => c.types.includes('locality'))?.long_name || '';
+        const country = addressComponents.find((c) => c.types.includes('country'))?.long_name || '';
+        const smartLocation = response.results[0].formatted_address || '';
+
+        // Update the state with the fetched values
+        setLocationCity(city);
+        setLocationCountry(country);
+        setLocationSmartLocation(smartLocation);
+      } else {
+        console.warn('No results found for reverse geocoding.');
+        Alert.alert('Error', 'No location details found.');
+      }
+    } catch (error) {
+      console.error('Error while reverse geocoding:', error);
+      Alert.alert('Error', 'Unable to get location details.');
+    }
   };
 
   // Submit the form data, including the selected coordinates from the map
@@ -71,7 +109,7 @@ const CreateActivity = () => {
         },
         location: {
           country: locationCountry,
-          area: locationArea,
+          area: '',
           city: locationCity,
           smart_location: locationSmartLocation,
           geometry: {
@@ -117,6 +155,7 @@ const CreateActivity = () => {
     }
   };
 
+  // Function to render titles for input sections
   const renderTitle = (labelKey) => (
     <Text style={{ paddingLeft: spacing.xs }}>
       {translate(`create_activity_screen.${labelKey}`)}
@@ -210,31 +249,6 @@ const CreateActivity = () => {
       />
 
       {/* Location */}
-      {renderTitle('label_location')}
-      <TextInput
-        placeholder={translate('create_activity_screen.placeholder_country')}
-        style={styles.input}
-        value={locationCountry}
-        onChangeText={setLocationCountry}
-      />
-      <TextInput
-        placeholder={translate('create_activity_screen.placeholder_area')}
-        style={styles.input}
-        value={locationArea}
-        onChangeText={setLocationArea}
-      />
-      <TextInput
-        placeholder={translate('create_activity_screen.placeholder_city')}
-        style={styles.input}
-        value={locationCity}
-        onChangeText={setLocationCity}
-      />
-      <TextInput
-        placeholder={translate('create_activity_screen.placeholder_smart_location')}
-        style={styles.input}
-        value={locationSmartLocation}
-        onChangeText={setLocationSmartLocation}
-      />
       {renderTitle('label_map')}
       <MapView
         style={styles.map}
@@ -253,7 +267,25 @@ const CreateActivity = () => {
         {translate('create_activity_screen.selected_coordinates')}: {coordinates.latitude},{' '}
         {coordinates.longitude}
       </Text>
-
+      {renderTitle('label_location')}
+      <TextInput
+        placeholder={translate('create_activity_screen.placeholder_country')}
+        style={styles.input}
+        value={locationCountry}
+        onChangeText={setLocationCountry}
+      />
+      <TextInput
+        placeholder={translate('create_activity_screen.placeholder_city')}
+        style={styles.input}
+        value={locationCity}
+        onChangeText={setLocationCity}
+      />
+      <TextInput
+        placeholder={translate('create_activity_screen.placeholder_smart_location')}
+        style={styles.input}
+        value={locationSmartLocation}
+        onChangeText={setLocationSmartLocation}
+      />
       {renderTitle('label_sport')}
       <View style={styles.pickerContainer}>
         <Picker

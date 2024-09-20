@@ -74,6 +74,11 @@
     "tennis": "Tennis",
     "golf": "Golf"
   },
+  "activity_types": {
+    "public_spot": "public spot",
+    "session": "session",
+    "event": "event"
+  },
   "activity_screen": {
     "hosted_by": "Hosted by",
     "reviews": "Reviews",

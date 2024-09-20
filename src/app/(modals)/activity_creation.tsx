@@ -20,6 +20,7 @@ import { createActivity } from '@/api/create_activity';
 import { useAuth } from '@clerk/clerk-expo';
 import { translate } from '@/app/services/translate';
 import { capitalize } from '@/utils/utils';
+import { defaultStyles } from '@/constants/Styles';
 
 Geocoder.init(process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY); // Replace with your Google API key
 
@@ -158,26 +159,19 @@ const CreateActivity = () => {
 
   // Function to render titles for input sections
   const renderTitle = (labelKey) => (
-    <Text style={{ paddingLeft: spacing.xs }}>
+    <Text style={{ paddingLeft: spacing.xs, paddingBottom: spacing.xs, fontSize: spacing.md }}>
       {translate(`create_activity_screen.${labelKey}`)}
     </Text>
   );
 
   return (
     <Screen preset="scroll" contentContainerStyle={styles.container} safeAreaEdges={['top']}>
-      <Button
-        title={translate('create_activity_screen.create')}
-        onPress={onSubmit}
-        color={Colors.dark}
-      />
-
-      <Text style={styles.header}>{translate('create_activity_screen.title')}</Text>
-
+      {/* Image selection*/}
       <TouchableOpacity style={styles.imageUpload} onPress={onCaptureImage}>
         {image ? (
           <Image source={{ uri: image }} style={styles.uploadedImage} />
         ) : (
-          <Text>{translate('create_activity_screen.upload_photo')}</Text>
+          <Text style={styles.insertImageText}>{translate('create_activity_screen.upload_photo')}</Text>
         )}
       </TouchableOpacity>
 
@@ -207,9 +201,15 @@ const CreateActivity = () => {
           onValueChange={(itemValue) => setActivityType(itemValue)}
           style={styles.picker}
         >
-          <Picker.Item label="Public Spot" value="Public Spot" />
-          <Picker.Item label="Session" value="Session" />
-          <Picker.Item label="Event" value="Event" />
+          <Picker.Item
+            label={`${capitalize(translate('activity_types.public_spot'))}`}
+            value="Public Spot"
+          />
+          <Picker.Item
+            label={`${capitalize(translate('activity_types.session'))}`}
+            value="Session"
+          />
+          <Picker.Item label={`${capitalize(translate('activity_types.event'))}`} value="Event" />
         </Picker>
       </View>
 
@@ -221,10 +221,10 @@ const CreateActivity = () => {
           onValueChange={(itemValue) => setSport(itemValue)}
           style={styles.picker}
         >
-          <Picker.Item label="Soccer" value="soccer" />
-          <Picker.Item label="Basketball" value="basketball" />
-          <Picker.Item label="Tennis" value="tennis" />
-          <Picker.Item label="Swimming" value="swimming" />
+          <Picker.Item label={`${translate('activity_sports.soccer')}`} value="soccer" />
+          <Picker.Item label={`${translate('activity_sports.baseball')}`} value="basketball" />
+          <Picker.Item label={`${translate('activity_sports.basketball')}`} value="tennis" />
+          <Picker.Item label={`${translate('activity_sports.football')}`} value="swimming" />
         </Picker>
       </View>
 
@@ -302,19 +302,20 @@ const CreateActivity = () => {
         value={locationSmartLocation}
         onChangeText={setLocationSmartLocation}
       />
+
+      {/* Create activity button */}
+      <TouchableOpacity onPress={onSubmit} style={defaultStyles.btn}>
+        <Text style={defaultStyles.btnText}>{translate('create_activity_screen.create')}</Text>
+      </TouchableOpacity>
     </Screen>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#fff',
     padding: spacing.lg,
     justifyContent: 'center',
-  },
-  header: {
-    fontSize: 24,
-    fontFamily: 'mon-b',
-    marginBottom: spacing.lg,
   },
   input: {
     borderWidth: 1,
@@ -327,14 +328,21 @@ const styles = StyleSheet.create({
   imageUpload: {
     width: '100%',
     height: 200,
-    backgroundColor: Colors.grey,
+    backgroundColor: Colors.primary_light,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: spacing.md,
+    borderRadius: spacing.sm,
   },
   uploadedImage: {
     width: '100%',
     height: '100%',
+  },
+  insertImageText: {
+    color: Colors.grey,
+    fontSize: 16,
+    fontFamily: 'mon',
+    paddingTop: spacing.xl,
   },
   pickerContainer: {
     borderWidth: 1,

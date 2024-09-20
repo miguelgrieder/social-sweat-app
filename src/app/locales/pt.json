@@ -69,6 +69,11 @@
     "tennis": "Tênis",
     "golf": "Golfe"
   },
+  "activity_types": {
+    "public_spot": "local público",
+    "session": "sessão",
+    "event": "evento"
+  },
   "activity_screen": {
     "hosted_by": "Organizado por",
     "reviews": "Avaliações",

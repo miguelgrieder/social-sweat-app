@@ -12,7 +12,8 @@ const Page = () => {
   const [category, setCategory] = useState<string>('Trending');
   const [items, setItems] = useState<any[]>([]);
 
-  useFocusEffect( // Always load activities when enter the page
+  useFocusEffect(
+    // Always load activities when enter the page
     useCallback(() => {
       const getData = async () => {
         const filterBody = {

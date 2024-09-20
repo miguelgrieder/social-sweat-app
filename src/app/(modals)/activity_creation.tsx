@@ -19,6 +19,7 @@ import Colors from '@/constants/Colors';
 import { createActivity } from '@/api/create_activity';
 import { useAuth } from '@clerk/clerk-expo';
 import { translate } from '@/app/services/translate';
+import { capitalize } from '@/utils/utils';
 
 Geocoder.init(process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY); // Replace with your Google API key
 
@@ -212,6 +213,21 @@ const CreateActivity = () => {
         </Picker>
       </View>
 
+      {/* Sport Type */}
+      {renderTitle('label_sport')}
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={sport}
+          onValueChange={(itemValue) => setSport(itemValue)}
+          style={styles.picker}
+        >
+          <Picker.Item label="Soccer" value="soccer" />
+          <Picker.Item label="Basketball" value="basketball" />
+          <Picker.Item label="Tennis" value="tennis" />
+          <Picker.Item label="Swimming" value="swimming" />
+        </Picker>
+      </View>
+
       {/* Price */}
       {renderTitle('label_price')}
       <View style={styles.pickerContainer}>
@@ -227,9 +243,9 @@ const CreateActivity = () => {
           onValueChange={(itemValue) => setPriceUnit(itemValue)}
           style={styles.picker}
         >
-          <Picker.Item label="$" value="$" />
-          <Picker.Item label="€" value="€" />
-          <Picker.Item label="R$" value="R$" />
+          <Picker.Item label={`$ - ${capitalize(translate('common.dollar'))}`} value="$" />
+          <Picker.Item label={`€ - ${capitalize(translate('common.euro'))}`} value="€" />
+          <Picker.Item label={`R$ - ${capitalize(translate('common.real'))}`} value="R$" />
         </Picker>
       </View>
 
@@ -286,19 +302,6 @@ const CreateActivity = () => {
         value={locationSmartLocation}
         onChangeText={setLocationSmartLocation}
       />
-      {renderTitle('label_sport')}
-      <View style={styles.pickerContainer}>
-        <Picker
-          selectedValue={sport}
-          onValueChange={(itemValue) => setSport(itemValue)}
-          style={styles.picker}
-        >
-          <Picker.Item label="Soccer" value="soccer" />
-          <Picker.Item label="Basketball" value="basketball" />
-          <Picker.Item label="Tennis" value="tennis" />
-          <Picker.Item label="Swimming" value="swimming" />
-        </Picker>
-      </View>
     </Screen>
   );
 };

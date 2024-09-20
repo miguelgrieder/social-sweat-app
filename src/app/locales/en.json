@@ -19,7 +19,10 @@
     "logout": "Log Out",
     "continue": "Continue",
     "or": "or",
-    "in": "in"
+    "in": "in",
+    "dollar": "dollar",
+    "euro": "euro",
+    "real": "real"
   },
   "profile_screen": {
     "header": "Profile",

@@ -19,7 +19,10 @@
     "logout": "Sair",
     "continue": "Continuar",
     "or": "ou",
-    "in": "em"
+    "in": "em",
+    "dollar": "dolar",
+    "euro": "euro",
+    "real": "real"
   },
   "profile_screen": {
     "header": "Perfil",

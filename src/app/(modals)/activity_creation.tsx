@@ -1,14 +1,5 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  Image,
-  Alert,
-} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import MapView, { Marker } from 'react-native-maps';
 import * as ImagePicker from 'expo-image-picker';
@@ -21,10 +12,16 @@ import { useAuth } from '@clerk/clerk-expo';
 import { translate } from '@/app/services/translate';
 import { capitalize } from '@/utils/utils';
 import { defaultStyles } from '@/constants/Styles';
+import { useNavigation } from 'expo-router';
 
 Geocoder.init(process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY); // Replace with your Google API key
 
 const CreateActivity = () => {
+  const navigation = useNavigation();
+  useEffect(() => {
+    navigation.setOptions({ title: translate('create_activity_screen.title') });
+  }, [navigation]);
+
   const { signOut, isSignedIn } = useAuth();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -171,7 +168,9 @@ const CreateActivity = () => {
         {image ? (
           <Image source={{ uri: image }} style={styles.uploadedImage} />
         ) : (
-          <Text style={styles.insertImageText}>{translate('create_activity_screen.upload_photo')}</Text>
+          <Text style={styles.insertImageText}>
+            {translate('create_activity_screen.upload_photo')}
+          </Text>
         )}
       </TouchableOpacity>
 
@@ -314,7 +313,7 @@ const CreateActivity = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-    padding: spacing.lg,
+    padding: spacing.md,
     justifyContent: 'center',
   },
   input: {

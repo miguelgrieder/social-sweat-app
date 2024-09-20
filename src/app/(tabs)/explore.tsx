@@ -32,7 +32,7 @@ const Page = () => {
   };
 
   return (
-    <Screen preset="scroll" contentContainerStyle={{ flex: 1 }} safeAreaEdges={['top']}>
+    <Screen preset="fixed" contentContainerStyle={{ flex: 1 }} safeAreaEdges={['top']}>
       <Stack.Screen
         options={{
           header: () => <ExploreHeader onCategoryChanged={onDataChanged} />,

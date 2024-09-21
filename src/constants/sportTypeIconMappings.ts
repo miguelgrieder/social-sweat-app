@@ -14,7 +14,7 @@ export const sportTypeIconMappings: { [key in SportType]: string } = {
   [SportType.Handball]: 'handball',
   [SportType.Hockey]: 'hockey-puck',
   [SportType.Ski]: 'ski',
-  [SportType.SkiWater]: 'water-ski',
+  [SportType.SkiWater]: 'ski-water',
   [SportType.Baseball]: 'baseball',
   [SportType.Skateboard]: 'skateboarding',
   [SportType.Esports]: 'gamepad-variant-outline',

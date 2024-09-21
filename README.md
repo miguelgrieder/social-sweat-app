@@ -1,22 +1,33 @@
-# rental-map
+# Social Sweat App
 
+Project and case guide:
 
-Tutorial: https://www.youtube.com/watch?v=iWzUZiVoiR0
-
-Packages
-npm install @clerk/clerk-expo
-npx expo install react-native-modern-datepicker
-npx expo install expo-blur
-npx expo install react-native-maps
-npx expo install react-native-gesture-handler
-npm i @gorhom/bottom-sheet@^4
-npx expo install expo-image-picker
-npx expo install expo-haptics
-npm install expo-router@~3.5.20
-npx expo install react-native-map-clustering
-npx expo install expo-secure-store
-
-
-npx expo install expo-auth-session expo-crypto
-npx expo install expo-web-browser
-intl-pluralrules
+```
+.
+├── assets                   # Static assets like data, fonts, images
+├── src                      # Source code for the application
+│   ├── api                  # API functions and services - camelCase
+│   ├── app                  # Main application logic and screens - kebab-case
+│   │   ├── (modals)         # Screens opened as modals
+│   │   ├── (tabs)           # Tab navigation screens
+│   │   ├── activity         # Screens related to activities
+│   │   ├── locales          # JSON translation files for i18n
+│   │   └── services         # Application-wide services like i18n
+│   ├── components           # Reusable UI components - PascalCase
+│   ├── constants            # Global constants for styling and settings - PascalCase and camelCase
+│   ├── hooks                # Custom React hooks - camelCase
+│   ├── interfaces           # TypeScript interfaces and data models - kebab-case
+│   └── utils                # General utility functions and helpers - camelCase
+├── .env.example             # Environment variables configuration example file
+├── .gitignore               # Git ignore rules
+├── .prettierignore          # Prettier ignore rules
+├── .prettierrc.json         # Prettier configuration file
+├── app.json                 # App configuration for Expo
+├── babel.config.js          # Babel configuration file
+├── eslint.config.js         # ESLint configuration file
+├── expo-env.d.ts            # TypeScript declarations for Expo environment variables
+├── package.json             # NPM package configuration and dependencies
+├── package-lock.json        # Lock file for package versions
+├── README.md                # Project documentation
+└── tsconfig.json            # TypeScript compiler configuration
+```

@@ -9,7 +9,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { spacing } from '@/constants/spacing';
 
 interface Props {
-  listings: Activity[] | null;
+  activities: Activity[] | null;
 }
 
 const INITIAL_REGION = {
@@ -23,7 +23,7 @@ const onMarkerSelected = (activity: Activity) => {
   router.push(`/activity/${activity.id}`);
 };
 
-const ActivitiesMap = memo(({ listings }: Props) => {
+const ActivitiesMap = memo(({ activities }: Props) => {
   const renderCluster = (cluster: any) => {
     const { id, geometry, onPress, properties } = cluster;
 
@@ -52,12 +52,12 @@ const ActivitiesMap = memo(({ listings }: Props) => {
     );
   };
 
-  if (!listings) {
-    console.log('No listings for Map:', listings);
-  } else if (listings.length === 0) {
-    console.log('No listings available:', listings);
+  if (!activities) {
+    console.log('No activities for Map:', activities);
+  } else if (activities.length === 0) {
+    console.log('No activities available:', activities);
   } else {
-    console.log('Activities loaded for the map:', listings.length);
+    console.log('Activities loaded for the map:', activities.length);
   }
 
   return (
@@ -73,7 +73,7 @@ const ActivitiesMap = memo(({ listings }: Props) => {
         clusterFontFamily="mon-sb"
         renderCluster={renderCluster}
       >
-        {listings?.map((item: Activity) => (
+        {activities?.map((item: Activity) => (
           <Marker
             coordinate={{
               latitude: +item.location.geometry.coordinates.longitude,

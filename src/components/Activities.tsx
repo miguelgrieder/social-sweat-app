@@ -10,11 +10,11 @@ import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 
 interface Props {
-  listings: any[];
+  activities: any[];
   category: string;
   refresh: number;
 }
-const Activities = ({ listings: items, category, refresh }: Props) => {
+const Activities = ({ activities: items, category, refresh }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const listRef = useRef<BottomSheetFlatListMethods>(null);
 
@@ -36,7 +36,7 @@ const Activities = ({ listings: items, category, refresh }: Props) => {
   const renderRow: ListRenderItem<Activity> = ({ item }) => (
     <Link href={`/activity/${item.id}`} asChild>
       <TouchableOpacity>
-        <Animated.View style={styles.listing} entering={FadeInRight} exiting={FadeOutLeft}>
+        <Animated.View style={styles.activity} entering={FadeInRight} exiting={FadeOutLeft}>
           <Animated.Image source={{ uri: item.pictures[0] }} style={styles.image} />
           <TouchableOpacity style={{ position: 'absolute', right: 30, top: 30 }}>
             <Ionicons name="heart-outline" size={24} color="#000" />
@@ -54,7 +54,7 @@ const Activities = ({ listings: items, category, refresh }: Props) => {
             <Text style={{ fontFamily: 'mon-sb' }}>
               {item.price.unit} {item.price.value}
             </Text>
-            <Text style={{ fontFamily: 'mon' }}>{translate('listings.registration')}</Text>
+            <Text style={{ fontFamily: 'mon' }}>{translate('activities.registration')}</Text>
           </View>
         </Animated.View>
       </TouchableOpacity>
@@ -68,7 +68,7 @@ const Activities = ({ listings: items, category, refresh }: Props) => {
         data={loading ? [] : items}
         ListHeaderComponent={
           <Text style={styles.info}>
-            {items.length} {translate('listings.activities')}
+            {items.length} {translate('activities.activities')}
           </Text>
         }
       />
@@ -77,7 +77,7 @@ const Activities = ({ listings: items, category, refresh }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  listing: {
+  activity: {
     padding: spacing.md,
     gap: 10,
   },

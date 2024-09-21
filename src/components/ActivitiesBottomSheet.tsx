@@ -9,11 +9,11 @@ import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 
 interface Props {
-  listings: Activity[];
+  activities: Activity[];
   category: string;
 }
 
-const ActivitiesBottomSheet = ({ listings, category }: Props) => {
+const ActivitiesBottomSheet = ({ activities, category }: Props) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [refresh, setRefresh] = useState<number>(0);
 
@@ -34,7 +34,7 @@ const ActivitiesBottomSheet = ({ listings, category }: Props) => {
       style={styles.sheetContainer}
     >
       <View style={styles.contentContainer}>
-        <Activities listings={listings} category={category} refresh={refresh} />
+        <Activities activities={activities} category={category} refresh={refresh} />
         <View style={styles.absoluteView}>
           <TouchableOpacity style={styles.btn} onPress={onShowMap}>
             <Text style={{ fontFamily: 'mon-sb', color: '#fff' }}>

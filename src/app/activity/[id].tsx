@@ -67,14 +67,14 @@ const dummy_listing = {
 
 const Page = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const [listing, setListing] = useState<Activity>(dummy_listing);
+  const [activity, setActivity] = useState<Activity>(dummy_listing);
   useEffect(() => {
     const getData = async () => {
       const filterBody = {
         activity_id: id,
       };
       const activities = await fetchActivities(filterBody);
-      setListing(activities[0]);
+      setActivity(activities[0]);
     };
     getData();
   }, []);
@@ -82,12 +82,12 @@ const Page = () => {
   const navigation = useNavigation();
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
 
-  const shareListing = async () => {
+  const shareActivity = async () => {
     // Share functionality of header share button
     try {
       await Share.share({
-        title: listing.name,
-        url: listing.pictures[0],
+        title: activity.name,
+        url: activity.pictures[0],
       });
     } catch (err) {
       console.log(err);
@@ -104,7 +104,7 @@ const Page = () => {
       ), // Header opacity effect
       headerRight: () => (
         <View style={styles.bar}>
-          <TouchableOpacity style={styles.roundButton} onPress={shareListing}>
+          <TouchableOpacity style={styles.roundButton} onPress={shareActivity}>
             <Ionicons name="share-outline" size={22} color={'#000'} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.roundButton}>
@@ -152,42 +152,42 @@ const Page = () => {
         scrollEventThrottle={16}
       >
         <Animated.Image
-          source={{ uri: listing.pictures[0] }}
+          source={{ uri: activity.pictures[0] }}
           style={[styles.image, imageAnimatedStyle]}
           resizeMode="cover"
         />
 
         <View style={styles.infoContainer}>
-          <Text style={styles.name}>{listing.name}</Text>
+          <Text style={styles.name}>{activity.name}</Text>
           <Text style={styles.location}>
-            {listing.activity_type} {translate('common.in')} {listing.location.smart_location}
+            {activity.activity_type} {translate('common.in')} {activity.location.smart_location}
           </Text>
           <Text style={styles.information}>
-            {listing.participants.current} {translate('activity_screen.participants')}
+            {activity.participants.current} {translate('activity_screen.participants')}
           </Text>
           <View style={{ flexDirection: 'row', gap: 4 }}>
             <Ionicons name="star" size={16} />
             <Text style={styles.ratings}>
-              {listing.reviews.review_scores_rating / 20} · {listing.reviews.number_of_reviews}
+              {activity.reviews.review_scores_rating / 20} · {activity.reviews.number_of_reviews}
               {translate('activity_screen.reviews')}
             </Text>
           </View>
           <View style={styles.divider} />
 
           <View style={styles.hostView}>
-            <Image source={{ uri: listing.host.host_picture_url }} style={styles.host} />
+            <Image source={{ uri: activity.host.host_picture_url }} style={styles.host} />
 
             <View>
               <Text style={{ fontWeight: '500', fontSize: 16 }}>
-                {translate('activity_screen.hosted_by')} {listing.host.host_name}
+                {translate('activity_screen.hosted_by')} {activity.host.host_name}
               </Text>
-              <Text>Host since {listing.host.host_since}</Text>
+              <Text>Host since {activity.host.host_since}</Text>
             </View>
           </View>
 
           <View style={styles.divider} />
 
-          <Text style={styles.description}>{listing.description}</Text>
+          <Text style={styles.description}>{activity.description}</Text>
         </View>
       </Animated.ScrollView>
 
@@ -197,8 +197,8 @@ const Page = () => {
         >
           <TouchableOpacity style={styles.footerText}>
             <Text style={styles.footerPrice}>
-              {listing.price.unit}
-              {listing.price.value}
+              {activity.price.unit}
+              {activity.price.value}
             </Text>
             <Text>{translate('activity_screen.registration')}</Text>
           </TouchableOpacity>

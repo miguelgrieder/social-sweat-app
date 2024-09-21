@@ -39,8 +39,8 @@ const Page = () => {
         }}
       />
       <GestureHandlerRootView>
-        <ActivitiesMap listings={items} />
-        <ActivitiesBottomSheet listings={items} category={category} />
+        <ActivitiesMap activities={items} />
+        <ActivitiesBottomSheet activities={items} category={category} />
       </GestureHandlerRootView>
     </Screen>
   );

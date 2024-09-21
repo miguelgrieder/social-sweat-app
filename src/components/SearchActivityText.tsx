@@ -4,7 +4,7 @@ import Colors from '@/constants/Colors';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 
-const ModalHeaderText = () => {
+const SearchActivityText = () => {
   const [active, setActive] = useState(0);
 
   return (
@@ -37,4 +37,4 @@ const ModalHeaderText = () => {
   );
 };
 
-export default ModalHeaderText;
+export default SearchActivityText;

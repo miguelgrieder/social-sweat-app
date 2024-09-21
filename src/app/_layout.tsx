@@ -6,7 +6,7 @@ import * as SecureStore from 'expo-secure-store';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { TouchableOpacity } from 'react-native';
-import ModalHeaderText from '@/components/ModalHeaderText';
+import SearchActivityText from '@/components/SearchActivityText';
 import { translate } from '@/app/services/translate';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
@@ -96,7 +96,7 @@ function RootLayoutNav() {
           presentation: 'transparentModal',
           animation: 'fade',
           headerTransparent: true,
-          headerTitle: () => <ModalHeaderText />,
+          headerTitle: () => <SearchActivityText />,
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => router.back()}

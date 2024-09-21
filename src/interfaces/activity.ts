@@ -2,7 +2,7 @@ export interface Activity {
   id: string;
   name: string;
   description: string;
-  activity_type: string;
+  activity_type: ActivityType;
   sport_type: SportType;
   price: Price;
   location: Location;
@@ -38,6 +38,12 @@ export enum SportType {
 interface Price {
   value: number;
   unit: string;
+}
+
+export enum ActivityType {
+  Spot = 'spot',
+  Session = 'session',
+  Event = 'event',
 }
 
 interface Location {

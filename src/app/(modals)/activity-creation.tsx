@@ -13,6 +13,7 @@ import { translate } from '@/app/services/translate';
 import { capitalize } from '@/utils/utils';
 import { defaultStyles } from '@/constants/Styles';
 import { useNavigation } from 'expo-router';
+import { ActivityType, SportType } from '@/interfaces/activity';
 
 Geocoder.init(process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY);
 
@@ -201,14 +202,17 @@ const CreateActivity = () => {
           style={styles.picker}
         >
           <Picker.Item
-            label={`${capitalize(translate('activity_types.public_spot'))}`}
-            value="Public Spot"
+            label={`${capitalize(translate('activity_types.spot'))}`}
+            value={ActivityType.Spot}
           />
           <Picker.Item
             label={`${capitalize(translate('activity_types.session'))}`}
-            value="Session"
+            value={ActivityType.Session}
           />
-          <Picker.Item label={`${capitalize(translate('activity_types.event'))}`} value="Event" />
+          <Picker.Item
+            label={`${capitalize(translate('activity_types.event'))}`}
+            value={ActivityType.Event}
+          />
         </Picker>
       </View>
 
@@ -220,10 +224,19 @@ const CreateActivity = () => {
           onValueChange={(itemValue) => setSport(itemValue)}
           style={styles.picker}
         >
-          <Picker.Item label={`${translate('activity_sports.soccer')}`} value="soccer" />
-          <Picker.Item label={`${translate('activity_sports.baseball')}`} value="basketball" />
-          <Picker.Item label={`${translate('activity_sports.basketball')}`} value="tennis" />
-          <Picker.Item label={`${translate('activity_sports.football')}`} value="swimming" />
+          <Picker.Item label={`${translate('activity_sports.soccer')}`} value={SportType.Soccer} />
+          <Picker.Item
+            label={`${translate('activity_sports.baseball')}`}
+            value={SportType.Baseball}
+          />
+          <Picker.Item
+            label={`${translate('activity_sports.basketball')}`}
+            value={SportType.Basketball}
+          />
+          <Picker.Item
+            label={`${translate('activity_sports.motorsports')}`}
+            value={SportType.Swim}
+          />
         </Picker>
       </View>
 

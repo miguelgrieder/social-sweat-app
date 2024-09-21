@@ -12,7 +12,11 @@ export const fetchActivities = async (filterBody) => {
     if (response.ok && response.data) {
       return response.data.activities;
     } else {
-      console.error('Failed to fetch activities', response);
+      console.error('Failed to fetch activities. Response:', {
+        status: response.status,
+        problem: response.problem,
+        data: JSON.stringify(response.data, null, 2),
+      });
       return [];
     }
   } catch (error) {

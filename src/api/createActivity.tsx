@@ -12,7 +12,11 @@ export const createActivity = async (activityBody) => {
     if (response.ok && response.data) {
       return response.data;
     } else {
-      console.error('Failed to create activity', response);
+      console.error('Failed to create activity. Response:', {
+        status: response.status,
+        problem: response.problem,
+        data: JSON.stringify(response.data, null, 2),
+      });
       return null;
     }
   } catch (error) {

@@ -74,21 +74,9 @@ const Page = () => {
       </View>
 
       <View style={{ gap: 20 }}>
-        <TouchableOpacity style={styles.btnOutline} onPress={() => onSelectAuth(Strategy.Apple)}>
-          <Ionicons name="logo-apple" size={24} style={defaultStyles.btnIcon} />
-          <Text style={styles.btnOutlineText}>{translate('login_modal.continue_with')} Apple</Text>
-        </TouchableOpacity>
-
         <TouchableOpacity style={styles.btnOutline} onPress={() => onSelectAuth(Strategy.Google)}>
           <Ionicons name="logo-google" size={24} style={defaultStyles.btnIcon} />
           <Text style={styles.btnOutlineText}>{translate('login_modal.continue_with')} Google</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.btnOutline} onPress={() => onSelectAuth(Strategy.Facebook)}>
-          <Ionicons name="logo-facebook" size={24} style={defaultStyles.btnIcon} />
-          <Text style={styles.btnOutlineText}>
-            {translate('login_modal.continue_with')} Facebook
-          </Text>
         </TouchableOpacity>
       </View>
     </Screen>

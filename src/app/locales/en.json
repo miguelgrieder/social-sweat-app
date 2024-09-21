@@ -14,6 +14,8 @@
     "body": "Welcome to the inbox page"
   },
   "common": {
+    "cancel": "Cancel",
+    "apply": "Apply",
     "email": "Email",
     "login": "Log In",
     "logout": "Log Out",
@@ -30,6 +32,23 @@
   "login_modal": {
     "header": "Log in or sign up",
     "continue_with": "Continue with"
+  },
+  "role_selection": {
+    "header": "SocialSweat",
+    "subtitle": "Where Fitness Meets Community.",
+    "about_you": "Tell us about yourself",
+    "description": "Share a bit about yourself so we can tailor socialSweat to fit you perfectly. Whether it's your fitness interests, goals, or preferred activities, we're here to make your experience personal. Let's dive in!"
+  },
+  "photo-upload": {
+    "header": "Upload Photo Profile",
+    "description": "Here, you can personalize your profile with a picture that represents you. Simply select an image from your device, and we'll handle the rest. Make sure your photo reflects who you are, whether it's a selfie, a favorite snapshot, or an image that resonates with you. Let's make your profile uniquely yours!"
+  },
+  "birthdate-selection": {
+    "header": "Your birthdate",
+    "inputTitle": "Selected date",
+    "inputPlaceholder": "Choose date",
+    "selectBirthdate": "Select Birthdate",
+    "description": "Let's nail down your birthdate! Sharing this info helps us fine-tune your experience on our platform. Whether it's for personalized recommendations or celebrating your special day, we're here to make it all about you. Ready to share? Let's do this!"
   },
   "explorer_screen": {
     "explorer_header": {

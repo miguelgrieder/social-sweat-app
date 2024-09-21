@@ -32,7 +32,7 @@ const Home = () => {
       </View>
 
       {/* Activity Creation Button */}
-      <Link href={'/(modals)/activity_creation'} asChild>
+      <Link href={'/(modals)/activity-creation'} asChild>
         <TouchableOpacity style={defaultStyles.btn}>
           <Text style={defaultStyles.btnText}>{translate('create_activity_screen.title')}</Text>
         </TouchableOpacity>

@@ -7,6 +7,7 @@ import { router } from 'expo-router';
 import MapView from 'react-native-map-clustering';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { spacing } from '@/constants/spacing';
+import { sportTypeIconMappings } from '@/constants/sportTypeIconMappings';
 
 interface Props {
   activities: Activity[] | null;
@@ -83,7 +84,7 @@ const ActivitiesMap = memo(({ activities }: Props) => {
             onPress={() => onMarkerSelected(item)}
           >
             <View style={styles.marker}>
-              <MaterialCommunityIcons name={item.sport_type} size={20} />
+              <MaterialCommunityIcons name={sportTypeIconMappings[item.sport_type]} size={20} />
             </View>
           </Marker>
         ))}

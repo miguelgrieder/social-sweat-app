@@ -3,7 +3,7 @@ export interface Activity {
   name: string;
   description: string;
   activity_type: string;
-  sport_type: string;
+  sport_type: SportType;
   price: Price;
   location: Location;
   participants: Participants;
@@ -11,6 +11,28 @@ export interface Activity {
   pictures: string[]; // Array of URLs
   host: Host;
   datetimes: DateTimes;
+}
+
+export enum SportType {
+  Gym = 'gym',
+  Basketball = 'basketball',
+  Soccer = 'soccer',
+  Tennis = 'tennis',
+  Yoga = 'yoga',
+  Triathlon = 'triathlon',
+  Run = 'run',
+  MartialArts = 'martial_arts',
+  Motorsports = 'motorsports',
+  Volleyball = 'volleyball',
+  Handball = 'handball',
+  Hockey = 'hockey',
+  Ski = 'ski',
+  SkiWater = 'ski_water',
+  Baseball = 'baseball',
+  Skateboard = 'skateboard',
+  Esports = 'esports',
+  Swim = 'swim',
+  Other = 'other',
 }
 
 interface Price {

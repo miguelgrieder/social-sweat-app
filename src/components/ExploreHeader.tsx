@@ -2,40 +2,99 @@ import { View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity } fr
 import { useRef, useState } from 'react';
 import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { Link } from 'expo-router';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
+import { SportType } from '@/interfaces/activity';
+import { sportTypeIconMappings } from '@/constants/sportTypeIconMappings';
 
-const categories = [
+interface Category {
+  name: string;
+  sportType: SportType | string;
+}
+
+export const categories: Category[] = [
   {
     name: 'Trending',
-    icon: 'trending-up',
+    sportType: 'trending-up',
   },
   {
     name: 'Soccer',
-    icon: 'sports-soccer',
-  },
-  {
-    name: 'Baseball',
-    icon: 'sports-baseball',
+    sportType: SportType.Soccer,
   },
   {
     name: 'Basketball',
-    icon: 'sports-basketball',
-  },
-  {
-    name: 'Football',
-    icon: 'sports-football',
+    sportType: SportType.Basketball,
   },
   {
     name: 'Tennis',
-    icon: 'sports-tennis',
+    sportType: SportType.Tennis,
   },
   {
-    name: 'Golf',
-    icon: 'sports-golf',
+    name: 'Gym',
+    sportType: SportType.Gym,
+  },
+  {
+    name: 'Yoga',
+    sportType: SportType.Yoga,
+  },
+  {
+    name: 'Triathlon',
+    sportType: SportType.Triathlon,
+  },
+  {
+    name: 'Running',
+    sportType: SportType.Run,
+  },
+  {
+    name: 'Martial Arts',
+    sportType: SportType.MartialArts,
+  },
+  {
+    name: 'Motorsports',
+    sportType: SportType.Motorsports,
+  },
+  {
+    name: 'Volleyball',
+    sportType: SportType.Volleyball,
+  },
+  {
+    name: 'Handball',
+    sportType: SportType.Handball,
+  },
+  {
+    name: 'Hockey',
+    sportType: SportType.Hockey,
+  },
+  {
+    name: 'Skiing',
+    sportType: SportType.Ski,
+  },
+  {
+    name: 'Water Skiing',
+    sportType: SportType.SkiWater,
+  },
+  {
+    name: 'Baseball',
+    sportType: SportType.Baseball,
+  },
+  {
+    name: 'Skateboarding',
+    sportType: SportType.Skateboard,
+  },
+  {
+    name: 'Esports',
+    sportType: SportType.Esports,
+  },
+  {
+    name: 'Swimming',
+    sportType: SportType.Swim,
+  },
+  {
+    name: 'Other',
+    sportType: SportType.Other,
   },
 ];
 
@@ -102,8 +161,12 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
               style={activeIndex === index ? styles.categoriesBtnActive : styles.categoriesBtn}
               onPress={() => selectCategory(index)}
             >
-              <MaterialIcons
-                name={item.icon as any}
+              <MaterialCommunityIcons
+                name={
+                  sportTypeIconMappings[item.sportType]
+                    ? sportTypeIconMappings[item.sportType]
+                    : item.sportType
+                }
                 size={24}
                 color={activeIndex === index ? '#000' : Colors.grey}
               />

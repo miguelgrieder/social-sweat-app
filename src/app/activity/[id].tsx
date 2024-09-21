@@ -67,14 +67,14 @@ const dummy_listing = {
 
 const Page = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const [activity, setActivity] = useState<Activity>(dummy_listing);
+  const [activity, setListing] = useState<Activity>(dummy_listing);
   useEffect(() => {
     const getData = async () => {
       const filterBody = {
         activity_id: id,
       };
       const activities = await fetchActivities(filterBody);
-      setActivity(activities[0]);
+      setListing(activities[0]);
     };
     getData();
   }, []);
@@ -82,7 +82,7 @@ const Page = () => {
   const navigation = useNavigation();
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
 
-  const shareActivity = async () => {
+  const shareListing = async () => {
     // Share functionality of header share button
     try {
       await Share.share({
@@ -104,7 +104,7 @@ const Page = () => {
       ), // Header opacity effect
       headerRight: () => (
         <View style={styles.bar}>
-          <TouchableOpacity style={styles.roundButton} onPress={shareActivity}>
+          <TouchableOpacity style={styles.roundButton} onPress={shareListing}>
             <Ionicons name="share-outline" size={22} color={'#000'} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.roundButton}>

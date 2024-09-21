@@ -1,20 +1,31 @@
-import { View } from 'react-native';
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Stack } from 'expo-router';
 import ExploreHeader from '@/components/ExploreHeader';
-import listingsData from 'assets/data/activity-listings.json';
-import listingsDataGeo from 'assets/data/activity-listings.geo.json';
-import ListingsMap from '@/components/ListingsMap';
-import ListingsBottomSheet from '@/components/ListingsBottomSheet';
+import ActivitiesMap from '@/components/ActivitiesMap';
+import ActivitiesBottomSheet from '@/components/ActivitiesBottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { defaultStyles } from '@/constants/Styles';
 import { Screen } from 'src/components/Screen';
+import { fetchActivities } from '@/api/fetchActivities';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Page = () => {
   const [category, setCategory] = useState<string>('Trending');
-  const geoItems = useMemo(() => listingsDataGeo, []);
+  const [items, setItems] = useState<any[]>([]);
 
-  const items = useMemo(() => listingsData as any, []);
+  useFocusEffect(
+    // Always load activities when enter the page
+    useCallback(() => {
+      const getData = async () => {
+        const filterBody = {
+          activity_id: null,
+        };
+        const activities = await fetchActivities(filterBody);
+        setItems(activities);
+      };
+
+      getData();
+    }, []) // Empty dependency array ensures the callback doesn't change
+  );
 
   const onDataChanged = (category: string) => {
     setCategory(category);
@@ -28,8 +39,8 @@ const Page = () => {
         }}
       />
       <GestureHandlerRootView>
-        <ListingsMap listings={geoItems} />
-        <ListingsBottomSheet listings={items} category={category} />
+        <ActivitiesMap activities={items} />
+        <ActivitiesBottomSheet activities={items} category={category} />
       </GestureHandlerRootView>
     </Screen>
   );

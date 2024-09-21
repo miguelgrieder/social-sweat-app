@@ -3,7 +3,7 @@ import { useOAuth } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { View, StyleSheet, TextInput, Text, TouchableOpacity } from 'react-native';
-import { Screen } from 'src/components/Screen';
+import { Screen } from '@/components/Screen';
 
 import { useWarmUpBrowser } from '@/hooks/useWarmUpBrowser';
 import { defaultStyles } from '@/constants/Styles';
@@ -36,7 +36,7 @@ const Page = () => {
 
       if (createdSessionId) {
         setActive!({ session: createdSessionId });
-        router.back();
+        router.push('/(modals)/user/role-selection');
       }
     } catch (err) {
       console.error('OAuth error', err);
@@ -74,21 +74,9 @@ const Page = () => {
       </View>
 
       <View style={{ gap: 20 }}>
-        <TouchableOpacity style={styles.btnOutline} onPress={() => onSelectAuth(Strategy.Apple)}>
-          <Ionicons name="logo-apple" size={24} style={defaultStyles.btnIcon} />
-          <Text style={styles.btnOutlineText}>{translate('login_modal.continue_with')} Apple</Text>
-        </TouchableOpacity>
-
         <TouchableOpacity style={styles.btnOutline} onPress={() => onSelectAuth(Strategy.Google)}>
           <Ionicons name="logo-google" size={24} style={defaultStyles.btnIcon} />
           <Text style={styles.btnOutlineText}>{translate('login_modal.continue_with')} Google</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.btnOutline} onPress={() => onSelectAuth(Strategy.Facebook)}>
-          <Ionicons name="logo-facebook" size={24} style={defaultStyles.btnIcon} />
-          <Text style={styles.btnOutlineText}>
-            {translate('login_modal.continue_with')} Facebook
-          </Text>
         </TouchableOpacity>
       </View>
     </Screen>

@@ -122,7 +122,7 @@ const Page = () => {
         <Button title={translate('common.logout')} onPress={() => signOut()} color={Colors.dark} />
       )}
       {!isSignedIn && (
-        <Link href={'/(modals)/login'} asChild>
+        <Link href={'/(modals)/user/login'} asChild>
           <Button title={translate('common.login')} color={Colors.dark} />
         </Link>
       )}

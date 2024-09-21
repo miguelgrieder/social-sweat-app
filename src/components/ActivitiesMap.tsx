@@ -2,14 +2,14 @@ import { View, Text, StyleSheet } from 'react-native';
 import React, { memo } from 'react';
 import { defaultStyles } from '@/constants/Styles';
 import { Marker } from 'react-native-maps';
-import { ListingGeo } from '@/interfaces/listingGeo';
+import { Activity } from '@/interfaces/activity';
 import { router } from 'expo-router';
 import MapView from 'react-native-map-clustering';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { spacing } from '@/constants/spacing';
 
 interface Props {
-  listings: any;
+  activities: Activity[] | null;
 }
 
 const INITIAL_REGION = {
@@ -19,11 +19,11 @@ const INITIAL_REGION = {
   longitudeDelta: 9,
 };
 
-const onMarkerSelected = (event: any) => {
-  router.push(`/listing/${event.properties.id}`);
+const onMarkerSelected = (activity: Activity) => {
+  router.push(`/activity/${activity.id}`);
 };
 
-const ListingsMap = memo(({ listings }: Props) => {
+const ActivitiesMap = memo(({ activities }: Props) => {
   const renderCluster = (cluster: any) => {
     const { id, geometry, onPress, properties } = cluster;
 
@@ -52,6 +52,14 @@ const ListingsMap = memo(({ listings }: Props) => {
     );
   };
 
+  if (!activities) {
+    console.log('No activities for Map:', activities);
+  } else if (activities.length === 0) {
+    console.log('No activities available:', activities);
+  } else {
+    console.log('Activities loaded for the map:', activities.length);
+  }
+
   return (
     <View style={defaultStyles.container}>
       <MapView
@@ -65,17 +73,17 @@ const ListingsMap = memo(({ listings }: Props) => {
         clusterFontFamily="mon-sb"
         renderCluster={renderCluster}
       >
-        {listings.features.map((item: ListingGeo) => (
+        {activities?.map((item: Activity) => (
           <Marker
             coordinate={{
-              latitude: +item.properties.latitude,
-              longitude: +item.properties.longitude,
+              latitude: +item.location.geometry.coordinates.longitude,
+              longitude: +item.location.geometry.coordinates.latitude,
             }}
-            key={item.properties.id}
+            key={item.id}
             onPress={() => onMarkerSelected(item)}
           >
             <View style={styles.marker}>
-              <MaterialCommunityIcons name={item.properties.sport_type} size={20} />
+              <MaterialCommunityIcons name={item.sport_type} size={20} />
             </View>
           </Marker>
         ))}
@@ -108,4 +116,4 @@ const styles = StyleSheet.create({
     fontFamily: 'mon-sb',
   },
 });
-export default ListingsMap;
+export default ActivitiesMap;

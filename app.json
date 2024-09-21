@@ -2,8 +2,8 @@
   "name": "ExpoRouterDemo",
   "displayName": "ExpoRouterDemo",
   "expo": {
-    "name": "rental-map",
-    "slug": "rental-map",
+    "name": "social-sweat-app",
+    "slug": "social-sweat-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

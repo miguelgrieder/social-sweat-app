@@ -1,19 +1,19 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useMemo, useRef, useState } from 'react';
-import { Listing } from '@/interfaces/listing';
+import { Activity } from '@/interfaces/activity';
 import BottomSheet from '@gorhom/bottom-sheet';
-import Listings from '@/components/Listings';
+import Activities from '@/components/Activities';
 import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 
 interface Props {
-  listings: Listing[];
+  activities: Activity[];
   category: string;
 }
 
-const ListingsBottomSheet = ({ listings, category }: Props) => {
+const ActivitiesBottomSheet = ({ activities, category }: Props) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [refresh, setRefresh] = useState<number>(0);
 
@@ -34,7 +34,7 @@ const ListingsBottomSheet = ({ listings, category }: Props) => {
       style={styles.sheetContainer}
     >
       <View style={styles.contentContainer}>
-        <Listings listings={listings} category={category} refresh={refresh} />
+        <Activities activities={activities} category={category} refresh={refresh} />
         <View style={styles.absoluteView}>
           <TouchableOpacity style={styles.btn} onPress={onShowMap}>
             <Text style={{ fontFamily: 'mon-sb', color: '#fff' }}>
@@ -80,4 +80,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListingsBottomSheet;
+export default ActivitiesBottomSheet;

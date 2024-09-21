@@ -14,12 +14,18 @@
     "body": "Welcome to the inbox page"
   },
   "common": {
+    "cancel": "Cancel",
+    "apply": "Apply",
     "email": "Email",
     "login": "Log In",
     "logout": "Log Out",
     "continue": "Continue",
     "or": "or",
-    "in": "in"
+    "in": "in",
+    "dollar": "dollar",
+    "euro": "euro",
+    "real": "real",
+    "language": "Language"
   },
   "profile_screen": {
     "header": "Profile",
@@ -30,6 +36,23 @@
   "login_modal": {
     "header": "Log in or sign up",
     "continue_with": "Continue with"
+  },
+  "role_selection": {
+    "header": "SocialSweat",
+    "subtitle": "Where Fitness Meets Community.",
+    "about_you": "Tell us about yourself",
+    "description": "Share a bit about yourself so we can tailor socialSweat to fit you perfectly. Whether it's your fitness interests, goals, or preferred activities, we're here to make your experience personal. Let's dive in!"
+  },
+  "photo-upload": {
+    "header": "Upload Photo Profile",
+    "description": "Here, you can personalize your profile with a picture that represents you. Simply select an image from your device, and we'll handle the rest. Make sure your photo reflects who you are, whether it's a selfie, a favorite snapshot, or an image that resonates with you. Let's make your profile uniquely yours!"
+  },
+  "birthdate-selection": {
+    "header": "Your birthdate",
+    "inputTitle": "Selected date",
+    "inputPlaceholder": "Choose date",
+    "selectBirthdate": "Select Birthdate",
+    "description": "Let's nail down your birthdate! Sharing this info helps us fine-tune your experience on our platform. Whether it's for personalized recommendations or celebrating your special day, we're here to make it all about you. Ready to share? Let's do this!"
   },
   "explorer_screen": {
     "explorer_header": {
@@ -58,7 +81,7 @@
       "coaches": "Coaches"
     }
   },
-  "listings": {
+  "activities": {
     "registration": "Registration",
     "activities": "Activities"
   },
@@ -71,6 +94,11 @@
     "tennis": "Tennis",
     "golf": "Golf"
   },
+  "activity_types": {
+    "public_spot": "public spot",
+    "session": "session",
+    "event": "event"
+  },
   "activity_screen": {
     "hosted_by": "Hosted by",
     "reviews": "Reviews",
@@ -78,5 +106,29 @@
     "host_since": "Host since",
     "join_now": "Join Now",
     "registration": "Registration"
+  },
+  "create_activity_screen": {
+    "title": "Create Activity",
+    "upload_photo": "Upload Activity Photo",
+    "label_title": "Title",
+    "placeholder_title": "Enter the activity title",
+    "label_description": "Description",
+    "placeholder_description": "Enter the activity description",
+    "label_activity_type": "Activity Type",
+    "label_price": "Price",
+    "placeholder_price": "$0.00",
+    "label_date_time": "Date & Time",
+    "placeholder_datetime_start": "Enter start date and time",
+    "placeholder_datetime_finish": "Enter finish date and time",
+    "label_location": "Location",
+    "placeholder_country": "Enter the country",
+    "placeholder_area": "Enter the area or region",
+    "placeholder_city": "Enter the city",
+    "placeholder_smart_location": "Enter the detailed location",
+    "label_coordinates": "Coordinates",
+    "label_map": "Select the location",
+    "selected_coordinates": "Selected coordinates",
+    "label_sport": "Sport",
+    "create": "Create Activity"
   }
 }

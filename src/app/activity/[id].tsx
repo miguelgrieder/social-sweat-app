@@ -1,7 +1,6 @@
 import { useLocalSearchParams, useNavigation } from 'expo-router';
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity, Share } from 'react-native';
-import listingsData from 'assets/data/activity-listings.json';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import Animated, {
@@ -12,17 +11,74 @@ import Animated, {
   useScrollViewOffset,
 } from 'react-native-reanimated';
 import { defaultStyles } from '@/constants/Styles';
-import { Listing } from '@/interfaces/listing';
+import { Activity } from '@/interfaces/activity';
 import { Screen } from 'src/components/Screen';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
+import { fetchActivities } from '@/api/fetchActivities';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
 
+const dummy_listing = {
+  id: '',
+  name: '',
+  description: '',
+  activity_type: '',
+  sport_type: '',
+  price: {
+    value: 0,
+    unit: '',
+  },
+  location: {
+    country: '',
+    area: '',
+    city: '',
+    smart_location: '',
+    geometry: {
+      type: '',
+      coordinates: {
+        latitude: 0,
+        longitude: 0,
+      },
+    },
+  },
+  participants: {
+    current: 0,
+    max: null,
+  },
+  reviews: {
+    number_of_reviews: 0,
+    review_scores_rating: 0,
+  },
+  pictures: [],
+  host: {
+    host_picture_url: '',
+    host_name: '',
+    host_since: '',
+  },
+  datetimes: {
+    datetime_created: '',
+    datetime_deleted: null,
+    datetime_start: '',
+    datetime_finish: '',
+  },
+};
+
 const Page = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const listing: Listing = (listingsData as any[]).find((item) => item.id === id);
+  const [activity, setListing] = useState<Activity>(dummy_listing);
+  useEffect(() => {
+    const getData = async () => {
+      const filterBody = {
+        activity_id: id,
+      };
+      const activities = await fetchActivities(filterBody);
+      setListing(activities[0]);
+    };
+    getData();
+  }, []);
+
   const navigation = useNavigation();
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
 
@@ -30,8 +86,8 @@ const Page = () => {
     // Share functionality of header share button
     try {
       await Share.share({
-        title: listing.name,
-        url: listing.listing_url,
+        title: activity.name,
+        url: activity.pictures[0],
       });
     } catch (err) {
       console.log(err);
@@ -96,42 +152,42 @@ const Page = () => {
         scrollEventThrottle={16}
       >
         <Animated.Image
-          source={{ uri: listing.xl_picture_url }}
+          source={{ uri: activity.pictures[0] }}
           style={[styles.image, imageAnimatedStyle]}
           resizeMode="cover"
         />
 
         <View style={styles.infoContainer}>
-          <Text style={styles.name}>{listing.name}</Text>
+          <Text style={styles.name}>{activity.name}</Text>
           <Text style={styles.location}>
-            {listing.activity_type} {translate('common.in')} {listing.smart_location}
+            {activity.activity_type} {translate('common.in')} {activity.location.smart_location}
           </Text>
           <Text style={styles.information}>
-            {listing.participants} {translate('activity_screen.participants')}
+            {activity.participants.current} {translate('activity_screen.participants')}
           </Text>
           <View style={{ flexDirection: 'row', gap: 4 }}>
             <Ionicons name="star" size={16} />
             <Text style={styles.ratings}>
-              {listing.review_scores_rating / 20} · {listing.number_of_reviews}
+              {activity.reviews.review_scores_rating / 20} · {activity.reviews.number_of_reviews}
               {translate('activity_screen.reviews')}
             </Text>
           </View>
           <View style={styles.divider} />
 
           <View style={styles.hostView}>
-            <Image source={{ uri: listing.host_picture_url }} style={styles.host} />
+            <Image source={{ uri: activity.host.host_picture_url }} style={styles.host} />
 
             <View>
               <Text style={{ fontWeight: '500', fontSize: 16 }}>
-                {translate('activity_screen.hosted_by')} {listing.host_name}
+                {translate('activity_screen.hosted_by')} {activity.host.host_name}
               </Text>
-              <Text>Host since {listing.host_since}</Text>
+              <Text>Host since {activity.host.host_since}</Text>
             </View>
           </View>
 
           <View style={styles.divider} />
 
-          <Text style={styles.description}>{listing.description}</Text>
+          <Text style={styles.description}>{activity.description}</Text>
         </View>
       </Animated.ScrollView>
 
@@ -140,7 +196,10 @@ const Page = () => {
           style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}
         >
           <TouchableOpacity style={styles.footerText}>
-            <Text style={styles.footerPrice}>€{listing.price}</Text>
+            <Text style={styles.footerPrice}>
+              {activity.price.unit}
+              {activity.price.value}
+            </Text>
             <Text>{translate('activity_screen.registration')}</Text>
           </TouchableOpacity>
 

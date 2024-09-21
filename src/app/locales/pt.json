@@ -14,12 +14,18 @@
     "body": "Bem-vindo à página da caixa de entrada"
   },
   "common": {
+    "cancel": "Cancelar",
+    "apply": "Aplicar",
     "email": "Email",
     "login": "Entrar",
     "logout": "Sair",
     "continue": "Continuar",
     "or": "ou",
-    "in": "em"
+    "in": "em",
+    "dollar": "dolar",
+    "euro": "euro",
+    "real": "real",
+    "language": "Idioma"
   },
   "profile_screen": {
     "header": "Perfil",
@@ -30,6 +36,23 @@
   "login_modal": {
     "header": "Entrar ou cadastrar-se",
     "continue_with": "Continuar com"
+  },
+  "role_selection": {
+    "header": "SocialSweat",
+    "subtitle": "Onde o Fitness Encontra a Comunidade.",
+    "about_you": "Conte-nos sobre você",
+    "description": "Compartilhe um pouco sobre você para que possamos adaptar o SocialSweat perfeitamente às suas necessidades. Seja seus interesses fitness, objetivos ou atividades preferidas, estamos aqui para tornar sua experiência pessoal. Vamos começar!"
+  },
+  "photo-upload": {
+    "header": "Carregar Foto de Perfil",
+    "description": "Aqui, você pode personalizar seu perfil com uma foto que te represente. Simplesmente selecione uma imagem do seu dispositivo, e nós cuidamos do resto. Certifique-se de que sua foto reflete quem você é, seja um selfie, uma foto favorita ou uma imagem com a qual você se identifique. Vamos tornar seu perfil único!"
+  },
+  "birthdate-selection": {
+    "header": "Sua Data de Nascimento",
+    "inputTitle": "Data selecionada",
+    "inputPlaceholder": "Escolha a data",
+    "selectBirthdate": "Selecionar Data de Nascimento",
+    "description": "Vamos acertar sua data de nascimento! Compartilhar essa informação nos ajuda a refinar sua experiência em nossa plataforma. Seja para recomendações personalizadas ou para celebrar seu dia especial, estamos aqui para fazer tudo sobre você. Pronto para compartilhar? Vamos nessa!"
   },
   "explorer_screen": {
     "explorer_header": {
@@ -54,7 +77,7 @@
       "search": "Buscar"
     }
   },
-  "listings": {
+  "activities": {
     "registration": "Cadastro"
   },
   "activity_sports": {
@@ -66,11 +89,40 @@
     "tennis": "Tênis",
     "golf": "Golfe"
   },
+  "activity_types": {
+    "public_spot": "local público",
+    "session": "sessão",
+    "event": "evento"
+  },
   "activity_screen": {
     "hosted_by": "Organizado por",
     "reviews": "Avaliações",
     "participants": "Participantes",
     "host_since": "Organizador desde",
     "join_now": "Junte-se Agora"
+  },
+  "create_activity_screen": {
+    "title": "Criar Atividade",
+    "upload_photo": "Enviar Foto da Atividade",
+    "label_title": "Título",
+    "placeholder_title": "Insira o título da atividade",
+    "label_description": "Descrição",
+    "placeholder_description": "Insira a descrição da atividade",
+    "label_activity_type": "Tipo de Atividade",
+    "label_price": "Preço",
+    "placeholder_price": "R$ 0,00",
+    "label_date_time": "Data e Hora",
+    "placeholder_datetime_start": "Insira a data e hora de início",
+    "placeholder_datetime_finish": "Insira a data e hora de término",
+    "label_location": "Localização",
+    "placeholder_country": "Insira o país",
+    "placeholder_area": "Insira a área ou região",
+    "placeholder_city": "Insira a cidade",
+    "placeholder_smart_location": "Insira o local detalhado",
+    "label_coordinates": "Coordenadas",
+    "label_map": "Selecione o Local",
+    "selected_coordinates": "Coordenadas selecionadas",
+    "label_sport": "Esporte",
+    "create": "Criar Atividade"
   }
 }

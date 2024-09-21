@@ -6,7 +6,7 @@ import * as SecureStore from 'expo-secure-store';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { TouchableOpacity } from 'react-native';
-import ModalHeaderText from '@/components/ModalHeaderText';
+import SearchActivityText from '@/components/SearchActivityText';
 import { translate } from '@/app/services/translate';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
@@ -65,16 +65,16 @@ function RootLayoutNav() {
   const router = useRouter();
 
   // Automatically open login if user is not authenticated
-  useEffect(() => {
-    if (isLoaded && !isSignedIn) {
-      router.push('/(modals)/login');
-    }
-  }, [isLoaded]);
+  // useEffect(() => {
+  //   if (isLoaded && !isSignedIn) {
+  //     router.push('/(modals)/login');
+  //   }
+  // }, [isLoaded]);
 
   return (
     <Stack>
       <Stack.Screen
-        name="(modals)/login"
+        name="(modals)/user/login"
         options={{
           presentation: 'modal',
           title: translate('login_modal.header'),
@@ -89,14 +89,14 @@ function RootLayoutNav() {
         }}
       />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="listing/[id]" options={{ headerTitle: '', headerTransparent: true }} />
+      <Stack.Screen name="activity/[id]" options={{ headerTitle: '', headerTransparent: true }} />
       <Stack.Screen
         name="(modals)/search"
         options={{
           presentation: 'transparentModal',
           animation: 'fade',
           headerTransparent: true,
-          headerTitle: () => <ModalHeaderText />,
+          headerTitle: () => <SearchActivityText />,
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => router.back()}

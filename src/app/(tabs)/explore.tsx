@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { Stack } from 'expo-router';
 import ExploreHeader from '@/components/ExploreHeader';
-import ListingsMap from '@/components/ListingsMap';
-import ListingsBottomSheet from '@/components/ListingsBottomSheet';
+import ActivitiesMap from '@/components/ActivitiesMap';
+import ActivitiesBottomSheet from '@/components/ActivitiesBottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Screen } from 'src/components/Screen';
 import { fetchActivities } from '@/api/filter_activities';
@@ -39,8 +39,8 @@ const Page = () => {
         }}
       />
       <GestureHandlerRootView>
-        <ListingsMap listings={items} />
-        <ListingsBottomSheet listings={items} category={category} />
+        <ActivitiesMap listings={items} />
+        <ActivitiesBottomSheet listings={items} category={category} />
       </GestureHandlerRootView>
     </Screen>
   );

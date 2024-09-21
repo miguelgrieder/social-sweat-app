@@ -11,7 +11,7 @@ import Animated, {
   useScrollViewOffset,
 } from 'react-native-reanimated';
 import { defaultStyles } from '@/constants/Styles';
-import { Listing } from '@/interfaces/listing';
+import { Activity } from '@/interfaces/activity';
 import { Screen } from 'src/components/Screen';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
@@ -67,7 +67,7 @@ const dummy_listing = {
 
 const Page = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const [listing, setListing] = useState<Listing>(dummy_listing);
+  const [listing, setListing] = useState<Activity>(dummy_listing);
   useEffect(() => {
     const getData = async () => {
       const filterBody = {

@@ -2,14 +2,14 @@ import { View, Text, StyleSheet } from 'react-native';
 import React, { memo } from 'react';
 import { defaultStyles } from '@/constants/Styles';
 import { Marker } from 'react-native-maps';
-import { Listing } from '@/interfaces/listing';
+import { Activity } from '@/interfaces/activity';
 import { router } from 'expo-router';
 import MapView from 'react-native-map-clustering';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { spacing } from '@/constants/spacing';
 
 interface Props {
-  listings: Listing[] | null;
+  listings: Activity[] | null;
 }
 
 const INITIAL_REGION = {
@@ -19,11 +19,11 @@ const INITIAL_REGION = {
   longitudeDelta: 9,
 };
 
-const onMarkerSelected = (activity: Listing) => {
-  router.push(`/listing/${activity.id}`);
+const onMarkerSelected = (activity: Activity) => {
+  router.push(`/activity/${activity.id}`);
 };
 
-const ListingsMap = memo(({ listings }: Props) => {
+const ActivitiesMap = memo(({ listings }: Props) => {
   const renderCluster = (cluster: any) => {
     const { id, geometry, onPress, properties } = cluster;
 
@@ -57,7 +57,7 @@ const ListingsMap = memo(({ listings }: Props) => {
   } else if (listings.length === 0) {
     console.log('No listings available:', listings);
   } else {
-    console.log('Listings loaded for the map:', listings.length);
+    console.log('Activities loaded for the map:', listings.length);
   }
 
   return (
@@ -73,7 +73,7 @@ const ListingsMap = memo(({ listings }: Props) => {
         clusterFontFamily="mon-sb"
         renderCluster={renderCluster}
       >
-        {listings?.map((item: Listing) => (
+        {listings?.map((item: Activity) => (
           <Marker
             coordinate={{
               latitude: +item.location.geometry.coordinates.longitude,
@@ -116,4 +116,4 @@ const styles = StyleSheet.create({
     fontFamily: 'mon-sb',
   },
 });
-export default ListingsMap;
+export default ActivitiesMap;

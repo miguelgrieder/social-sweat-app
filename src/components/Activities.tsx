@@ -2,7 +2,7 @@ import { View, Text, ListRenderItem, TouchableOpacity, StyleSheet } from 'react-
 import React, { useEffect, useRef, useState } from 'react';
 import { defaultStyles } from '@/constants/Styles';
 import { Link } from 'expo-router';
-import { Listing } from '@/interfaces/listing';
+import { Activity } from '@/interfaces/activity';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 import { BottomSheetFlatList, BottomSheetFlatListMethods } from '@gorhom/bottom-sheet';
@@ -14,7 +14,7 @@ interface Props {
   category: string;
   refresh: number;
 }
-const Listings = ({ listings: items, category, refresh }: Props) => {
+const Activities = ({ listings: items, category, refresh }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const listRef = useRef<BottomSheetFlatListMethods>(null);
 
@@ -33,8 +33,8 @@ const Listings = ({ listings: items, category, refresh }: Props) => {
     }, 200);
   }, [category]);
 
-  const renderRow: ListRenderItem<Listing> = ({ item }) => (
-    <Link href={`/listing/${item.id}`} asChild>
+  const renderRow: ListRenderItem<Activity> = ({ item }) => (
+    <Link href={`/activity/${item.id}`} asChild>
       <TouchableOpacity>
         <Animated.View style={styles.listing} entering={FadeInRight} exiting={FadeOutLeft}>
           <Animated.Image source={{ uri: item.pictures[0] }} style={styles.image} />
@@ -94,4 +94,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Listings;
+export default Activities;

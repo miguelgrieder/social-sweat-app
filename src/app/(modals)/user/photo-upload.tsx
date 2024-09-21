@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { useUser } from '@clerk/clerk-expo';
-import { Screen } from 'src/components/Screen';
+import { Screen } from '@/components/Screen';
 import * as ImagePicker from 'expo-image-picker';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
@@ -41,7 +41,7 @@ const RoleSelectionScreen = () => {
       <Text style={styles.description}>{translate('photo-upload.description')}</Text>
       <TouchableOpacity
         style={[defaultStyles.btn, { width: '100%' }]}
-        onPress={() => router.push('/(modals)/birthdate-selection')}
+        onPress={() => router.push('/(modals)/user/birthdate-selection')}
       >
         <Text style={defaultStyles.btnText}>{translate('common.continue')}</Text>
       </TouchableOpacity>

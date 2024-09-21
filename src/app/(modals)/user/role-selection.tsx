@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { useUser } from '@clerk/clerk-expo';
-import { Screen } from 'src/components/Screen';
+import { Screen } from '@/components/Screen';
 import { defaultStyles } from '@/constants/Styles';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
@@ -22,14 +22,14 @@ const RoleSelectionScreen: React.FC = () => {
         });
 
         console.log('Role saved successfully:', selectedRole);
-        router.push('/(modals)/photo-upload');
+        router.push('/(modals)/user/photo-upload');
         return;
       } catch (error) {
         console.error('Error updating role in public metadata:', error);
         return;
       }
     }
-    router.navigate('/login');
+    router.navigate('/(modals)/user/login');
   };
 
   return (

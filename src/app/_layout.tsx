@@ -74,7 +74,7 @@ function RootLayoutNav() {
   return (
     <Stack>
       <Stack.Screen
-        name="(modals)/login"
+        name="(modals)/user/login"
         options={{
           presentation: 'modal',
           title: translate('login_modal.header'),

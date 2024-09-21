@@ -3,7 +3,7 @@ import { useOAuth } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { View, StyleSheet, TextInput, Text, TouchableOpacity } from 'react-native';
-import { Screen } from 'src/components/Screen';
+import { Screen } from '@/components/Screen';
 
 import { useWarmUpBrowser } from '@/hooks/useWarmUpBrowser';
 import { defaultStyles } from '@/constants/Styles';
@@ -36,7 +36,7 @@ const Page = () => {
 
       if (createdSessionId) {
         setActive!({ session: createdSessionId });
-        router.push('/(modals)/role-selection');
+        router.push('/(modals)/user/role-selection');
       }
     } catch (err) {
       console.error('OAuth error', err);

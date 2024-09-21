@@ -81,13 +81,26 @@
     "registration": "Cadastro"
   },
   "activity_sports": {
-    "trending": "Em alta",
+    "trending-up": "Em alta",
     "soccer": "Futebol",
     "baseball": "Beisebol",
     "basketball": "Basquete",
-    "football": "Futebol",
     "tennis": "Tênis",
-    "golf": "Golfe"
+    "gym": "Academia",
+    "yoga": "Ioga",
+    "triathlon": "Triatlo",
+    "run": "Corrida",
+    "martial_arts": "Artes Marciais",
+    "motorsports": "Esportes a Motor",
+    "volleyball": "Vôlei",
+    "handball": "Handebol",
+    "hockey": "Hóquei",
+    "ski": "Esqui",
+    "ski_water": "Esqui Aquático",
+    "skateboard": "Skate",
+    "esports": "Esportes Eletrônicos",
+    "swim": "Natação",
+    "other": "Outros"
   },
   "activity_types": {
     "public_spot": "local público",

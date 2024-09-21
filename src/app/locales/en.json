@@ -86,13 +86,26 @@
     "activities": "Activities"
   },
   "activity_sports": {
-    "trending": "Trending",
+    "trending-up": "Trending",
     "soccer": "Soccer",
     "baseball": "Baseball",
     "basketball": "Basketball",
-    "football": "Football",
     "tennis": "Tennis",
-    "golf": "Golf"
+    "gym": "Gym",
+    "yoga": "Yoga",
+    "triathlon": "Triathlon",
+    "run": "Running",
+    "martial_arts": "Martial Arts",
+    "motorsports": "Motorsports",
+    "volleyball": "Volleyball",
+    "handball": "Handball",
+    "hockey": "Hockey",
+    "ski": "Skiing",
+    "ski_water": "Water Skiing",
+    "skateboard": "Skateboarding",
+    "esports": "Esports",
+    "swim": "Swimming",
+    "other": "Other"
   },
   "activity_types": {
     "public_spot": "public spot",

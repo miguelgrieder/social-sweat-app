@@ -11,89 +11,68 @@ import { SportType } from '@/interfaces/activity';
 import { sportTypeIconMappings } from '@/constants/sportTypeIconMappings';
 
 interface Category {
-  name: string;
   sportType: SportType | string;
 }
 
 export const categories: Category[] = [
   {
-    name: 'Trending',
     sportType: 'trending-up',
   },
   {
-    name: 'Soccer',
     sportType: SportType.Soccer,
   },
   {
-    name: 'Basketball',
     sportType: SportType.Basketball,
   },
   {
-    name: 'Tennis',
     sportType: SportType.Tennis,
   },
   {
-    name: 'Gym',
     sportType: SportType.Gym,
   },
   {
-    name: 'Yoga',
     sportType: SportType.Yoga,
   },
   {
-    name: 'Triathlon',
     sportType: SportType.Triathlon,
   },
   {
-    name: 'Running',
     sportType: SportType.Run,
   },
   {
-    name: 'Martial Arts',
     sportType: SportType.MartialArts,
   },
   {
-    name: 'Motorsports',
     sportType: SportType.Motorsports,
   },
   {
-    name: 'Volleyball',
     sportType: SportType.Volleyball,
   },
   {
-    name: 'Handball',
     sportType: SportType.Handball,
   },
   {
-    name: 'Hockey',
     sportType: SportType.Hockey,
   },
   {
-    name: 'Skiing',
     sportType: SportType.Ski,
   },
   {
-    name: 'Water Skiing',
     sportType: SportType.SkiWater,
   },
   {
-    name: 'Baseball',
     sportType: SportType.Baseball,
   },
   {
-    name: 'Skateboarding',
     sportType: SportType.Skateboard,
   },
   {
-    name: 'Esports',
     sportType: SportType.Esports,
   },
   {
-    name: 'Swimming',
     sportType: SportType.Swim,
   },
   {
-    name: 'Other',
     sportType: SportType.Other,
   },
 ];
@@ -171,7 +150,7 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
                 color={activeIndex === index ? '#000' : Colors.grey}
               />
               <Text style={activeIndex === index ? styles.categoryTextActive : styles.categoryText}>
-                {item.name}
+                {translate(`activity_sports.${item.sportType}`)}
               </Text>
             </TouchableOpacity>
           ))}

@@ -98,7 +98,7 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff', paddingTop: 29 }}>
+    <SafeAreaView style={{ backgroundColor: '#fff', paddingTop: 29 }}>
       <View style={styles.container}>
         <View style={styles.actionRow}>
           <Link href={'/(modals)/search'} asChild>

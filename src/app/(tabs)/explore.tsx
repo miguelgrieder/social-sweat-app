@@ -5,7 +5,7 @@ import ActivitiesMap from '@/components/ActivitiesMap';
 import ActivitiesBottomSheet from '@/components/ActivitiesBottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Screen } from 'src/components/Screen';
-import { fetchActivities } from '@/api/filter_activities';
+import { fetchActivities } from '@/api/fetchActivities';
 import { useFocusEffect } from '@react-navigation/native';
 
 const Page = () => {

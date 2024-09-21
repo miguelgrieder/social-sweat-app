@@ -7,7 +7,7 @@ import Geocoder from 'react-native-geocoding'; // Import Geocoding library
 import { Screen } from 'src/components/Screen';
 import { spacing } from '@/constants/spacing';
 import Colors from '@/constants/Colors';
-import { createActivity } from '@/api/create_activity';
+import { createActivity } from '@/api/createActivity';
 import { useAuth } from '@clerk/clerk-expo';
 import { translate } from '@/app/services/translate';
 import { capitalize } from '@/utils/utils';

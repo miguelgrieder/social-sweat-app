@@ -15,7 +15,7 @@ import { Activity } from '@/interfaces/activity';
 import { Screen } from 'src/components/Screen';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
-import { fetchActivities } from '@/api/filter_activities';
+import { fetchActivities } from '@/api/fetchActivities';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;

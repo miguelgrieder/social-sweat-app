@@ -23,7 +23,7 @@
     "dollar": "dollar",
     "euro": "euro",
     "real": "real",
-    "select_language": "Select Language"
+    "language": "Language"
   },
   "profile_screen": {
     "header": "Profile",

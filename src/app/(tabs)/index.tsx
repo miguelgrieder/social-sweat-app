@@ -20,7 +20,7 @@ const Home = () => {
     <Screen preset="fixed" contentContainerStyle={styles.container} safeAreaEdges={['top']}>
       {/* Language Switcher */}
       <View style={styles.languageSwitcher}>
-        <Text style={styles.languageLabel}>{translate('common.select_language')}</Text>
+        <Text style={styles.languageLabel}>{translate('common.language')}</Text>
         <Picker
           selectedValue={selectedLanguage}
           style={styles.picker}
@@ -43,11 +43,6 @@ const Home = () => {
 
 export default Home;
 
-const $container: ViewStyle = {
-  flex: 1,
-  padding: spacing.md,
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -55,10 +50,12 @@ const styles = StyleSheet.create({
   },
   languageSwitcher: {
     marginBottom: spacing.md,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   languageLabel: {
     fontSize: 16,
-    marginBottom: spacing.sm,
   },
   picker: {
     height: 50,

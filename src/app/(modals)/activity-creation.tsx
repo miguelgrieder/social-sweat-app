@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, Alert } fro
 import { Picker } from '@react-native-picker/picker';
 import MapView, { Marker } from 'react-native-maps';
 import * as ImagePicker from 'expo-image-picker';
-import Geocoder from 'react-native-geocoding'; // Import Geocoding library
+import Geocoder from 'react-native-geocoding';
 import { Screen } from 'src/components/Screen';
 import { spacing } from '@/constants/spacing';
 import Colors from '@/constants/Colors';
@@ -14,7 +14,7 @@ import { capitalize } from '@/utils/utils';
 import { defaultStyles } from '@/constants/Styles';
 import { useNavigation } from 'expo-router';
 
-Geocoder.init(process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY); // Replace with your Google API key
+Geocoder.init(process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY);
 
 const CreateActivity = () => {
   const navigation = useNavigation();

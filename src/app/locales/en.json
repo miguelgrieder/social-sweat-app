@@ -108,7 +108,7 @@
     "other": "Other"
   },
   "activity_types": {
-    "public_spot": "public spot",
+    "spot": "spot",
     "session": "session",
     "event": "event"
   },

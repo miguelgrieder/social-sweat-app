@@ -103,7 +103,7 @@
     "other": "Outros"
   },
   "activity_types": {
-    "public_spot": "local público",
+    "spot": "local",
     "session": "sessão",
     "event": "evento"
   },

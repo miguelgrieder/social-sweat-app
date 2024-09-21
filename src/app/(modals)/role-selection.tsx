@@ -1,57 +1,70 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useRouter } from 'expo-router';
-import { useUser } from '@clerk/clerk-expo'; // Import Clerk's useUser hook
+import { Stack, useRouter } from 'expo-router';
+import { useUser } from '@clerk/clerk-expo';
 import { Screen } from 'src/components/Screen';
 import { defaultStyles } from '@/constants/Styles';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 import { Picker } from '@react-native-picker/picker';
 
-const RoleSelectionScreen = () => {
-  const [selectedRole, setSelectedRole] = useState<string | null>(null);
+const RoleSelectionScreen: React.FC = () => {
   const router = useRouter();
-  const { user } = useUser(); // Access the current user object
+  const { user } = useUser();
+
+  const [selectedRole, setSelectedRole] = useState<string | null>(null);
 
   const handleRoleSelection = async () => {
     if (selectedRole && user) {
       try {
-        // Update the user's public metadata with the selected role
         await user.update({
-          publicMetadata: { role: selectedRole }, // Store the role in publicMetadata
+          unsafeMetadata: { ...user.unsafeMetadata, role: selectedRole },
         });
 
         console.log('Role saved successfully:', selectedRole);
-        // Navigate to the next screen, or home screen
-        router.replace('/home'); // Adjust the path as per your app's flow
+        router.push('/(modals)/photo-upload');
+        return;
       } catch (error) {
         console.error('Error updating role in public metadata:', error);
+        return;
       }
     }
+    router.navigate('/login');
   };
 
   return (
-    <Screen preset="auto" contentContainerStyle={styles.container}>
-      <Text style={styles.heading}>{translate('role_selection.title')}</Text>
+    <Screen preset="fixed" contentContainerStyle={styles.container}>
+      <Stack.Screen options={{ headerShown: false }} />
+      <View style={styles.heading}>
+        <Text style={styles.header}>{translate('role_selection.header')}</Text>
+        <Text style={styles.subtitle}>{translate('role_selection.subtitle')}</Text>
+      </View>
 
-      <Picker
-        selectedValue={selectedRole}
-        onValueChange={(itemValue) => setSelectedRole(itemValue)}
-        style={styles.picker}
-      >
-        <Picker.Item label="Select your role" value={null} />
-        <Picker.Item label="User" value="user" />
-        <Picker.Item label="Coach" value="coach" />
-        <Picker.Item label="Company" value="company" />
-      </Picker>
+      <View style={styles.formContainer}>
+        <Text style={styles.aboutYou}>{translate('role_selection.about_you')}</Text>
+        <Text style={styles.description}>{translate('role_selection.description')}</Text>
 
-      <TouchableOpacity
-        style={[defaultStyles.btn, !selectedRole && styles.disabledBtn]}
-        onPress={handleRoleSelection}
-        disabled={!selectedRole}
-      >
-        <Text style={defaultStyles.btnText}>{translate('common.continue')}</Text>
-      </TouchableOpacity>
+        <View style={styles.picker}>
+          <Picker
+            style={{ flex: 1, color: '#6C6C6C' }}
+            selectedValue={selectedRole}
+            onValueChange={(itemValue) => setSelectedRole(itemValue)}
+          >
+            <Picker.Item label="Select your role" value={null} />
+            <Picker.Item label="User" value="user" />
+            <Picker.Item label="Coach" value="coach" />
+            <Picker.Item label="Company" value="company" />
+          </Picker>
+        </View>
+
+        <TouchableOpacity
+          style={[defaultStyles.btn, !selectedRole && styles.disabledBtn]}
+          onPress={handleRoleSelection}
+          disabled={!selectedRole}
+        >
+          <Text style={defaultStyles.btnText}>{translate('common.continue')}</Text>
+        </TouchableOpacity>
+      </View>
     </Screen>
   );
 };
@@ -62,19 +75,47 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 26,
+    paddingTop: 100,
+    gap: spacing.xxl,
     backgroundColor: '#fff',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   heading: {
-    fontSize: 24,
+    alignItems: 'flex-start',
+  },
+  header: {
+    fontFamily: 'mon-b',
+    fontWeight: 'bold',
+    fontSize: 48,
+    fontStyle: 'italic',
+  },
+  subtitle: {
+    fontSize: 16,
+    fontWeight: '500',
     fontFamily: 'mon-sb',
-    marginBottom: spacing.xl,
-    textAlign: 'center',
+    paddingLeft: spacing.xxs,
+  },
+  formContainer: {
+    gap: spacing.md,
+  },
+  aboutYou: {
+    fontSize: 24,
+    fontWeight: '700',
+    fontFamily: 'mon-sb',
+  },
+  description: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#6C6C6C',
+    fontFamily: 'mon-sb',
   },
   picker: {
     height: 50,
     width: '100%',
-    marginBottom: spacing.lg,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: '#E3E7EC',
+    justifyContent: 'center',
   },
   disabledBtn: {
     backgroundColor: '#ccc',

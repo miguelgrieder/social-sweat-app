@@ -6,7 +6,7 @@ import { Screen } from '@/components/Screen';
 import { defaultStyles } from '@/constants/Styles';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
-import { Picker } from '@react-native-picker/picker';
+import RNPickerSelect from 'react-native-picker-select';
 
 const RoleSelectionScreen: React.FC = () => {
   const router = useRouter();
@@ -44,17 +44,22 @@ const RoleSelectionScreen: React.FC = () => {
         <Text style={styles.aboutYou}>{translate('role_selection.about_you')}</Text>
         <Text style={styles.description}>{translate('role_selection.description')}</Text>
 
-        <View style={styles.picker}>
-          <Picker
-            style={{ flex: 1, color: '#6C6C6C' }}
-            selectedValue={selectedRole}
+        <View style={styles.pickerContainer}>
+          <RNPickerSelect
             onValueChange={(itemValue) => setSelectedRole(itemValue)}
-          >
-            <Picker.Item label="Select your role" value={null} />
-            <Picker.Item label="User" value="user" />
-            <Picker.Item label="Coach" value="coach" />
-            <Picker.Item label="Company" value="company" />
-          </Picker>
+            items={[
+              { label: 'User', value: 'user' },
+              { label: 'Coach', value: 'coach' },
+              { label: 'Company', value: 'company' },
+            ]}
+            value={selectedRole}
+            style={pickerSelectStyles}
+            placeholder={{ label: 'Select your role', value: null, color: '#9EA0A4' }}
+            useNativeAndroidPickerStyle={false} // To apply custom styles on Android
+            Icon={() => {
+              return <View style={styles.iconContainer} />;
+            }}
+          />
         </View>
 
         <TouchableOpacity
@@ -109,15 +114,34 @@ const styles = StyleSheet.create({
     color: '#6C6C6C',
     fontFamily: 'mon-sb',
   },
-  picker: {
-    height: 50,
-    width: '100%',
+  pickerContainer: {
     borderWidth: 1,
-    borderRadius: 5,
     borderColor: '#E3E7EC',
+    borderRadius: 5,
     justifyContent: 'center',
+  },
+  iconContainer: {
+    top: 20,
+    right: 10,
   },
   disabledBtn: {
     backgroundColor: '#ccc',
+  },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: 10,
+    color: '#6C6C6C',
+    paddingRight: 30, // to ensure the text is not cut off
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: spacing.xs,
+    color: '#6C6C6C',
+    paddingRight: 30, // to ensure the text is not cut off
   },
 });

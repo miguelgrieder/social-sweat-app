@@ -5,8 +5,8 @@ import { translate } from '@/app/services/translate';
 import { Link } from 'expo-router';
 import { defaultStyles } from '@/constants/Styles';
 import { spacing } from '@/constants/spacing';
-import { Picker } from '@react-native-picker/picker';
 import i18next from 'i18next';
+import RNPickerSelect from 'react-native-picker-select';
 
 const Home = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(i18next.language); // Get the current language
@@ -21,14 +21,16 @@ const Home = () => {
       {/* Language Switcher */}
       <View style={styles.languageSwitcher}>
         <Text style={styles.languageLabel}>{translate('common.language')}</Text>
-        <Picker
-          selectedValue={selectedLanguage}
-          style={styles.picker}
+        <RNPickerSelect
           onValueChange={(itemValue) => changeLanguage(itemValue)}
-        >
-          <Picker.Item label="English" value="en" />
-          <Picker.Item label="Português" value="pt" />
-        </Picker>
+          items={[
+            { label: 'English', value: 'en' },
+            { label: 'Português', value: 'pt' },
+          ]}
+          value={selectedLanguage}
+          style={pickerSelectStyles}
+          placeholder={{}}
+        />
       </View>
 
       {/* Activity Creation Button */}
@@ -57,8 +59,23 @@ const styles = StyleSheet.create({
   languageLabel: {
     fontSize: 16,
   },
-  picker: {
-    height: 50,
+});
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: 0,
+    color: 'black',
+    paddingRight: spacing.lg,
+    width: 150,
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 0,
+    paddingVertical: spacing.sm,
+    color: 'black',
+    paddingRight: spacing.lg,
     width: 150,
   },
 });

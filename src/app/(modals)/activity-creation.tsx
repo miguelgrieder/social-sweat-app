@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, Alert } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
 import MapView, { Marker } from 'react-native-maps';
 import * as ImagePicker from 'expo-image-picker';
 import Geocoder from 'react-native-geocoding';
@@ -14,6 +13,7 @@ import { capitalize } from '@/utils/utils';
 import { defaultStyles } from '@/constants/Styles';
 import { useNavigation } from 'expo-router';
 import { ActivityType, SportType } from '@/interfaces/activity';
+import RNPickerSelect from 'react-native-picker-select';
 
 Geocoder.init(process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY);
 
@@ -196,48 +196,34 @@ const CreateActivity = () => {
       {/* Activity Type */}
       {renderTitle('label_activity_type')}
       <View style={styles.pickerContainer}>
-        <Picker
-          selectedValue={activityType}
+        <RNPickerSelect
           onValueChange={(itemValue) => setActivityType(itemValue)}
-          style={styles.picker}
-        >
-          <Picker.Item
-            label={`${capitalize(translate('activity_types.spot'))}`}
-            value={ActivityType.Spot}
-          />
-          <Picker.Item
-            label={`${capitalize(translate('activity_types.session'))}`}
-            value={ActivityType.Session}
-          />
-          <Picker.Item
-            label={`${capitalize(translate('activity_types.event'))}`}
-            value={ActivityType.Event}
-          />
-        </Picker>
+          items={[
+            { label: capitalize(translate('activity_types.spot')), value: ActivityType.Spot },
+            { label: capitalize(translate('activity_types.session')), value: ActivityType.Session },
+            { label: capitalize(translate('activity_types.event')), value: ActivityType.Event },
+          ]}
+          value={activityType}
+          style={pickerSelectStyles}
+          placeholder={{}}
+        />
       </View>
 
       {/* Sport Type */}
       {renderTitle('label_sport')}
       <View style={styles.pickerContainer}>
-        <Picker
-          selectedValue={sport}
+        <RNPickerSelect
           onValueChange={(itemValue) => setSport(itemValue)}
-          style={styles.picker}
-        >
-          <Picker.Item label={`${translate('activity_sports.soccer')}`} value={SportType.Soccer} />
-          <Picker.Item
-            label={`${translate('activity_sports.baseball')}`}
-            value={SportType.Baseball}
-          />
-          <Picker.Item
-            label={`${translate('activity_sports.basketball')}`}
-            value={SportType.Basketball}
-          />
-          <Picker.Item
-            label={`${translate('activity_sports.motorsports')}`}
-            value={SportType.Swim}
-          />
-        </Picker>
+          items={[
+            { label: translate('activity_sports.soccer'), value: SportType.Soccer },
+            { label: translate('activity_sports.baseball'), value: SportType.Baseball },
+            { label: translate('activity_sports.basketball'), value: SportType.Basketball },
+            { label: translate('activity_sports.motorsports'), value: SportType.Swim },
+          ]}
+          value={sport}
+          style={pickerSelectStyles}
+          placeholder={{}}
+        />
       </View>
 
       {/* Price */}
@@ -250,15 +236,17 @@ const CreateActivity = () => {
           value={priceValue}
           onChangeText={(text) => setPriceValue(text.replace(/[^0-9.]/g, ''))}
         />
-        <Picker
-          selectedValue={priceUnit}
+        <RNPickerSelect
           onValueChange={(itemValue) => setPriceUnit(itemValue)}
-          style={styles.picker}
-        >
-          <Picker.Item label={`$ - ${capitalize(translate('common.dollar'))}`} value="$" />
-          <Picker.Item label={`€ - ${capitalize(translate('common.euro'))}`} value="€" />
-          <Picker.Item label={`R$ - ${capitalize(translate('common.real'))}`} value="R$" />
-        </Picker>
+          items={[
+            { label: `$ - ${capitalize(translate('common.dollar'))}`, value: '$' },
+            { label: `€ - ${capitalize(translate('common.euro'))}`, value: '€' },
+            { label: `R$ - ${capitalize(translate('common.real'))}`, value: 'R$' },
+          ]}
+          value={priceUnit}
+          style={pickerSelectStyles}
+          placeholder={{}}
+        />
       </View>
 
       {/* Date & Time */}
@@ -362,10 +350,7 @@ const styles = StyleSheet.create({
     borderRadius: spacing.sm,
     width: '100%',
     marginBottom: spacing.md,
-  },
-  picker: {
-    height: 50,
-    width: '100%',
+    paddingHorizontal: spacing.sm,
   },
   map: {
     width: '100%',
@@ -374,6 +359,25 @@ const styles = StyleSheet.create({
   },
   coordinatesText: {
     textAlign: 'center',
+    marginBottom: spacing.md,
+  },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: 0, // Adjusted to align with the input field
+    color: 'black',
+    paddingRight: spacing.lg,
+    marginBottom: spacing.md,
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 0,
+    paddingVertical: spacing.sm,
+    color: 'black',
+    paddingRight: spacing.lg,
     marginBottom: spacing.md,
   },
 });

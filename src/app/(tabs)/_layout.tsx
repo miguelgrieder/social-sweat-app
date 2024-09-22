@@ -31,11 +31,15 @@ const Layout = () => {
         }}
       />
       <Tabs.Screen
-        name="inbox"
+        name="coaches"
         options={{
-          tabBarLabel: translate('navbar.inbox'),
+          tabBarLabel: translate('navbar.coaches'),
           tabBarIcon: ({ size, color }) => (
-            <MaterialCommunityIcons name="message-outline" size={size} color={color} />
+            <MaterialCommunityIcons
+              name="badge-account-horizontal-outline"
+              size={size}
+              color={color}
+            />
           ),
         }}
       />

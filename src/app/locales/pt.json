@@ -2,16 +2,15 @@
   "navbar": {
     "home": "Início",
     "explore": "Explorar",
-    "inbox": "Conversas",
+    "coaches": "Treinadores",
     "profile": "Perfil"
   },
   "home_screen": {
     "header": "Início",
     "body": "Bem-vindo à página inicial"
   },
-  "inbox_screen": {
-    "header": "Caixa de entrada",
-    "body": "Bem-vindo à página da caixa de entrada"
+  "coaches_screen": {
+    "since": "desde"
   },
   "common": {
     "cancel": "Cancelar",
@@ -25,7 +24,8 @@
     "dollar": "dolar",
     "euro": "euro",
     "real": "real",
-    "language": "Idioma"
+    "language": "Idioma",
+    "unknown": "desconhecido"
   },
   "profile_screen": {
     "header": "Perfil",

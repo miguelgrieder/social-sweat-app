@@ -2,16 +2,15 @@
   "navbar": {
     "home": "Home",
     "explore": "Explore",
-    "inbox": "Inbox",
+    "coaches": "Coaches",
     "profile": "Profile"
   },
   "home_screen": {
     "header": "Home",
     "body": "Welcome to the home page"
   },
-  "inbox_screen": {
-    "header": "Inbox",
-    "body": "Welcome to the inbox page"
+  "coaches_screen": {
+    "since": "since"
   },
   "common": {
     "cancel": "Cancel",
@@ -25,7 +24,8 @@
     "dollar": "dollar",
     "euro": "euro",
     "real": "real",
-    "language": "Language"
+    "language": "Language",
+    "unknown": "unknown"
   },
   "profile_screen": {
     "header": "Profile",

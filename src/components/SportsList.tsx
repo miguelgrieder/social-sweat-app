@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
   },
 
   tagText: {
-    color: '#000',
+    color: Colors.primary,
   },
 
   tagTextSelected: {

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { useUser } from '@clerk/clerk-expo';
 import { Screen } from '@/components/Screen';
@@ -7,30 +7,62 @@ import { defaultStyles } from '@/constants/Styles';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 import RNPickerSelect from 'react-native-picker-select';
+import SportsList from '@/components/SportsList';
 
-const RoleSelectionScreen: React.FC = () => {
+const RoleSelectionScreen = () => {
   const router = useRouter();
   const { user } = useUser();
 
-  const [selectedRole, setSelectedRole] = useState<string | null>(null);
+  const [selectedRole, setSelectedRole] = useState('');
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [isButtonDisabled, setButtonDisabled] = useState(false);
+
+  const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const handleRoleSelection = async () => {
-    if (selectedRole && user) {
+    if (selectedRole && selectedTags.length > 0 && user) {
+      setButtonDisabled(true);
       try {
         await user.update({
-          unsafeMetadata: { ...user.unsafeMetadata, role: selectedRole },
+          unsafeMetadata: { ...user.unsafeMetadata, role: selectedRole, sports: [...selectedTags] },
         });
-
-        console.log('Role saved successfully:', selectedRole);
-        router.push('/(modals)/user/photo-upload');
+        console.log(
+          `Unsafe metadata saved successfully. role: ${selectedRole}, sports: {${selectedTags}}`
+        );
+        router.navigate('/(modals)/user/photo-upload');
         return;
       } catch (error) {
-        console.error('Error updating role in public metadata:', error);
-        return;
+        console.error('Error updating unsafe metadata:', error);
+      } finally {
+        setButtonDisabled(false);
       }
+    } else {
+      router.navigate('/(modals)/user/login');
     }
-    router.navigate('/(modals)/user/login');
   };
+
+  const getRoleBasedListTitle = () => {
+    switch (selectedRole) {
+      case 'coach':
+        return translate('role_selection.role_coach_title');
+      case 'company':
+        return translate('role_selection.role_company_title');
+      default:
+        return translate('role_selection.role_user_title');
+    }
+  };
+
+  useEffect(() => {
+    if (selectedRole) {
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      fadeAnim.setValue(0);
+    }
+  }, [selectedRole, fadeAnim]);
 
   return (
     <Screen preset="fixed" contentContainerStyle={styles.container}>
@@ -44,28 +76,42 @@ const RoleSelectionScreen: React.FC = () => {
         <Text style={styles.aboutYou}>{translate('role_selection.about_you')}</Text>
         <Text style={styles.description}>{translate('role_selection.description')}</Text>
 
-        <View style={styles.pickerContainer}>
-          <RNPickerSelect
-            onValueChange={(itemValue) => setSelectedRole(itemValue)}
-            items={[
-              { label: 'User', value: 'user' },
-              { label: 'Coach', value: 'coach' },
-              { label: 'Company', value: 'company' },
-            ]}
-            value={selectedRole}
-            style={pickerSelectStyles}
-            placeholder={{ label: 'Select your role', value: null, color: '#9EA0A4' }}
-            useNativeAndroidPickerStyle={false} // To apply custom styles on Android
-            Icon={() => {
-              return <View style={styles.iconContainer} />;
-            }}
-          />
-        </View>
+        <RNPickerSelect
+          onValueChange={(itemValue) => setSelectedRole(itemValue)}
+          items={[
+            { label: translate('role_selection.role_user'), value: 'user' },
+            { label: translate('role_selection.role_coach'), value: 'coach' },
+            { label: translate('role_selection.role_company'), value: 'company' },
+          ]}
+          value={selectedRole}
+          style={pickerSelectStyles}
+          placeholder={{
+            label: translate('role_selection.select_your_role'),
+            value: null,
+            color: '#9EA0A4',
+          }}
+          useNativeAndroidPickerStyle={false}
+          Icon={() => <View style={styles.iconContainer} />}
+        />
+
+        {selectedRole && (
+          <Animated.View style={{ opacity: fadeAnim }}>
+            <SportsList
+              title={getRoleBasedListTitle()}
+              onSelectedTagsChange={(tags) => {
+                setSelectedTags(tags);
+              }}
+            />
+          </Animated.View>
+        )}
 
         <TouchableOpacity
-          style={[defaultStyles.btn, !selectedRole && styles.disabledBtn]}
+          style={[
+            defaultStyles.btn,
+            !(selectedRole && selectedTags.length > 0) && styles.disabledBtn,
+          ]}
           onPress={handleRoleSelection}
-          disabled={!selectedRole}
+          disabled={!selectedRole || selectedTags.length === 0 || isButtonDisabled}
         >
           <Text style={defaultStyles.btnText}>{translate('common.continue')}</Text>
         </TouchableOpacity>
@@ -80,8 +126,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 26,
-    paddingTop: 100,
-    gap: spacing.xxl,
+    paddingTop: 80,
+    gap: spacing.xl,
     backgroundColor: '#fff',
     justifyContent: 'flex-start',
   },
@@ -114,12 +160,6 @@ const styles = StyleSheet.create({
     color: '#6C6C6C',
     fontFamily: 'mon-sb',
   },
-  pickerContainer: {
-    borderWidth: 1,
-    borderColor: '#E3E7EC',
-    borderRadius: 5,
-    justifyContent: 'center',
-  },
   iconContainer: {
     top: 20,
     right: 10,
@@ -135,13 +175,19 @@ const pickerSelectStyles = StyleSheet.create({
     paddingVertical: spacing.sm,
     paddingHorizontal: 10,
     color: '#6C6C6C',
-    paddingRight: 30, // to ensure the text is not cut off
+    paddingRight: 30, 
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#c2c2c2',
+    borderRadius: 10,
   },
   inputAndroid: {
     fontSize: 16,
     paddingHorizontal: 10,
     paddingVertical: spacing.xs,
     color: '#6C6C6C',
-    paddingRight: 30, // to ensure the text is not cut off
+    paddingRight: 30, 
+    borderColor: '#c2c2c2',
+    borderRadius: 10,
+    borderWidth: StyleSheet.hairlineWidth,
   },
 });

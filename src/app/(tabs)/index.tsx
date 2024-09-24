@@ -17,7 +17,7 @@ const Home = () => {
   };
 
   return (
-    <Screen preset="fixed" contentContainerStyle={styles.container} safeAreaEdges={['top']}>
+    <Screen preset="fixed" contentContainerStyle={styles.container}>
       {/* Language Switcher */}
       <View style={styles.languageSwitcher}>
         <Text style={styles.languageLabel}>{translate('common.language')}</Text>

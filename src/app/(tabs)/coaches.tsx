@@ -46,7 +46,7 @@ const Coaches = () => {
   };
 
   return (
-    <Screen preset="scroll" contentContainerStyle={styles.container} safeAreaEdges={['top']}>
+    <Screen preset="scroll" contentContainerStyle={styles.container}>
       <FlatList
         data={users}
         renderItem={renderItem}

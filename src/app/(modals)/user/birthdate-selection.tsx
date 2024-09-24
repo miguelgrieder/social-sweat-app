@@ -30,7 +30,7 @@ const BirthdateSelectionScreen = () => {
   };
 
   return (
-    <Screen preset="fixed" contentContainerStyle={styles.container}>
+    <Screen preset="fixed" safeAreaEdges={['top']} contentContainerStyle={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
       <Text style={styles.header}>{translate('birthdate-selection.header')}</Text>
       <DateInputField
@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 26,
-    paddingTop: 100,
     gap: spacing.xxl,
     alignItems: 'center',
     backgroundColor: '#fff',

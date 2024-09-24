@@ -65,7 +65,7 @@ const RoleSelectionScreen = () => {
   }, [selectedRole, fadeAnim]);
 
   return (
-    <Screen preset="fixed" contentContainerStyle={styles.container}>
+    <Screen preset="fixed" safeAreaEdges={['top']} contentContainerStyle={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
       <View style={styles.heading}>
         <Text style={styles.header}>{translate('role_selection.header')}</Text>
@@ -126,7 +126,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 26,
-    paddingTop: 80,
     gap: spacing.xl,
     backgroundColor: '#fff',
     justifyContent: 'flex-start',
@@ -175,7 +174,7 @@ const pickerSelectStyles = StyleSheet.create({
     paddingVertical: spacing.sm,
     paddingHorizontal: 10,
     color: '#6C6C6C',
-    paddingRight: 30, 
+    paddingRight: 30,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#c2c2c2',
     borderRadius: 10,
@@ -185,7 +184,7 @@ const pickerSelectStyles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: spacing.xs,
     color: '#6C6C6C',
-    paddingRight: 30, 
+    paddingRight: 30,
     borderColor: '#c2c2c2',
     borderRadius: 10,
     borderWidth: StyleSheet.hairlineWidth,

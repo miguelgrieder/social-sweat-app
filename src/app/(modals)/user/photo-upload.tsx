@@ -30,7 +30,7 @@ const RoleSelectionScreen = () => {
   };
 
   return (
-    <Screen preset="fixed" contentContainerStyle={styles.container}>
+    <Screen preset="fixed" safeAreaEdges={['top']} contentContainerStyle={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
       <Text style={styles.header}>{translate('photo-upload.header')}</Text>
       {user && (
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 26,
     gap: spacing.xxl,
-    paddingTop: 100,
     alignItems: 'center',
     backgroundColor: '#fff',
     justifyContent: 'flex-start',

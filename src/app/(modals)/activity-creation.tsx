@@ -205,6 +205,7 @@ const CreateActivity = () => {
           ]}
           value={activityType}
           style={pickerSelectStyles}
+          useNativeAndroidPickerStyle={false}
           placeholder={{}}
         />
       </View>
@@ -222,6 +223,7 @@ const CreateActivity = () => {
           ]}
           value={sport}
           style={pickerSelectStyles}
+          useNativeAndroidPickerStyle={false}
           placeholder={{}}
         />
       </View>
@@ -231,7 +233,7 @@ const CreateActivity = () => {
       <View style={[styles.pickerContainer, { borderTopWidth: 0 }]}>
         <TextInput
           placeholder="0"
-          style={[styles.input, { borderWidth: 1, marginBottom: 0 }]}
+          style={[styles.input, { borderWidth: StyleSheet.hairlineWidth, marginBottom: 0 }]}
           keyboardType="numeric"
           value={priceValue}
           onChangeText={(text) => setPriceValue(text.replace(/[^0-9.]/g, ''))}
@@ -245,6 +247,7 @@ const CreateActivity = () => {
           ]}
           value={priceUnit}
           style={pickerSelectStyles}
+          useNativeAndroidPickerStyle={false}
           placeholder={{}}
         />
       </View>
@@ -320,16 +323,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   input: {
-    borderWidth: 1,
-    borderColor: Colors.grey,
+    color: Colors.grey,
     padding: spacing.sm,
+    borderColor: Colors.grey,
     borderRadius: spacing.sm,
-    width: '100%',
     marginBottom: spacing.md,
+    borderWidth: StyleSheet.hairlineWidth,
   },
   imageUpload: {
-    width: '100%',
     height: 200,
+    width: '100%',
     backgroundColor: Colors.primary_light,
     justifyContent: 'center',
     alignItems: 'center',
@@ -347,11 +350,11 @@ const styles = StyleSheet.create({
     fontFamily: 'mon',
   },
   pickerContainer: {
-    borderWidth: 1,
-    borderColor: Colors.grey,
-    borderRadius: spacing.sm,
     width: '100%',
+    borderColor: Colors.grey,
     marginBottom: spacing.md,
+    borderRadius: spacing.sm,
+    borderWidth: StyleSheet.hairlineWidth,
   },
   mapContainer: {
     height: 300,
@@ -372,19 +375,20 @@ const styles = StyleSheet.create({
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    fontSize: 16,
-    paddingVertical: spacing.sm,
+    height: 54,
+    borderRadius: 10,
+    color: Colors.grey,
     paddingHorizontal: 0, // Adjusted to align with the input field
-    color: 'black',
     paddingRight: spacing.lg,
-    marginBottom: spacing.md,
+    paddingVertical: spacing.sm,
   },
   inputAndroid: {
-    fontSize: 16,
-    paddingHorizontal: 0,
-    paddingVertical: spacing.sm,
-    color: 'black',
+    height: 54,
+    borderRadius: 10,
+    color: Colors.grey,
+    paddingHorizontal: spacing.sm,
     paddingRight: spacing.lg,
+    paddingVertical: spacing.xs,
   },
 });
 

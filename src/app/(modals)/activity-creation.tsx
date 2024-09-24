@@ -163,7 +163,7 @@ const CreateActivity = () => {
   );
 
   return (
-    <Screen preset="scroll" contentContainerStyle={styles.container} safeAreaEdges={['top']}>
+    <Screen preset="scroll" contentContainerStyle={styles.container}>
       {/* Image selection*/}
       <TouchableOpacity style={styles.imageUpload} onPress={onCaptureImage}>
         {image ? (
@@ -228,10 +228,10 @@ const CreateActivity = () => {
 
       {/* Price */}
       {renderTitle('label_price')}
-      <View style={styles.pickerContainer}>
+      <View style={[styles.pickerContainer, { borderTopWidth: 0 }]}>
         <TextInput
           placeholder="0"
-          style={styles.input}
+          style={[styles.input, { borderWidth: 1, marginBottom: 0 }]}
           keyboardType="numeric"
           value={priceValue}
           onChangeText={(text) => setPriceValue(text.replace(/[^0-9.]/g, ''))}
@@ -266,18 +266,20 @@ const CreateActivity = () => {
 
       {/* Location */}
       {renderTitle('label_map')}
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: coordinates.latitude,
-          longitude: coordinates.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-        onPress={handleMapPress}
-      >
-        <Marker coordinate={coordinates} />
-      </MapView>
+      <View style={styles.mapContainer}>
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: coordinates.latitude,
+            longitude: coordinates.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+          onPress={handleMapPress}
+        >
+          <Marker coordinate={coordinates} />
+        </MapView>
+      </View>
 
       <Text style={styles.coordinatesText}>
         {translate('create_activity_screen.selected_coordinates')}: {coordinates.latitude},{' '}
@@ -335,6 +337,7 @@ const styles = StyleSheet.create({
     borderRadius: spacing.sm,
   },
   uploadedImage: {
+    borderRadius: spacing.sm,
     width: '100%',
     height: '100%',
   },
@@ -342,7 +345,6 @@ const styles = StyleSheet.create({
     color: Colors.grey,
     fontSize: 16,
     fontFamily: 'mon',
-    paddingTop: spacing.xl,
   },
   pickerContainer: {
     borderWidth: 1,
@@ -350,12 +352,17 @@ const styles = StyleSheet.create({
     borderRadius: spacing.sm,
     width: '100%',
     marginBottom: spacing.md,
-    paddingHorizontal: spacing.sm,
+  },
+  mapContainer: {
+    height: 300,
+    overflow: 'hidden',
+    borderRadius: spacing.sm,
+    marginBottom: spacing.sm,
+    backgroundColor: Colors.primary,
   },
   map: {
+    flex: 1,
     width: '100%',
-    height: 300,
-    marginBottom: spacing.md,
   },
   coordinatesText: {
     textAlign: 'center',
@@ -378,7 +385,6 @@ const pickerSelectStyles = StyleSheet.create({
     paddingVertical: spacing.sm,
     color: 'black',
     paddingRight: spacing.lg,
-    marginBottom: spacing.md,
   },
 });
 

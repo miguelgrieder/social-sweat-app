@@ -2,12 +2,12 @@ import React from 'react';
 import { Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { useUser } from '@clerk/clerk-expo';
-import { Screen } from '@/components/Screen';
 import * as ImagePicker from 'expo-image-picker';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 import Colors from '@/constants/Colors';
 import { defaultStyles } from '@/constants/Styles';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const RoleSelectionScreen = () => {
   const router = useRouter();
@@ -30,7 +30,7 @@ const RoleSelectionScreen = () => {
   };
 
   return (
-    <Screen preset="fixed" safeAreaEdges={['top']} contentContainerStyle={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
       <Text style={styles.header}>{translate('photo-upload.header')}</Text>
       {user && (
@@ -45,7 +45,7 @@ const RoleSelectionScreen = () => {
       >
         <Text style={defaultStyles.btnText}>{translate('common.continue')}</Text>
       </TouchableOpacity>
-    </Screen>
+    </SafeAreaView>
   );
 };
 
@@ -54,7 +54,8 @@ export default RoleSelectionScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 26,
+    paddingHorizontal: 26,
+    paddingVertical: 20,
     gap: spacing.xxl,
     alignItems: 'center',
     backgroundColor: '#fff',

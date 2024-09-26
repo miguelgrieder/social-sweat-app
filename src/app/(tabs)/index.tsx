@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, View, ViewStyle, StyleSheet } from 'react-native';
-import { Screen } from 'src/components/Screen';
+import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { translate } from '@/app/services/translate';
 import { Link } from 'expo-router';
 import { defaultStyles } from '@/constants/Styles';
@@ -17,7 +16,7 @@ const Home = () => {
   };
 
   return (
-    <Screen preset="fixed" contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       {/* Language Switcher */}
       <View style={styles.languageSwitcher}>
         <Text style={styles.languageLabel}>{translate('common.language')}</Text>
@@ -39,7 +38,7 @@ const Home = () => {
           <Text style={defaultStyles.btnText}>{translate('create_activity_screen.title')}</Text>
         </TouchableOpacity>
       </Link>
-    </Screen>
+    </View>
   );
 };
 

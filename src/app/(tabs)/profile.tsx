@@ -1,13 +1,4 @@
-import {
-  View,
-  Text,
-  Button,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  TextInput,
-} from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useAuth, useUser } from '@clerk/clerk-expo';
 import { Link } from 'expo-router';
@@ -15,9 +6,9 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { defaultStyles } from '@/constants/Styles';
 import * as ImagePicker from 'expo-image-picker';
-import { Screen } from 'src/components/Screen';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Page = () => {
   const { signOut, isSignedIn } = useAuth();
@@ -71,7 +62,7 @@ const Page = () => {
     }
   };
   return (
-    <Screen preset="fixed" contentContainerStyle={defaultStyles.container} safeAreaEdges={['top']}>
+    <SafeAreaView style={defaultStyles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>{translate('profile_screen.header')}</Text>
         <Ionicons name="notifications-outline" size={26} />
@@ -126,7 +117,7 @@ const Page = () => {
           <Button title={translate('common.login')} color={Colors.dark} />
         </Link>
       )}
-    </Screen>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
@@ -134,7 +125,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: spacing.lg,
+    paddingVertical: spacing.xs,
+    paddingHorizontal: spacing.lg,
   },
   header: {
     fontFamily: 'mon-b',

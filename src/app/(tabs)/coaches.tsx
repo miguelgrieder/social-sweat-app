@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, Image, FlatList, StyleSheet, ViewStyle } from 'react-native';
-import { Screen } from 'src/components/Screen';
+import { Text, View, Image, FlatList, StyleSheet } from 'react-native';
 import { translate } from '@/app/services/translate';
 import { fetchUsers } from '@/api/fetchUsers';
 import { User } from '@/interfaces/user';
@@ -46,14 +45,14 @@ const Coaches = () => {
   };
 
   return (
-    <Screen preset="scroll" contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <FlatList
         data={users}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContent}
       />
-    </Screen>
+    </View>
   );
 };
 

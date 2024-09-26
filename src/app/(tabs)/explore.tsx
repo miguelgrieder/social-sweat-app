@@ -4,9 +4,9 @@ import ExploreHeader from '@/components/ExploreHeader';
 import ActivitiesMap from '@/components/ActivitiesMap';
 import ActivitiesBottomSheet from '@/components/ActivitiesBottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Screen } from 'src/components/Screen';
 import { fetchActivities } from '@/api/fetchActivities';
 import { useFocusEffect } from '@react-navigation/native';
+import { View } from 'react-native';
 
 const Page = () => {
   const [category, setCategory] = useState<string>('Trending');
@@ -32,7 +32,7 @@ const Page = () => {
   };
 
   return (
-    <Screen preset="fixed" contentContainerStyle={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <Stack.Screen
         options={{
           header: () => <ExploreHeader onCategoryChanged={onDataChanged} />,
@@ -42,7 +42,7 @@ const Page = () => {
         <ActivitiesMap activities={items} />
         <ActivitiesBottomSheet activities={items} category={category} />
       </GestureHandlerRootView>
-    </Screen>
+    </View>
   );
 };
 

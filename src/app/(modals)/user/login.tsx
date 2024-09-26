@@ -3,8 +3,6 @@ import { useOAuth } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { View, StyleSheet, TextInput, Text, TouchableOpacity } from 'react-native';
-import { Screen } from '@/components/Screen';
-
 import { useWarmUpBrowser } from '@/hooks/useWarmUpBrowser';
 import { defaultStyles } from '@/constants/Styles';
 import { translate } from '@/app/services/translate';
@@ -44,7 +42,7 @@ const Page = () => {
   };
 
   return (
-    <Screen preset="auto" contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <TextInput
         autoCapitalize="none"
         placeholder={translate('common.email')}
@@ -79,7 +77,7 @@ const Page = () => {
           <Text style={styles.btnOutlineText}>{translate('login_modal.continue_with')} Google</Text>
         </TouchableOpacity>
       </View>
-    </Screen>
+    </View>
   );
 };
 

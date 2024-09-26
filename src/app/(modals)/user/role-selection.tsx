@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated, ScrollView } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { useUser } from '@clerk/clerk-expo';
-import { Screen } from '@/components/Screen';
 import { defaultStyles } from '@/constants/Styles';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 import RNPickerSelect from 'react-native-picker-select';
 import SportsList from '@/components/SportsList';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const RoleSelectionScreen = () => {
   const router = useRouter();
@@ -65,58 +65,63 @@ const RoleSelectionScreen = () => {
   }, [selectedRole, fadeAnim]);
 
   return (
-    <Screen preset="fixed" safeAreaEdges={['top']} contentContainerStyle={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
-      <View style={styles.heading}>
-        <Text style={styles.header}>{translate('role_selection.header')}</Text>
-        <Text style={styles.subtitle}>{translate('role_selection.subtitle')}</Text>
-      </View>
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false} // Remove a barra de rolagem vertical
+      >
+        <View style={styles.heading}>
+          <Text style={styles.header}>{translate('role_selection.header')}</Text>
+          <Text style={styles.subtitle}>{translate('role_selection.subtitle')}</Text>
+        </View>
 
-      <View style={styles.formContainer}>
-        <Text style={styles.aboutYou}>{translate('role_selection.about_you')}</Text>
-        <Text style={styles.description}>{translate('role_selection.description')}</Text>
+        <View style={styles.formContainer}>
+          <Text style={styles.aboutYou}>{translate('role_selection.about_you')}</Text>
+          <Text style={styles.description}>{translate('role_selection.description')}</Text>
 
-        <RNPickerSelect
-          onValueChange={(itemValue) => setSelectedRole(itemValue)}
-          items={[
-            { label: translate('role_selection.role_user'), value: 'user' },
-            { label: translate('role_selection.role_coach'), value: 'coach' },
-            { label: translate('role_selection.role_company'), value: 'company' },
-          ]}
-          value={selectedRole}
-          style={pickerSelectStyles}
-          placeholder={{
-            label: translate('role_selection.select_your_role'),
-            value: null,
-            color: '#9EA0A4',
-          }}
-          useNativeAndroidPickerStyle={false}
-          Icon={() => <View style={styles.iconContainer} />}
-        />
+          <RNPickerSelect
+            onValueChange={(itemValue) => setSelectedRole(itemValue)}
+            items={[
+              { label: translate('role_selection.role_user'), value: 'user' },
+              { label: translate('role_selection.role_coach'), value: 'coach' },
+              { label: translate('role_selection.role_company'), value: 'company' },
+            ]}
+            value={selectedRole}
+            style={pickerSelectStyles}
+            placeholder={{
+              label: translate('role_selection.select_your_role'),
+              value: null,
+              color: '#9EA0A4',
+            }}
+            useNativeAndroidPickerStyle={false}
+            Icon={() => <View style={styles.iconContainer} />}
+          />
 
-        {selectedRole && (
-          <Animated.View style={{ opacity: fadeAnim }}>
-            <SportsList
-              title={getRoleBasedListTitle()}
-              onSelectedTagsChange={(tags) => {
-                setSelectedTags(tags);
-              }}
-            />
-          </Animated.View>
-        )}
+          {selectedRole && (
+            <Animated.View style={{ opacity: fadeAnim }}>
+              <SportsList
+                title={getRoleBasedListTitle()}
+                onSelectedTagsChange={(tags) => {
+                  setSelectedTags(tags);
+                }}
+              />
+            </Animated.View>
+          )}
 
-        <TouchableOpacity
-          style={[
-            defaultStyles.btn,
-            !(selectedRole && selectedTags.length > 0) && styles.disabledBtn,
-          ]}
-          onPress={handleRoleSelection}
-          disabled={!selectedRole || selectedTags.length === 0 || isButtonDisabled}
-        >
-          <Text style={defaultStyles.btnText}>{translate('common.continue')}</Text>
-        </TouchableOpacity>
-      </View>
-    </Screen>
+          <TouchableOpacity
+            style={[
+              defaultStyles.btn,
+              !(selectedRole && selectedTags.length > 0) && styles.disabledBtn,
+            ]}
+            onPress={handleRoleSelection}
+            disabled={!selectedRole || selectedTags.length === 0 || isButtonDisabled}
+          >
+            <Text style={defaultStyles.btnText}>{translate('common.continue')}</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -125,9 +130,13 @@ export default RoleSelectionScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 26,
-    gap: spacing.xl,
+    paddingHorizontal: 26,
     backgroundColor: '#fff',
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    paddingVertical: 20,
+    gap: spacing.xl,
     justifyContent: 'flex-start',
   },
   heading: {

@@ -54,6 +54,7 @@ const SportsList = ({ showInput, title, onSelectedTagsChange }: SportsListProps)
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.tagContainer}
+          nestedScrollEnabled={true}
         >
           {filteredCategories.map((category, index) => (
             <TouchableOpacity

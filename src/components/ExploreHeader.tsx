@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useRef, useState } from 'react';
 import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,75 +7,9 @@ import * as Haptics from 'expo-haptics';
 import { Link } from 'expo-router';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
-import { SportType } from '@/interfaces/activity';
 import { sportTypeIconMappings } from '@/constants/sportTypeIconMappings';
-
-interface Category {
-  sportType: SportType | string;
-}
-
-export const categories: Category[] = [
-  {
-    sportType: 'trending-up',
-  },
-  {
-    sportType: SportType.Soccer,
-  },
-  {
-    sportType: SportType.Basketball,
-  },
-  {
-    sportType: SportType.Tennis,
-  },
-  {
-    sportType: SportType.Gym,
-  },
-  {
-    sportType: SportType.Yoga,
-  },
-  {
-    sportType: SportType.Triathlon,
-  },
-  {
-    sportType: SportType.Run,
-  },
-  {
-    sportType: SportType.MartialArts,
-  },
-  {
-    sportType: SportType.Motorsports,
-  },
-  {
-    sportType: SportType.Volleyball,
-  },
-  {
-    sportType: SportType.Handball,
-  },
-  {
-    sportType: SportType.Hockey,
-  },
-  {
-    sportType: SportType.Ski,
-  },
-  {
-    sportType: SportType.SkiWater,
-  },
-  {
-    sportType: SportType.Baseball,
-  },
-  {
-    sportType: SportType.Skateboard,
-  },
-  {
-    sportType: SportType.Esports,
-  },
-  {
-    sportType: SportType.Swim,
-  },
-  {
-    sportType: SportType.Other,
-  },
-];
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { categories } from '@/constants/sportCategories';
 
 interface Props {
   onCategoryChanged: (category: string) => void;
@@ -98,22 +32,20 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: '#fff', paddingTop: 29 }}>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <SafeAreaView style={styles.safeAreaView}>
         <View style={styles.actionRow}>
           <Link href={'/(modals)/search'} asChild>
-            <TouchableOpacity>
-              <View style={styles.searchBtn}>
-                <Ionicons name="search" size={24} />
-                <View>
-                  <Text style={{ fontFamily: 'mon-sb' }}>
-                    {translate('explorer_screen.explorer_header.search')}
-                  </Text>
-                  <Text style={{ color: Colors.grey, fontFamily: 'mon' }}>
-                    {translate('explorer_screen.explorer_header.any_sport')} ·{' '}
-                    {translate('explorer_screen.explorer_header.any_location')}
-                  </Text>
-                </View>
+            <TouchableOpacity style={styles.searchBtn}>
+              <Ionicons name="search" size={24} />
+              <View>
+                <Text style={{ fontFamily: 'mon-sb' }}>
+                  {translate('explorer_screen.explorer_header.search')}
+                </Text>
+                <Text style={{ color: Colors.grey, fontFamily: 'mon' }}>
+                  {translate('explorer_screen.explorer_header.any_sport')} ·{' '}
+                  {translate('explorer_screen.explorer_header.any_location')}
+                </Text>
               </View>
             </TouchableOpacity>
           </Link>
@@ -132,6 +64,7 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
             gap: 20,
             paddingHorizontal: spacing.md,
           }}
+          style={{ flex: 1 }}
         >
           {categories.map((item, index) => (
             <TouchableOpacity
@@ -155,16 +88,16 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
             </TouchableOpacity>
           ))}
         </ScrollView>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
-    height: 130,
-    elevation: 2,
+    backgroundColor: Colors.background,
+    position: 'absolute',
+    elevation: 5,
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 6,
@@ -173,32 +106,35 @@ const styles = StyleSheet.create({
       height: 10,
     },
   },
+  safeAreaView: {},
   actionRow: {
+    flex: 1,
+    height: 90,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: spacing.lg,
-    paddingBottom: spacing.md,
   },
-
   searchBtn: {
-    backgroundColor: '#fff',
-    flexDirection: 'row',
+    flex: 1,
     gap: 10,
-    padding: spacing.sm,
-    alignItems: 'center',
-    width: 280,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#c2c2c2',
-    borderRadius: 30,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOpacity: 0.12,
-    shadowRadius: 8,
+    marginRight: spacing.md,
     shadowOffset: {
       width: 1,
       height: 1,
     },
+    elevation: 5,
+    shadowRadius: 8,
+    borderRadius: 30,
+    overflow: 'hidden',
+    padding: spacing.sm,
+    shadowColor: '#000',
+    shadowOpacity: 0.12,
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderColor: '#c2c2c2',
+    backgroundColor: Colors.background,
+    borderWidth: StyleSheet.hairlineWidth,
   },
   filterBtn: {
     padding: spacing.sm,

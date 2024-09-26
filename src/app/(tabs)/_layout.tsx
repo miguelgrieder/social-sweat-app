@@ -1,8 +1,9 @@
-import { Tabs } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { router, Tabs } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons/';
 import { translate } from '@/app/services/translate';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
+import { TouchableOpacity } from 'react-native';
 
 const Layout = () => {
   return (
@@ -20,6 +21,16 @@ const Layout = () => {
           tabBarLabel: translate('navbar.home'),
           tabBarIcon: ({ size, color }) => (
             <Ionicons name="home-outline" size={size} color={color} />
+          ),
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => {
+                router.navigate('/(modals)/user/role-selection');
+              }}
+              style={{ marginRight: 15 }}
+            >
+              <MaterialCommunityIcons name="account-cog-outline" size={24} color={Colors.primary} />
+            </TouchableOpacity>
           ),
         }}
       />

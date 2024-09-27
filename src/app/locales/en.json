@@ -50,8 +50,13 @@
     "role_coach_title": "Select the sports you coach",
     "role_company_title": "Select the sports your company offers"
   },
-  "photo-upload": {
-    "header": "Upload Photo Profile",
+  "photo-username-selection": {
+    "header": "Choose profile picture and username",
+    "input-label": "Select your username",
+    "error-message": "Username already in use.",
+    "placeholder": "Username",
+    "too-short": "Too short",
+    "invalid": "Invalid Username",
     "description": "Here, you can personalize your profile with a picture that represents you. Simply select an image from your device, and we'll handle the rest. Make sure your photo reflects who you are, whether it's a selfie, a favorite snapshot, or an image that resonates with you. Let's make your profile uniquely yours!"
   },
   "birthdate-selection": {

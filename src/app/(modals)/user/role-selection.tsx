@@ -29,7 +29,7 @@ const RoleSelectionScreen = () => {
         console.log(
           `Unsafe metadata saved successfully. role: ${selectedRole}, sports: {${selectedTags}}`
         );
-        router.navigate('/(modals)/user/photo-upload');
+        router.navigate('/(modals)/user/photo-username-selection');
         return;
       } catch (error) {
         console.error('Error updating unsafe metadata:', error);

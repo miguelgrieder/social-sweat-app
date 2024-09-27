@@ -11,7 +11,7 @@ const Coaches = () => {
   useEffect(() => {
     const getUsers = async () => {
       const filterBody = {
-        unsafe_metadata_role: 'coach',
+        role: 'coach',
       };
 
       const fetchedUsers = await fetchUsers(filterBody);

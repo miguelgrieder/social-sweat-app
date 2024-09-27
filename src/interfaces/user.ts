@@ -1,9 +1,21 @@
 // Define the UserModel interface
+import { SportType } from '@/interfaces/activity';
+
+export enum Role {
+  Coach = 'coach',
+  User = 'user',
+  Company = 'company',
+}
+
+export interface UserMetadata {
+  role: Role;
+  sports?: SportType[];
+  birth_date: string; // Expected format: 'YYYY/MM/DD'
+}
+
 export interface User {
   id: string;
-  public_metadata: { [key: string]: any };
-  private_metadata?: { [key: string]: any } | null;
-  unsafe_metadata: { [key: string]: any };
+  user_metadata: UserMetadata;
   email_address?: string | null;
   phone_number?: string | null;
   image_url?: string | null;
@@ -16,5 +28,5 @@ export interface User {
 
 // Define the FilterUser interface
 export interface FilterUser {
-  unsafe_metadata_role: string;
+  role: string;
 }

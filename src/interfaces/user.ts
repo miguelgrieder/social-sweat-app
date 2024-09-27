@@ -7,10 +7,20 @@ export enum Role {
   Company = 'company',
 }
 
+export interface UserSocialMedias {
+  user_youtube?: string;
+  user_instagram?: string;
+  user_facebook?: string;
+  user_tiktok?: string;
+  user_strava?: string;
+}
+
 export interface UserMetadata {
   role: Role;
   sports?: SportType[];
   birth_date: string; // Expected format: 'YYYY/MM/DD'
+  user_social_medias?: UserSocialMedias;
+  profile_description?: string;
 }
 
 export interface User {

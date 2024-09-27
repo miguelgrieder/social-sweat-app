@@ -36,7 +36,12 @@ const Page = () => {
   };
 
   return (
-    <BlurView intensity={90} style={styles.container} tint="light">
+    <BlurView
+      experimentalBlurMethod="dimezisBlurView"
+      style={styles.container}
+      intensity={70}
+      tint="light"
+    >
       {/*  Where */}
       <View style={styles.card}>
         {openCard != 0 && (
@@ -156,7 +161,11 @@ const Page = () => {
       </View>
 
       {/* Footer */}
-      <Animated.View style={defaultStyles.footer} entering={SlideInDown.delay(200)}>
+
+      <Animated.View
+        style={[defaultStyles.footer, { height: 70 }]}
+        entering={SlideInDown.delay(200)}
+      >
         <View
           style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}
         >

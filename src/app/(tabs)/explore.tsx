@@ -4,16 +4,18 @@ import ExploreHeader from '@/components/ExploreHeader';
 import ActivitiesMap from '@/components/ActivitiesMap';
 import ActivitiesBottomSheet from '@/components/ActivitiesBottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Screen } from 'src/components/Screen';
 import { fetchActivities } from '@/api/fetchActivities';
 import { useFocusEffect } from '@react-navigation/native';
+import { View, StyleSheet, Dimensions } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+const { height: screenHeight } = Dimensions.get('window'); // Obtém a altura da tela
 
 const Page = () => {
   const [category, setCategory] = useState<string>('Trending');
   const [items, setItems] = useState<any[]>([]);
 
   useFocusEffect(
-    // Always load activities when enter the page
     useCallback(() => {
       const getData = async () => {
         const filterBody = {
@@ -24,7 +26,7 @@ const Page = () => {
       };
 
       getData();
-    }, []) // Empty dependency array ensures the callback doesn't change
+    }, [])
   );
 
   const onDataChanged = (category: string) => {
@@ -32,18 +34,26 @@ const Page = () => {
   };
 
   return (
-    <Screen preset="fixed" contentContainerStyle={{ flex: 1 }}>
-      <Stack.Screen
-        options={{
-          header: () => <ExploreHeader onCategoryChanged={onDataChanged} />,
-        }}
-      />
-      <GestureHandlerRootView>
+    <SafeAreaView style={styles.container}>
+      <Stack.Screen options={{ headerShown: false }} />
+      <ExploreHeader onCategoryChanged={onDataChanged} />
+      <GestureHandlerRootView style={styles.gestureHandlerContainer}>
         <ActivitiesMap activities={items} />
         <ActivitiesBottomSheet activities={items} category={category} />
       </GestureHandlerRootView>
-    </Screen>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 90,
+  },
+  gestureHandlerContainer: {
+    flex: 1,
+    zIndex: -9999,
+  },
+});
 
 export default Page;

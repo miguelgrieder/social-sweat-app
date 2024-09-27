@@ -1,6 +1,15 @@
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity, Share } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+  Share,
+  StatusBar,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import Animated, {
@@ -12,7 +21,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import { defaultStyles } from '@/constants/Styles';
 import { Activity } from '@/interfaces/activity';
-import { Screen } from 'src/components/Screen';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 import { fetchActivities } from '@/api/fetchActivities';
@@ -144,8 +152,10 @@ const Page = () => {
       opacity: interpolate(scrollOffset.value, [0, IMG_HEIGHT / 1.5], [0, 1]),
     };
   }, []);
+
   return (
-    <Screen preset="scroll" contentContainerStyle={styles.container}>
+    <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="rgba(0,0,0,0.3)" />
       <Animated.ScrollView
         contentContainerStyle={{ paddingBottom: 100 }}
         ref={scrollRef}
@@ -169,6 +179,7 @@ const Page = () => {
             <Ionicons name="star" size={16} />
             <Text style={styles.ratings}>
               {activity.reviews.review_scores_rating / 20} · {activity.reviews.number_of_reviews}
+              &nbsp;
               {translate('activity_screen.reviews')}
             </Text>
           </View>
@@ -191,7 +202,10 @@ const Page = () => {
         </View>
       </Animated.ScrollView>
 
-      <Animated.View style={defaultStyles.footer} entering={SlideInDown.delay(200)}>
+      <Animated.View
+        style={[defaultStyles.footer, { height: 70 }]}
+        entering={SlideInDown.delay(200)}
+      >
         <View
           style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}
         >
@@ -203,19 +217,19 @@ const Page = () => {
             <Text>{translate('activity_screen.registration')}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[defaultStyles.btn, { paddingRight: 20, paddingLeft: 20 }]}>
+          <TouchableOpacity style={[defaultStyles.btn, { paddingHorizontal: 20 }]}>
             <Text style={defaultStyles.btnText}>{translate('activity_screen.join_now')}</Text>
           </TouchableOpacity>
         </View>
       </Animated.View>
-    </Screen>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: Colors.background,
   },
   image: {
     height: IMG_HEIGHT,
@@ -223,7 +237,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     padding: spacing.lg,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
   },
   name: {
     fontSize: 26,

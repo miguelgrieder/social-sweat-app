@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  Image,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Keyboard,
+} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as ImagePicker from 'expo-image-picker';
 import Geocoder from 'react-native-geocoding';
-import { Screen } from 'src/components/Screen';
 import { spacing } from '@/constants/spacing';
 import Colors from '@/constants/Colors';
 import { createActivity } from '@/api/createActivity';
@@ -163,171 +174,179 @@ const CreateActivity = () => {
   );
 
   return (
-    <Screen preset="scroll" contentContainerStyle={styles.container} safeAreaEdges={['top']}>
-      {/* Image selection*/}
-      <TouchableOpacity style={styles.imageUpload} onPress={onCaptureImage}>
-        {image ? (
-          <Image source={{ uri: image }} style={styles.uploadedImage} />
-        ) : (
-          <Text style={styles.insertImageText}>
-            {translate('create_activity_screen.upload_photo')}
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      <ScrollView>
+        <View style={styles.container}>
+          {/* Image selection*/}
+          <TouchableOpacity style={styles.imageUpload} onPress={onCaptureImage}>
+            {image ? (
+              <Image source={{ uri: image }} style={styles.uploadedImage} />
+            ) : (
+              <Text style={styles.insertImageText}>
+                {translate('create_activity_screen.upload_photo')}
+              </Text>
+            )}
+          </TouchableOpacity>
+          {/* Title */}
+          {renderTitle('label_title')}
+          <TextInput
+            placeholder={translate('create_activity_screen.placeholder_title')}
+            style={styles.input}
+            value={title}
+            onChangeText={setTitle}
+          />
+          {/* Description */}
+          {renderTitle('label_description')}
+          <TextInput
+            placeholder={translate('create_activity_screen.placeholder_description')}
+            style={styles.input}
+            value={description}
+            onChangeText={setDescription}
+          />
+          {/* Activity Type */}
+          {renderTitle('label_activity_type')}
+          <View style={styles.pickerContainer}>
+            <RNPickerSelect
+              onValueChange={(itemValue) => setActivityType(itemValue)}
+              items={[
+                { label: capitalize(translate('activity_types.spot')), value: ActivityType.Spot },
+                {
+                  label: capitalize(translate('activity_types.session')),
+                  value: ActivityType.Session,
+                },
+                { label: capitalize(translate('activity_types.event')), value: ActivityType.Event },
+              ]}
+              value={activityType}
+              style={pickerSelectStyles}
+              useNativeAndroidPickerStyle={false}
+              placeholder={{}}
+            />
+          </View>
+          {/* Sport Type */}
+          {renderTitle('label_sport')}
+          <View style={styles.pickerContainer}>
+            <RNPickerSelect
+              onValueChange={(itemValue) => setSport(itemValue)}
+              items={[
+                { label: translate('activity_sports.soccer'), value: SportType.Soccer },
+                { label: translate('activity_sports.baseball'), value: SportType.Baseball },
+                { label: translate('activity_sports.basketball'), value: SportType.Basketball },
+                { label: translate('activity_sports.motorsports'), value: SportType.Swim },
+              ]}
+              value={sport}
+              style={pickerSelectStyles}
+              useNativeAndroidPickerStyle={false}
+              placeholder={{}}
+            />
+          </View>
+          {/* Price */}
+          {renderTitle('label_price')}
+          <View style={[styles.pickerContainer, { borderTopWidth: 0 }]}>
+            <TextInput
+              placeholder="0"
+              style={[styles.input, { borderWidth: StyleSheet.hairlineWidth, marginBottom: 0 }]}
+              keyboardType="numeric"
+              value={priceValue}
+              onChangeText={(text) => setPriceValue(text.replace(/[^0-9.]/g, ''))}
+            />
+            <RNPickerSelect
+              onValueChange={(itemValue) => setPriceUnit(itemValue)}
+              items={[
+                { label: `$ - ${capitalize(translate('common.dollar'))}`, value: '$' },
+                { label: `€ - ${capitalize(translate('common.euro'))}`, value: '€' },
+                { label: `R$ - ${capitalize(translate('common.real'))}`, value: 'R$' },
+              ]}
+              value={priceUnit}
+              style={pickerSelectStyles}
+              useNativeAndroidPickerStyle={false}
+              placeholder={{}}
+            />
+          </View>
+          {/* Date & Time */}
+          {renderTitle('label_date_time')}
+          <TextInput
+            placeholder={translate('create_activity_screen.placeholder_datetime_start')}
+            style={styles.input}
+            value={datetimeStart}
+            onChangeText={setDatetimeStart}
+          />
+          <TextInput
+            placeholder={translate('create_activity_screen.placeholder_datetime_finish')}
+            style={styles.input}
+            value={datetimeFinish}
+            onChangeText={setDatetimeFinish}
+          />
+          {/* Location */}
+          {renderTitle('label_map')}
+          <View style={styles.mapContainer}>
+            <MapView
+              style={styles.map}
+              initialRegion={{
+                latitude: coordinates.latitude,
+                longitude: coordinates.longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+              onPress={handleMapPress}
+            >
+              <Marker coordinate={coordinates} />
+            </MapView>
+          </View>
+          <Text style={styles.coordinatesText}>
+            {translate('create_activity_screen.selected_coordinates')}: {coordinates.latitude},{' '}
+            {coordinates.longitude}
           </Text>
-        )}
-      </TouchableOpacity>
-
-      {/* Title */}
-      {renderTitle('label_title')}
-      <TextInput
-        placeholder={translate('create_activity_screen.placeholder_title')}
-        style={styles.input}
-        value={title}
-        onChangeText={setTitle}
-      />
-
-      {/* Description */}
-      {renderTitle('label_description')}
-      <TextInput
-        placeholder={translate('create_activity_screen.placeholder_description')}
-        style={styles.input}
-        value={description}
-        onChangeText={setDescription}
-      />
-
-      {/* Activity Type */}
-      {renderTitle('label_activity_type')}
-      <View style={styles.pickerContainer}>
-        <RNPickerSelect
-          onValueChange={(itemValue) => setActivityType(itemValue)}
-          items={[
-            { label: capitalize(translate('activity_types.spot')), value: ActivityType.Spot },
-            { label: capitalize(translate('activity_types.session')), value: ActivityType.Session },
-            { label: capitalize(translate('activity_types.event')), value: ActivityType.Event },
-          ]}
-          value={activityType}
-          style={pickerSelectStyles}
-          placeholder={{}}
-        />
-      </View>
-
-      {/* Sport Type */}
-      {renderTitle('label_sport')}
-      <View style={styles.pickerContainer}>
-        <RNPickerSelect
-          onValueChange={(itemValue) => setSport(itemValue)}
-          items={[
-            { label: translate('activity_sports.soccer'), value: SportType.Soccer },
-            { label: translate('activity_sports.baseball'), value: SportType.Baseball },
-            { label: translate('activity_sports.basketball'), value: SportType.Basketball },
-            { label: translate('activity_sports.motorsports'), value: SportType.Swim },
-          ]}
-          value={sport}
-          style={pickerSelectStyles}
-          placeholder={{}}
-        />
-      </View>
-
-      {/* Price */}
-      {renderTitle('label_price')}
-      <View style={styles.pickerContainer}>
-        <TextInput
-          placeholder="0"
-          style={styles.input}
-          keyboardType="numeric"
-          value={priceValue}
-          onChangeText={(text) => setPriceValue(text.replace(/[^0-9.]/g, ''))}
-        />
-        <RNPickerSelect
-          onValueChange={(itemValue) => setPriceUnit(itemValue)}
-          items={[
-            { label: `$ - ${capitalize(translate('common.dollar'))}`, value: '$' },
-            { label: `€ - ${capitalize(translate('common.euro'))}`, value: '€' },
-            { label: `R$ - ${capitalize(translate('common.real'))}`, value: 'R$' },
-          ]}
-          value={priceUnit}
-          style={pickerSelectStyles}
-          placeholder={{}}
-        />
-      </View>
-
-      {/* Date & Time */}
-      {renderTitle('label_date_time')}
-      <TextInput
-        placeholder={translate('create_activity_screen.placeholder_datetime_start')}
-        style={styles.input}
-        value={datetimeStart}
-        onChangeText={setDatetimeStart}
-      />
-      <TextInput
-        placeholder={translate('create_activity_screen.placeholder_datetime_finish')}
-        style={styles.input}
-        value={datetimeFinish}
-        onChangeText={setDatetimeFinish}
-      />
-
-      {/* Location */}
-      {renderTitle('label_map')}
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: coordinates.latitude,
-          longitude: coordinates.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-        onPress={handleMapPress}
-      >
-        <Marker coordinate={coordinates} />
-      </MapView>
-
-      <Text style={styles.coordinatesText}>
-        {translate('create_activity_screen.selected_coordinates')}: {coordinates.latitude},{' '}
-        {coordinates.longitude}
-      </Text>
-      {renderTitle('label_location')}
-      <TextInput
-        placeholder={translate('create_activity_screen.placeholder_country')}
-        style={styles.input}
-        value={locationCountry}
-        onChangeText={setLocationCountry}
-      />
-      <TextInput
-        placeholder={translate('create_activity_screen.placeholder_city')}
-        style={styles.input}
-        value={locationCity}
-        onChangeText={setLocationCity}
-      />
-      <TextInput
-        placeholder={translate('create_activity_screen.placeholder_smart_location')}
-        style={styles.input}
-        value={locationSmartLocation}
-        onChangeText={setLocationSmartLocation}
-      />
-
+          {renderTitle('label_location')}
+          <TextInput
+            placeholder={translate('create_activity_screen.placeholder_country')}
+            style={styles.input}
+            value={locationCountry}
+            onChangeText={setLocationCountry}
+          />
+          <TextInput
+            placeholder={translate('create_activity_screen.placeholder_city')}
+            style={styles.input}
+            value={locationCity}
+            onChangeText={setLocationCity}
+          />
+          <TextInput
+            placeholder={translate('create_activity_screen.placeholder_smart_location')}
+            style={styles.input}
+            value={locationSmartLocation}
+            onChangeText={setLocationSmartLocation}
+          />
+        </View>
+      </ScrollView>
       {/* Create activity button */}
-      <TouchableOpacity onPress={onSubmit} style={defaultStyles.btn}>
-        <Text style={defaultStyles.btnText}>{translate('create_activity_screen.create')}</Text>
-      </TouchableOpacity>
-    </Screen>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={onSubmit} style={defaultStyles.btn}>
+          <Text style={defaultStyles.btnText}>{translate('create_activity_screen.create')}</Text>
+        </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
     padding: spacing.md,
-    justifyContent: 'center',
+    paddingBottom: 0,
+    backgroundColor: Colors.background,
   },
   input: {
-    borderWidth: 1,
-    borderColor: Colors.grey,
+    color: Colors.grey,
     padding: spacing.sm,
+    borderColor: Colors.grey,
     borderRadius: spacing.sm,
-    width: '100%',
     marginBottom: spacing.md,
+    borderWidth: StyleSheet.hairlineWidth,
   },
   imageUpload: {
+    height: 240,
     width: '100%',
-    height: 200,
     backgroundColor: Colors.primary_light,
     justifyContent: 'center',
     alignItems: 'center',
@@ -335,6 +354,7 @@ const styles = StyleSheet.create({
     borderRadius: spacing.sm,
   },
   uploadedImage: {
+    borderRadius: spacing.sm,
     width: '100%',
     height: '100%',
   },
@@ -342,43 +362,55 @@ const styles = StyleSheet.create({
     color: Colors.grey,
     fontSize: 16,
     fontFamily: 'mon',
-    paddingTop: spacing.xl,
   },
   pickerContainer: {
-    borderWidth: 1,
-    borderColor: Colors.grey,
-    borderRadius: spacing.sm,
     width: '100%',
+    borderColor: Colors.grey,
     marginBottom: spacing.md,
-    paddingHorizontal: spacing.sm,
+    borderRadius: spacing.sm,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  mapContainer: {
+    height: 300,
+    overflow: 'hidden',
+    borderRadius: spacing.sm,
+    marginBottom: spacing.sm,
+    backgroundColor: Colors.primary,
   },
   map: {
+    flex: 1,
     width: '100%',
-    height: 300,
-    marginBottom: spacing.md,
   },
   coordinatesText: {
     textAlign: 'center',
     marginBottom: spacing.md,
   },
+  buttonContainer: {
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.md,
+    backgroundColor: Colors.background,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderColor: Colors.grey,
+    justifyContent: 'center',
+  },
 });
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    fontSize: 16,
-    paddingVertical: spacing.sm,
+    height: 54,
+    borderRadius: 10,
+    color: Colors.grey,
     paddingHorizontal: 0, // Adjusted to align with the input field
-    color: 'black',
     paddingRight: spacing.lg,
-    marginBottom: spacing.md,
+    paddingVertical: spacing.sm,
   },
   inputAndroid: {
-    fontSize: 16,
-    paddingHorizontal: 0,
-    paddingVertical: spacing.sm,
-    color: 'black',
+    height: 54,
+    borderRadius: 10,
+    color: Colors.grey,
+    paddingHorizontal: spacing.sm,
     paddingRight: spacing.lg,
-    marginBottom: spacing.md,
+    paddingVertical: spacing.xs,
   },
 });
 

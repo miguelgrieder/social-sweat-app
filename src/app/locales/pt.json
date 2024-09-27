@@ -41,7 +41,14 @@
     "header": "SocialSweat",
     "subtitle": "Onde o Fitness Encontra a Comunidade.",
     "about_you": "Conte-nos sobre você",
-    "description": "Compartilhe um pouco sobre você para que possamos adaptar o SocialSweat perfeitamente às suas necessidades. Seja seus interesses fitness, objetivos ou atividades preferidas, estamos aqui para tornar sua experiência pessoal. Vamos começar!"
+    "description": "Compartilhe um pouco sobre você para que possamos adaptar o SocialSweat perfeitamente às suas necessidades. Seja seus interesses fitness, objetivos ou atividades preferidas, estamos aqui para tornar sua experiência pessoal. Vamos começar!",
+    "select_your_role": "Você é...",
+    "role_user": "Usuário",
+    "role_coach": "Coach",
+    "role_company": "Empresa",
+    "role_user_title": "Escolha seus esportes favoritos",
+    "role_coach_title": "Selecione os esportes que vocẽ oferece",
+    "role_company_title": "Selecione os esportes que sua empresa oferece"
   },
   "photo-upload": {
     "header": "Carregar Foto de Perfil",
@@ -137,5 +144,8 @@
     "selected_coordinates": "Coordenadas selecionadas",
     "label_sport": "Esporte",
     "create": "Criar Atividade"
+  },
+  "sports_list": {
+    "find_a_sport": "Procure um esporte..."
   }
 }

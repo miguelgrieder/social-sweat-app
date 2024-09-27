@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, TouchableOpacity, ToastAndroid } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, ToastAndroid, View } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { useUser } from '@clerk/clerk-expo';
-
-import { Screen } from '@/components/Screen';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 import { defaultStyles } from '@/constants/Styles';
 import DateInputField from '@/components/DateInputField';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const BirthdateSelectionScreen = () => {
   const router = useRouter();
@@ -30,7 +29,7 @@ const BirthdateSelectionScreen = () => {
   };
 
   return (
-    <Screen preset="fixed" contentContainerStyle={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
       <Text style={styles.header}>{translate('birthdate-selection.header')}</Text>
       <DateInputField
@@ -50,27 +49,25 @@ const BirthdateSelectionScreen = () => {
       >
         <Text style={defaultStyles.btnText}>{translate('common.continue')}</Text>
       </TouchableOpacity>
-    </Screen>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 26,
-    paddingTop: 100,
     gap: spacing.xxl,
+    paddingVertical: 20,
     alignItems: 'center',
+    paddingHorizontal: 26,
     backgroundColor: '#fff',
     justifyContent: 'flex-start',
   },
-
   header: {
     fontSize: 24,
     fontWeight: '700',
     fontFamily: 'mon-b',
   },
-
   description: {
     fontSize: 14,
     lineHeight: 22,
@@ -80,11 +77,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: spacing.sm,
   },
-
   continueBtn: {
     width: '100%',
   },
-
   disabledContinueBtn: {
     backgroundColor: '#ccc',
   },

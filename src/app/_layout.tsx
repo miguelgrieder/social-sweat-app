@@ -1,3 +1,4 @@
+import { StatusBar } from 'react-native';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack, useRouter } from 'expo-router';
 import { useEffect } from 'react';
@@ -10,6 +11,7 @@ import SearchActivityText from '@/components/SearchActivityText';
 import { translate } from '@/app/services/translate';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
 // Cache the Clerk JWT
 const tokenCache = {
   async getToken(key: string) {
@@ -55,6 +57,7 @@ export default function RootLayout() {
 
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY!} tokenCache={tokenCache}>
+      <StatusBar barStyle="dark-content" />
       <RootLayoutNav />
     </ClerkProvider>
   );
@@ -72,7 +75,11 @@ function RootLayoutNav() {
   // }, [isLoaded]);
 
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        animation: 'ios',
+      }}
+    >
       <Stack.Screen
         name="(modals)/user/login"
         options={{

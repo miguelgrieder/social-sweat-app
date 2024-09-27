@@ -41,7 +41,14 @@
     "header": "SocialSweat",
     "subtitle": "Where Fitness Meets Community.",
     "about_you": "Tell us about yourself",
-    "description": "Share a bit about yourself so we can tailor socialSweat to fit you perfectly. Whether it's your fitness interests, goals, or preferred activities, we're here to make your experience personal. Let's dive in!"
+    "description": "Share a bit about yourself so we can tailor socialSweat to fit you perfectly. Whether it's your fitness interests, goals, or preferred activities, we're here to make your experience personal. Let's dive in!",
+    "select_your_role": "Select your role",
+    "role_user": "User",
+    "role_coach": "Coach",
+    "role_company": "Company",
+    "role_user_title": "Select your favorite sports",
+    "role_coach_title": "Select the sports you coach",
+    "role_company_title": "Select the sports your company offers"
   },
   "photo-upload": {
     "header": "Upload Photo Profile",
@@ -143,5 +150,8 @@
     "selected_coordinates": "Selected coordinates",
     "label_sport": "Sport",
     "create": "Create Activity"
+  },
+  "sports_list": {
+    "find_a_sport": "Find a sport..."
   }
 }

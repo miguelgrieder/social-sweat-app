@@ -50,8 +50,13 @@
     "role_coach_title": "Selecione os esportes que vocẽ oferece",
     "role_company_title": "Selecione os esportes que sua empresa oferece"
   },
-  "photo-upload": {
-    "header": "Carregar Foto de Perfil",
+  "photo-username-selection": {
+    "header": "Escolha uma foto de perfil e um nome de usuário",
+    "input-label": "Escolha seu nome de usuário",
+    "error-message": "Nome de usuário em uso.",
+    "placeholder": "Nome de usuário",
+    "too-short": "Muito curto",
+    "invalid": "Nome de usuário inválido",
     "description": "Aqui, você pode personalizar seu perfil com uma foto que te represente. Simplesmente selecione uma imagem do seu dispositivo, e nós cuidamos do resto. Certifique-se de que sua foto reflete quem você é, seja um selfie, uma foto favorita ou uma imagem com a qual você se identifique. Vamos tornar seu perfil único!"
   },
   "birthdate-selection": {

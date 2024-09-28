@@ -32,7 +32,7 @@ import { User } from '@/interfaces/user';
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
 
-const dummy_listing = {
+const dummy_listing: Activity = {
   id: '',
   name: '',
   description: '',
@@ -48,7 +48,7 @@ const dummy_listing = {
     city: '',
     smart_location: '',
     geometry: {
-      type: '',
+      type: 'Point',
       coordinates: {
         latitude: 0,
         longitude: 0,
@@ -57,7 +57,7 @@ const dummy_listing = {
   },
   participants: {
     current: 0,
-    max: null,
+    max: 0,
   },
   reviews: {
     number_of_reviews: 0,
@@ -65,9 +65,7 @@ const dummy_listing = {
   },
   pictures: [],
   host: {
-    host_picture_url: '',
-    host_name: '',
-    host_since: '',
+    host_user_id: '', // Ensure host_user_id is included
   },
   datetimes: {
     datetime_created: '',
@@ -75,6 +73,7 @@ const dummy_listing = {
     datetime_start: '',
     datetime_finish: '',
   },
+  enabled: true,
 };
 
 const ActivityDetailsScreen = () => {
@@ -92,19 +91,26 @@ const ActivityDetailsScreen = () => {
           activity_id: id,
         };
         const activities = await fetchActivities(filterBody);
-        const activityData = activities[0];
-        setActivity(activityData);
 
-        // Fetch host user data
-        const host_user_id = activityData.host.host_user_id;
-        if (host_user_id) {
-          const users = await fetchUsers({ id: host_user_id });
-          if (users && users.length > 0) {
-            setHostUser(users[0]);
+        if (activities && activities.length > 0) {
+          const activityData = activities[0];
+          setActivity(activityData);
+
+          // Fetch host user data
+          const host_user_id = activityData.host.host_user_id;
+          if (host_user_id) {
+            const users = await fetchUsers({ id: host_user_id });
+            if (users && users.length > 0) {
+              setHostUser(users[0]);
+            }
           }
+        } else {
+          console.warn('No activities found for the given ID.');
+          setActivity(dummy_listing); // Provide default value
         }
       } catch (error) {
         console.error('Error fetching activity or host data:', error);
+        setActivity(dummy_listing); // Provide default value on error
       } finally {
         setLoading(false);
       }
@@ -225,9 +231,9 @@ const ActivityDetailsScreen = () => {
           <Text style={styles.information}>
             {activity.participants.current} {translate('activity_screen.participants')}
           </Text>
-          <View style={{ flexDirection: 'row', gap: 4 }}>
+          <View style={styles.rowContainer}>
             <Ionicons name="star" size={16} />
-            <Text style={styles.ratings}>
+            <Text style={[styles.ratings, { marginLeft: spacing.xxs }]}>
               {activity.reviews.review_scores_rating / 20} · {activity.reviews.number_of_reviews}
               &nbsp;
               {translate('activity_screen.reviews')}
@@ -240,7 +246,7 @@ const ActivityDetailsScreen = () => {
               <>
                 <Image source={{ uri: hostUser.image_url || '' }} style={styles.host} />
                 <View>
-                  <Text style={{ fontWeight: '500', fontSize: 16 }}>
+                  <Text style={styles.hostedByText}>
                     {translate('activity_screen.hosted_by')}{' '}
                     {`${hostUser.first_name || ''} ${hostUser.last_name || ''}`.trim()}
                   </Text>
@@ -264,9 +270,7 @@ const ActivityDetailsScreen = () => {
         style={[defaultStyles.footer, { height: 70 }]}
         entering={SlideInDown.delay(200)}
       >
-        <View
-          style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}
-        >
+        <View style={styles.footerContainer}>
           <TouchableOpacity style={styles.footerText}>
             <Text style={styles.footerPrice}>
               {activity.price.unit}
@@ -340,6 +344,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
   },
+  hostedByText: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
   footerText: {
     height: '100%',
     justifyContent: 'center',
@@ -350,6 +358,11 @@ const styles = StyleSheet.create({
   footerPrice: {
     fontSize: 18,
     fontFamily: 'mon-sb',
+  },
+  footerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   roundButton: {
     width: 40,
@@ -372,12 +385,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: Colors.grey,
   },
-
   description: {
     fontSize: 16,
     marginTop: spacing.sm,
     fontFamily: 'mon',
   },
+  rowContainer: {
+    flexDirection: 'row',
+  },
 });
-
-export default ActivityDetailsScreen;

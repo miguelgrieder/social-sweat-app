@@ -25,7 +25,8 @@
     "euro": "euro",
     "real": "real",
     "language": "Idioma",
-    "unknown": "desconhecido"
+    "unknown": "desconhecido",
+    "loading": "carregando"
   },
   "profile_screen": {
     "header": "Perfil",

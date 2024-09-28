@@ -97,6 +97,7 @@ function RootLayoutNav() {
       />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="activity/[id]" options={{ headerTitle: '', headerTransparent: true }} />
+      <Stack.Screen name="user/[id]" options={{ headerTitle: '', headerTransparent: true }} />
       <Stack.Screen
         name="(modals)/search"
         options={{

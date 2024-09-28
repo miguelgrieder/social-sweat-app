@@ -38,5 +38,6 @@ export interface User {
 
 // Define the FilterUser interface
 export interface FilterUser {
-  role: string;
+  role?: string;
+  userId?: string;
 }

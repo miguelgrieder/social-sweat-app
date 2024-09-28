@@ -1,66 +1,57 @@
-import { View, Text, Button, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { useAuth, useUser } from '@clerk/clerk-expo';
-import { Link } from 'expo-router';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  Linking,
+  Button,
+} from 'react-native';
+import { useAuth } from '@clerk/clerk-expo';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { Link } from 'expo-router';
+
+import { translate } from '@/app/services/translate';
+import { fetchUsers } from '@/api/fetchUsers';
+import { User } from '@/interfaces/user';
+import { capitalize } from '@/utils/utils';
 import Colors from '@/constants/Colors';
 import { defaultStyles } from '@/constants/Styles';
-import * as ImagePicker from 'expo-image-picker';
-import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-const Page = () => {
-  const { signOut, isSignedIn } = useAuth();
-  const { user } = useUser();
-  const [firstName, setFirstName] = useState(user?.firstName);
-  const [lastName, setLastName] = useState(user?.lastName);
-  const [email, setEmail] = useState(user?.emailAddresses[0].emailAddress);
-  const [edit, setEdit] = useState(false);
+const ProfilePage = () => {
+  const { signOut, isSignedIn, userId } = useAuth();
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    if (!user) {
-      return;
-    }
+    const fetchUserData = async () => {
+      if (!userId) return;
+      try {
+        const fetchedUsers = await fetchUsers({ userId: userId });
+        if (fetchedUsers && fetchedUsers.length > 0) {
+          setUser(fetchedUsers[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
 
-    setFirstName(user.firstName);
-    setLastName(user.lastName);
-    setEmail(user.emailAddresses[0].emailAddress);
-  }, [user]);
+    fetchUserData();
+  }, [userId]);
 
-  // Update Clerk user data
-  const onSaveUser = async () => {
-    try {
-      if (!firstName || !lastName) return;
+  if (!user) {
+    return (
+      <SafeAreaView style={defaultStyles.container}>
+        <Text>{translate('common.loading')}</Text>
+      </SafeAreaView>
+    );
+  }
 
-      await user?.update({
-        firstName: firstName!,
-        lastName: lastName!,
-      });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setEdit(false);
-    }
-  };
+  const formattedDate = new Date(user.created_at).toLocaleDateString();
 
-  // Capture image from camera roll
-  // Upload to Clerk as avatar
-  const onCaptureImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      quality: 0.75,
-      base64: true,
-    });
-
-    if (!result.canceled) {
-      const base64 = `data:image/png;base64,${result.assets[0].base64}`;
-      user?.setProfileImage({
-        file: base64,
-      });
-    }
-  };
   return (
     <SafeAreaView style={defaultStyles.container}>
       <View style={styles.headerContainer}>
@@ -68,51 +59,128 @@ const Page = () => {
         <Ionicons name="notifications-outline" size={26} />
       </View>
 
-      {user && (
-        <View style={styles.card}>
-          <TouchableOpacity onPress={onCaptureImage}>
-            <Image source={{ uri: user?.imageUrl }} style={styles.avatar} />
-          </TouchableOpacity>
-
-          {edit ? (
-            <View style={styles.editRow}>
-              <TextInput
-                placeholder={translate('profile_screen.first_name')}
-                value={firstName || ''}
-                onChangeText={setFirstName}
-                style={[defaultStyles.inputField, { width: 100 }]}
-              />
-              <TextInput
-                placeholder={translate('profile_screen.last_name')}
-                value={lastName || ''}
-                onChangeText={setLastName}
-                style={[defaultStyles.inputField, { width: 100 }]}
-              />
-              <TouchableOpacity onPress={() => onSaveUser}>
-                <Ionicons name="checkmark-outline" size={24} color={Colors.dark} />
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <View style={styles.editRow}>
-              <Text style={{ fontFamily: 'mon-b', fontSize: 22 }}>
-                {firstName} {lastName}
-              </Text>
-              <TouchableOpacity onPress={() => setEdit(true)}>
-                <Ionicons name="create-outline" size={24} color={Colors.dark} />
-              </TouchableOpacity>
-            </View>
-          )}
-          <Text>{email}</Text>
-          <Text>
-            {translate('profile_screen.since')} {user?.createdAt!.toLocaleDateString()}
-          </Text>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        {/* Profile Image */}
+        <View style={styles.profileImageContainer}>
+          <Image
+            source={
+              user.image_url
+                ? { uri: user.image_url }
+                : require('assets/images/user_default_image.jpg')
+            }
+            style={styles.profileImage}
+          />
         </View>
-      )}
 
-      {isSignedIn && (
+        {/* User Role */}
+        <Text style={styles.userRole}>{capitalize(user.user_metadata.role)}</Text>
+
+        {/* Name */}
+        {user.first_name && (
+          <Text style={styles.name}>
+            {user.first_name} {user.last_name}
+          </Text>
+        )}
+
+        {/* Username */}
+        {user.username && <Text style={styles.username}>@{user.username}</Text>}
+
+        {/* Since Date */}
+        <Text style={styles.userSince}>
+          {capitalize(translate('profile_screen.since'))} {formattedDate}
+        </Text>
+
+        {/* Sports List */}
+        {user.user_metadata.sports && user.user_metadata.sports.length > 0 && (
+          <View style={styles.sportsContainer}>
+            {user.user_metadata.sports.map((sport, index) => (
+              <View key={index} style={styles.sportBadge}>
+                <Text style={styles.sportText}>
+                  {translate(`activity_sports.${sport.toLowerCase()}`)}
+                </Text>
+              </View>
+            ))}
+          </View>
+        )}
+
+        {/* Social Media Buttons */}
+        <View style={styles.socialMediaContainer}>
+          {user.user_metadata.user_social_medias &&
+            Object.entries(user.user_metadata.user_social_medias).map(([key, value]) => {
+              if (value) {
+                let baseUrl = '';
+                let iconSource = null;
+                switch (key) {
+                  case 'user_youtube':
+                    baseUrl = 'https://youtube.com/channel/';
+                    iconSource = require('assets/images/user_default_image.jpg');
+                    break;
+                  case 'user_instagram':
+                    baseUrl = 'https://instagram.com/';
+                    iconSource = require('assets/images/user_default_image.jpg');
+                    break;
+                  case 'user_facebook':
+                    baseUrl = 'https://facebook.com/';
+                    iconSource = require('assets/images/user_default_image.jpg');
+                    break;
+                  case 'user_tiktok':
+                    baseUrl = 'https://tiktok.com/@';
+                    iconSource = require('assets/images/user_default_image.jpg');
+                    break;
+                  case 'user_strava':
+                    baseUrl = 'https://www.strava.com/athletes/';
+                    iconSource = require('assets/images/user_default_image.jpg');
+                    break;
+                  default:
+                    break;
+                }
+                const url = baseUrl + value;
+                return (
+                  <TouchableOpacity
+                    key={key}
+                    onPress={() => Linking.openURL(url)}
+                    style={styles.socialMediaButton}
+                  >
+                    <Image source={iconSource} style={styles.socialMediaIcon} />
+                  </TouchableOpacity>
+                );
+              }
+              return null;
+            })}
+        </View>
+
+        {/* Profile Description */}
+        {user.user_metadata.profile_description && (
+          <Text style={styles.profileDescription}>{user.user_metadata.profile_description}</Text>
+        )}
+
+        {/* Horizontal Cards */}
+        <View style={styles.cardsContainer}>
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>
+              {translate('profile_screen.activities_participated')}
+            </Text>
+            <Text style={styles.cardValue}>x</Text>
+          </View>
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>
+              {translate('profile_screen.activities_participated')}
+            </Text>
+            <Text style={styles.cardValue}>x</Text>
+          </View>
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>
+              {translate('profile_screen.activities_participated')}
+            </Text>
+            <Text style={styles.cardValue}>x</Text>
+          </View>
+        </View>
+      </ScrollView>
+
+      {/* Logout / Login Button */}
+      {isSignedIn ? (
         <Button title={translate('common.logout')} onPress={() => signOut()} color={Colors.dark} />
-      )}
-      {!isSignedIn && (
+      ) : (
         <Link href={'/(modals)/user/login'} asChild>
           <Button title={translate('common.login')} color={Colors.dark} />
         </Link>
@@ -120,6 +188,9 @@ const Page = () => {
     </SafeAreaView>
   );
 };
+
+export default ProfilePage;
+
 const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
@@ -132,12 +203,90 @@ const styles = StyleSheet.create({
     fontFamily: 'mon-b',
     fontSize: 24,
   },
+  contentContainer: {
+    alignItems: 'center',
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.lg,
+  },
+  profileImageContainer: {
+    alignItems: 'center',
+    marginBottom: spacing.lg,
+  },
+  profileImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    backgroundColor: Colors.grey,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: spacing.xxs,
+  },
+  userRole: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: spacing.xs,
+  },
+  username: {
+    fontSize: 16,
+    color: '#555',
+    marginBottom: spacing.sm,
+  },
+  userSince: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: spacing.lg,
+  },
+  sportsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginBottom: spacing.lg,
+  },
+  sportBadge: {
+    backgroundColor: '#e0e0e0',
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    marginRight: 8,
+    marginTop: 4,
+  },
+  sportText: {
+    fontSize: 12,
+    color: '#555',
+  },
+  socialMediaContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: spacing.lg,
+  },
+  socialMediaButton: {
+    marginHorizontal: spacing.sm,
+  },
+  socialMediaIcon: {
+    width: 40,
+    height: 40,
+  },
+  profileDescription: {
+    fontSize: 16,
+    color: '#333',
+    textAlign: 'center',
+    marginBottom: spacing.lg,
+    paddingHorizontal: spacing.lg,
+  },
+  cardsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: spacing.xs,
+  },
   card: {
+    flex: 1,
     backgroundColor: '#fff',
-    padding: spacing.lg,
     borderRadius: spacing.md,
-    marginHorizontal: spacing.lg,
-    marginTop: spacing.lg,
+    marginHorizontal: spacing.xxs,
+    alignItems: 'center',
     elevation: 2,
     shadowColor: '#000',
     shadowOpacity: 0.2,
@@ -146,24 +295,16 @@ const styles = StyleSheet.create({
       width: 1,
       height: 2,
     },
-    alignItems: 'center',
-    gap: spacing.sm,
-    marginBottom: spacing.lg,
   },
-  avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: Colors.grey,
+  cardTitle: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: spacing.sm,
+    textAlign: 'center',
   },
-  editRow: {
-    // flex: 1,
-    height: 50,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.xs,
+  cardValue: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: Colors.primary,
   },
 });
-
-export default Page;

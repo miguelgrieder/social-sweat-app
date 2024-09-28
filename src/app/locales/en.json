@@ -31,7 +31,8 @@
     "header": "Profile",
     "first_name": "First Name",
     "last_name": "Last Name",
-    "since": "Since"
+    "since": "Since",
+    "activities_participated": "Activities Participateted"
   },
   "login_modal": {
     "header": "Log in or sign up",

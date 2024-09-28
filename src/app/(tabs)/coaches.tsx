@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, Image, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  FlatList,
+  StyleSheet,
+  ActivityIndicator,
+  TouchableOpacity, // Import TouchableOpacity
+} from 'react-native';
+import { useRouter } from 'expo-router'; // Import useRouter
 import { translate } from '@/app/services/translate';
 import { fetchUsers } from '@/api/fetchUsers';
 import { User } from '@/interfaces/user';
@@ -9,6 +18,7 @@ import { spacing } from '@/constants/spacing';
 const Coaches = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter(); // Initialize the router
 
   useEffect(() => {
     const getUsers = async () => {
@@ -43,7 +53,10 @@ const Coaches = () => {
       item.user_metadata.sports?.filter(Boolean).map((sport) => capitalize(sport)) || [];
 
     return (
-      <View style={styles.itemContainer}>
+      <TouchableOpacity
+        style={styles.itemContainer}
+        onPress={() => router.push(`/user/${item.id}`)}
+      >
         <Image
           source={imageSource}
           style={styles.userImage}
@@ -69,7 +82,7 @@ const Coaches = () => {
             </Text>
           )}
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 

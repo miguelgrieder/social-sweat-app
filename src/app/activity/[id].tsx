@@ -9,21 +9,25 @@ import {
   TouchableOpacity,
   Share,
   StatusBar,
+  ActivityIndicator,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import Animated, {
-  SlideInDown,
-  interpolate,
-  useAnimatedRef,
+  useAnimatedScrollHandler,
   useAnimatedStyle,
-  useScrollViewOffset,
+  useSharedValue,
+  interpolate,
+  Extrapolate,
+  SlideInDown,
 } from 'react-native-reanimated';
 import { defaultStyles } from '@/constants/Styles';
 import { Activity } from '@/interfaces/activity';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 import { fetchActivities } from '@/api/fetchActivities';
+import { fetchUsers } from '@/api/fetchUsers';
+import { User } from '@/interfaces/user';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
@@ -73,29 +77,47 @@ const dummy_listing = {
   },
 };
 
-const Page = () => {
+const ActivityDetailsScreen = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const [activity, setListing] = useState<Activity>(dummy_listing);
-  useEffect(() => {
-    const getData = async () => {
-      const filterBody = {
-        activity_id: id,
-      };
-      const activities = await fetchActivities(filterBody);
-      setListing(activities[0]);
-    };
-    getData();
-  }, []);
+  const [activity, setActivity] = useState<Activity>(dummy_listing);
+  const [hostUser, setHostUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const navigation = useNavigation();
-  const scrollRef = useAnimatedRef<Animated.ScrollView>();
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const filterBody = {
+          activity_id: id,
+        };
+        const activities = await fetchActivities(filterBody);
+        const activityData = activities[0];
+        setActivity(activityData);
+
+        // Fetch host user data
+        const host_user_id = activityData.host.host_user_id;
+        if (host_user_id) {
+          const users = await fetchUsers({ id: host_user_id });
+          if (users && users.length > 0) {
+            setHostUser(users[0]);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching activity or host data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getData();
+  }, [id]);
 
   const shareListing = async () => {
     // Share functionality of header share button
     try {
       await Share.share({
         title: activity.name,
-        url: activity.pictures[0],
+        url: activity.pictures[0] || '',
       });
     } catch (err) {
       console.log(err);
@@ -126,22 +148,35 @@ const Page = () => {
         </TouchableOpacity> // Header back button
       ),
     });
-  }, []);
+  }, [navigation, shareListing, headerAnimatedStyle]);
 
-  const scrollOffset = useScrollViewOffset(scrollRef);
+  // Use useSharedValue and useAnimatedScrollHandler
+  const scrollY = useSharedValue(0);
+
+  const onScroll = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.value = event.contentOffset.y;
+    },
+  });
 
   const imageAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
         {
           translateY: interpolate(
-            scrollOffset.value,
-            [-IMG_HEIGHT, 0, IMG_HEIGHT, IMG_HEIGHT],
-            [-IMG_HEIGHT / 2, 0, IMG_HEIGHT * 0.75]
+            scrollY.value,
+            [-IMG_HEIGHT, 0, IMG_HEIGHT],
+            [-IMG_HEIGHT / 2, 0, IMG_HEIGHT * 0.75],
+            Extrapolate.CLAMP
           ),
         },
         {
-          scale: interpolate(scrollOffset.value, [-IMG_HEIGHT, 0, IMG_HEIGHT], [2, 1, 1]),
+          scale: interpolate(
+            scrollY.value,
+            [-IMG_HEIGHT, 0, IMG_HEIGHT],
+            [2, 1, 1],
+            Extrapolate.CLAMP
+          ),
         },
       ],
     };
@@ -149,20 +184,35 @@ const Page = () => {
 
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
-      opacity: interpolate(scrollOffset.value, [0, IMG_HEIGHT / 1.5], [0, 1]),
+      opacity: interpolate(scrollY.value, [0, IMG_HEIGHT / 1.5], [0, 1], Extrapolate.CLAMP),
     };
-  }, []);
+  });
+
+  const formatDate = (timestamp: number | null | undefined) => {
+    if (!timestamp) return '';
+    const date = new Date(timestamp);
+    if (isNaN(date.getTime())) return '';
+    return date.toISOString().split('T')[0];
+  };
+
+  if (loading) {
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="rgba(0,0,0,0.3)" />
       <Animated.ScrollView
         contentContainerStyle={{ paddingBottom: 100 }}
-        ref={scrollRef}
+        onScroll={onScroll}
         scrollEventThrottle={16}
       >
         <Animated.Image
-          source={{ uri: activity.pictures[0] }}
+          source={{ uri: activity.pictures[0] || '' }}
           style={[styles.image, imageAnimatedStyle]}
           resizeMode="cover"
         />
@@ -186,14 +236,22 @@ const Page = () => {
           <View style={styles.divider} />
 
           <View style={styles.hostView}>
-            <Image source={{ uri: activity.host.host_picture_url }} style={styles.host} />
-
-            <View>
-              <Text style={{ fontWeight: '500', fontSize: 16 }}>
-                {translate('activity_screen.hosted_by')} {activity.host.host_name}
-              </Text>
-              <Text>Host since {activity.host.host_since}</Text>
-            </View>
+            {hostUser ? (
+              <>
+                <Image source={{ uri: hostUser.image_url || '' }} style={styles.host} />
+                <View>
+                  <Text style={{ fontWeight: '500', fontSize: 16 }}>
+                    {translate('activity_screen.hosted_by')}{' '}
+                    {`${hostUser.first_name || ''} ${hostUser.last_name || ''}`.trim()}
+                  </Text>
+                  <Text>
+                    {translate('activity_screen.host_since')} {formatDate(hostUser.created_at)}
+                  </Text>
+                </View>
+              </>
+            ) : (
+              <Text>{translate('activity_screen.loading_host_info')}</Text>
+            )}
           </View>
 
           <View style={styles.divider} />
@@ -226,10 +284,17 @@ const Page = () => {
   );
 };
 
+export default ActivityDetailsScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   image: {
     height: IMG_HEIGHT,
@@ -315,4 +380,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Page;
+export default ActivityDetailsScreen;

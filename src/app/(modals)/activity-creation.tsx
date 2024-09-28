@@ -10,7 +10,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Keyboard,
+  ToastAndroid,
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as ImagePicker from 'expo-image-picker';
@@ -34,10 +34,11 @@ const CreateActivity = () => {
     navigation.setOptions({ title: translate('create_activity_screen.title') });
   }, [navigation]);
 
-  const { signOut, isSignedIn } = useAuth();
+  const { userId } = useAuth();
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [activityType, setActivityType] = useState('Public Spot');
+  const [activityType, setActivityType] = useState(ActivityType.Spot);
   const [priceValue, setPriceValue] = useState('');
   const [priceUnit, setPriceUnit] = useState('$');
   const [datetimeStart, setDatetimeStart] = useState('');
@@ -45,8 +46,8 @@ const CreateActivity = () => {
   const [locationCountry, setLocationCountry] = useState('Brazil');
   const [locationCity, setLocationCity] = useState('');
   const [locationSmartLocation, setLocationSmartLocation] = useState('');
-  const [sport, setSport] = useState('soccer');
-  const [image, setImage] = useState(null);
+  const [sport, setSport] = useState(SportType.Soccer);
+  const [image, setImage] = useState<string | null>(null);
 
   // State to store the selected coordinates
   const [coordinates, setCoordinates] = useState({
@@ -106,6 +107,11 @@ const CreateActivity = () => {
 
   // Submit the form data, including the selected coordinates from the map
   const onSubmit = async () => {
+    if (!userId) {
+      Alert.alert('Error', 'User ID not available.');
+      return;
+    }
+
     try {
       const data = {
         id: Date.now().toString(), // Generate a unique ID for testing; replace with appropriate logic
@@ -115,7 +121,7 @@ const CreateActivity = () => {
         activity_type: activityType,
         sport_type: sport,
         price: {
-          value: parseFloat(priceValue.replace(/[^0-9.]/g, '')),
+          value: parseFloat(priceValue.replace(/[^0-9.]/g, '')) || 0,
           unit: priceUnit,
         },
         location: {
@@ -139,14 +145,12 @@ const CreateActivity = () => {
           number_of_reviews: 0, // Default values for testing
           review_scores_rating: 0,
         },
-        pictures: [image],
+        pictures: image ? [image] : [],
         host: {
-          host_picture_url: image,
-          host_name: 'Test Host', // Default values for testing
-          host_since: '2024-01-01',
+          host_user_id: userId,
         },
         datetimes: {
-          datetime_created: datetimeStart,
+          datetime_created: new Date().toISOString(),
           datetime_deleted: null,
           datetime_start: datetimeStart,
           datetime_finish: datetimeFinish,
@@ -157,12 +161,16 @@ const CreateActivity = () => {
       if (result) {
         // Handle success (e.g., show a success message, navigate back)
         console.log('Activity created successfully:', result);
+        ToastAndroid.show('Activity created successfully!', ToastAndroid.SHORT);
+        navigation.goBack();
       } else {
         // Handle error (e.g., show an error message)
         console.error('Failed to create activity:', result);
+        Alert.alert('Error', 'Failed to create activity.');
       }
     } catch (error) {
       console.error('Error while creating activity:', error);
+      Alert.alert('Error', 'An error occurred while creating the activity.');
     }
   };
 
@@ -234,7 +242,7 @@ const CreateActivity = () => {
                 { label: translate('activity_sports.soccer'), value: SportType.Soccer },
                 { label: translate('activity_sports.baseball'), value: SportType.Baseball },
                 { label: translate('activity_sports.basketball'), value: SportType.Basketball },
-                { label: translate('activity_sports.motorsports'), value: SportType.Swim },
+                { label: translate('activity_sports.swim'), value: SportType.Swim },
               ]}
               value={sport}
               style={pickerSelectStyles}

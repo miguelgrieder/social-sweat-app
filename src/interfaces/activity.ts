@@ -75,9 +75,7 @@ interface Reviews {
 }
 
 interface Host {
-  host_picture_url: string;
-  host_name: string;
-  host_since: string;
+  host_user_id: string;
 }
 
 interface DateTimes {

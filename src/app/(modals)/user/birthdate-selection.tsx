@@ -1,28 +1,39 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, TouchableOpacity, ToastAndroid, View } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, ToastAndroid } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
-import { useUser } from '@clerk/clerk-expo';
+import { useAuth } from '@clerk/clerk-expo';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 import { defaultStyles } from '@/constants/Styles';
 import DateInputField from '@/components/DateInputField';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { updateUser } from '@/api/updateUser';
 
 const BirthdateSelectionScreen = () => {
   const router = useRouter();
-  const { user } = useUser();
+  const { userId } = useAuth();
   const [selectedBirthDate, setSelectedBirthDate] = useState<string | null>(null);
 
   const handleBirthdateSubmit = async () => {
-    if (selectedBirthDate && user) {
+    if (selectedBirthDate && userId) {
       try {
-        await user.update({
-          unsafeMetadata: { ...user.unsafeMetadata, birth_date: selectedBirthDate },
-        });
-        console.log('Birthdate saved successfully:', selectedBirthDate);
-        router.navigate('/(tabs)/');
+        const updateData = {
+          user_metadata: {
+            birth_date: selectedBirthDate,
+          },
+        };
+
+        const success = await updateUser(userId, updateData);
+
+        if (success) {
+          console.log('Birthdate saved successfully:', selectedBirthDate);
+          router.navigate('/(tabs)/');
+        } else {
+          console.error('Failed to update birthdate.');
+          ToastAndroid.show('Error updating birthdate. Please try again.', ToastAndroid.SHORT);
+        }
       } catch (error) {
-        console.error('Error updating birthdate in unsafe metadata:', error);
+        console.error('Error updating birthdate:', error);
         ToastAndroid.show('Error updating birthdate. Please try again.', ToastAndroid.SHORT);
       }
     }

@@ -41,3 +41,10 @@ export interface FilterUser {
   role?: string;
   id?: string;
 }
+
+export interface UpdateUser {
+  first_name?: string;
+  last_name?: string;
+  username?: string;
+  user_metadata?: Partial<UserMetadata>;
+}

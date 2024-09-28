@@ -16,14 +16,14 @@ const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 const tokenCache = {
   async getToken(key: string) {
     try {
-      return SecureStore.getItemAsync(key);
+      return await SecureStore.getItemAsync(key);
     } catch (err) {
       return null;
     }
   },
   async saveToken(key: string, value: string) {
     try {
-      return SecureStore.setItemAsync(key, value);
+      await SecureStore.setItemAsync(key, value);
     } catch (err) {
       return;
     }
@@ -64,7 +64,7 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const { isLoaded, isSignedIn } = useAuth();
+  const { isLoaded, isSignedIn, getToken } = useAuth();
   const router = useRouter();
 
   // Automatically open login if user is not authenticated
@@ -73,6 +73,20 @@ function RootLayoutNav() {
   //     router.push('/(modals)/login');
   //   }
   // }, [isLoaded]);
+
+  useEffect(() => {
+    const saveTokenToSecureStore = async () => {
+      if (isLoaded) {
+        const token = await getToken();
+        if (token) {
+          await SecureStore.setItemAsync('clerk-token', token);
+        } else {
+          await SecureStore.deleteItemAsync('clerk-token');
+        }
+      }
+    };
+    saveTokenToSecureStore();
+  }, [isLoaded, isSignedIn, getToken]);
 
   return (
     <Stack

@@ -1,13 +1,21 @@
 import { create } from 'apisauce';
+import { getUserToken } from '@/api/utils/getUserToken';
 
-// Create an instance of the API client
-const api = create({
-  baseURL: process.env.EXPO_PUBLIC_API_MICROSERVICE,
-});
-
-// Function to create an activity
-export const createActivity = async (activityBody) => {
+export const createActivity = async (activityBody: any) => {
   try {
+    const token = await getUserToken();
+    if (!token) {
+      console.error('User token is not available.');
+      return null;
+    }
+
+    const api = create({
+      baseURL: process.env.EXPO_PUBLIC_API_MICROSERVICE,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     const response = await api.post('/activities/create', activityBody);
     if (response.ok && response.data) {
       return response.data;

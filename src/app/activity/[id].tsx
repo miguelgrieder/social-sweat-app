@@ -19,7 +19,6 @@ import Animated, {
   useSharedValue,
   interpolate,
   Extrapolate,
-  SlideInDown,
 } from 'react-native-reanimated';
 import { defaultStyles } from '@/constants/Styles';
 import { Activity } from '@/interfaces/activity';
@@ -266,10 +265,7 @@ const ActivityDetailsScreen = () => {
         </View>
       </Animated.ScrollView>
 
-      <Animated.View
-        style={[defaultStyles.footer, { height: 70 }]}
-        entering={SlideInDown.delay(200)}
-      >
+      <Animated.View style={[defaultStyles.footer, { height: 70 }]}>
         <View style={styles.footerContainer}>
           <TouchableOpacity style={styles.footerText}>
             <Text style={styles.footerPrice}>

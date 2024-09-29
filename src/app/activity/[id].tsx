@@ -55,7 +55,7 @@ const dummy_listing: Activity = {
     },
   },
   participants: {
-    current: 0,
+    participants_user_id: [],
     max: 0,
   },
   reviews: {
@@ -228,7 +228,8 @@ const ActivityDetailsScreen = () => {
             {activity.activity_type} {translate('common.in')} {activity.location.smart_location}
           </Text>
           <Text style={styles.information}>
-            {activity.participants.current} {translate('activity_screen.participants')}
+            {activity.participants.participants_user_id.length}{' '}
+            {translate('activity_screen.participants')}
           </Text>
           <View style={styles.rowContainer}>
             <Ionicons name="star" size={16} />

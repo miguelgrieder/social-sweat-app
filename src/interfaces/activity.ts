@@ -65,7 +65,7 @@ interface Coordinates {
 }
 
 interface Participants {
-  current: number;
+  participants_user_id: string[];
   max: number | null;
 }
 

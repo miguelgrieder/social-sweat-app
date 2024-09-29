@@ -138,7 +138,7 @@ const CreateActivity = () => {
           },
         },
         participants: {
-          current: 0, // Default values for testing
+          participants_user_id: [userId],
           max: 0,
         },
         reviews: {

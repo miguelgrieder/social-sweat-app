@@ -33,7 +33,7 @@
     "first_name": "First Name",
     "last_name": "Last Name",
     "since": "Since",
-    "activities_participated": "Activities Participateted"
+    "activities_participated": "Activities Participated"
   },
   "login_modal": {
     "header": "Log in or sign up",
@@ -133,7 +133,8 @@
     "host_since": "Host since",
     "join_now": "Join Now",
     "registration": "Registration",
-    "joined": "Joined"
+    "joined": "Joined",
+    "leave_now": "Leave Now"
   },
   "create_activity_screen": {
     "title": "Create Activity",
@@ -180,6 +181,8 @@
     "failed_to_join": "Failed to join the activity. Please try again.",
     "unexpected_error": "An unexpected error occurred. Please try again.",
     "user_id_unavailable": "User ID not available.",
-    "invalid_max_participants": "Please enter a valid number of maximum participants."
+    "invalid_max_participants": "Please enter a valid number of maximum participants.",
+    "left_activity": "You have left the activity.",
+    "failed_to_leave": "Failed to leave the activity. Please try again."
   }
 }

@@ -29,7 +29,7 @@ import { fetchActivities } from '@/api/fetchActivities';
 import { fetchUsers } from '@/api/fetchUsers';
 import { User } from '@/interfaces/user';
 import { useAuth } from '@clerk/clerk-expo';
-import { userJoinActivity } from '@/api/userJoinActivity';
+import { userInteractActivity } from '@/api/userInteractActivity';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
@@ -204,44 +204,54 @@ const ActivityDetailsScreen = () => {
     return date.toISOString().split('T')[0];
   };
 
-  const handleJoinActivity = async () => {
+  const handleInteractActivity = async () => {
     if (!userId) {
       Alert.alert(translate('alerts.error'), translate('alerts.must_login_to_join'));
       return;
     }
 
-    // Check if the user has already joined
-    if (activity.participants.participants_user_id.includes(userId)) {
-      Alert.alert(translate('alerts.info'), translate('alerts.already_joined'));
-      return;
-    }
-
-    // Check if the activity has reached its maximum participants
-    if (
-      activity.participants.max &&
-      activity.participants.participants_user_id.length >= activity.participants.max
-    ) {
-      Alert.alert(translate('alerts.info'), translate('alerts.max_participants_reached'));
-      return;
-    }
+    const isParticipant = activity.participants.participants_user_id.includes(userId);
+    const action = isParticipant ? 'leave' : 'join';
 
     try {
-      const success = await userJoinActivity(userId, activity.id);
+      const success = await userInteractActivity(userId, activity.id, action);
 
       if (success) {
-        Alert.alert(translate('alerts.success'), translate('alerts.joined_activity'));
-        setActivity((prevActivity) => ({
-          ...prevActivity,
-          participants: {
-            ...prevActivity.participants,
-            participants_user_id: [...prevActivity.participants.participants_user_id, userId],
-          },
-        }));
+        Alert.alert(
+          translate('alerts.success'),
+          action === 'join'
+            ? translate('alerts.joined_activity')
+            : translate('alerts.left_activity')
+        );
+
+        // Update the activity state
+        setActivity((prevActivity) => {
+          let updatedParticipants = prevActivity.participants.participants_user_id.slice();
+
+          if (action === 'join') {
+            updatedParticipants.push(userId);
+          } else {
+            updatedParticipants = updatedParticipants.filter((id) => id !== userId);
+          }
+
+          return {
+            ...prevActivity,
+            participants: {
+              ...prevActivity.participants,
+              participants_user_id: updatedParticipants,
+            },
+          };
+        });
       } else {
-        Alert.alert(translate('alerts.error'), translate('alerts.failed_to_join'));
+        Alert.alert(
+          translate('alerts.error'),
+          action === 'join'
+            ? translate('alerts.failed_to_join')
+            : translate('alerts.failed_to_leave')
+        );
       }
     } catch (error) {
-      console.error('Error joining activity:', error);
+      console.error(`Error trying to ${action} activity:`, error);
       Alert.alert(translate('alerts.error'), translate('alerts.unexpected_error'));
     }
   };
@@ -253,6 +263,12 @@ const ActivityDetailsScreen = () => {
       </View>
     );
   }
+
+  const isParticipant = activity.participants.participants_user_id.includes(userId);
+  const isActivityFull =
+    activity.participants.max &&
+    activity.participants.participants_user_id.length >= activity.participants.max &&
+    !isParticipant;
 
   return (
     <View style={styles.container}>
@@ -326,22 +342,14 @@ const ActivityDetailsScreen = () => {
             style={[
               defaultStyles.btn,
               { paddingHorizontal: 20 },
-              (activity.participants.max &&
-                activity.participants.participants_user_id.length >= activity.participants.max) ||
-              activity.participants.participants_user_id.includes(userId)
-                ? styles.disabledBtn
-                : {},
+              isActivityFull ? styles.disabledBtn : {},
             ]}
-            onPress={handleJoinActivity}
-            disabled={
-              (activity.participants.max &&
-                activity.participants.participants_user_id.length >= activity.participants.max) ||
-              activity.participants.participants_user_id.includes(userId)
-            }
+            onPress={handleInteractActivity}
+            disabled={isActivityFull}
           >
             <Text style={defaultStyles.btnText}>
-              {activity.participants.participants_user_id.includes(userId)
-                ? translate('activity_screen.joined')
+              {isParticipant
+                ? translate('activity_screen.leave_now')
                 : translate('activity_screen.join_now')}
             </Text>
           </TouchableOpacity>

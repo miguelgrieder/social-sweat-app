@@ -21,7 +21,7 @@
     "continue": "Continuar",
     "or": "ou",
     "in": "em",
-    "dollar": "dolar",
+    "dollar": "dólar",
     "euro": "euro",
     "real": "real",
     "language": "Idioma",
@@ -49,7 +49,7 @@
     "role_coach": "Coach",
     "role_company": "Empresa",
     "role_user_title": "Escolha seus esportes favoritos",
-    "role_coach_title": "Selecione os esportes que vocẽ oferece",
+    "role_coach_title": "Selecione os esportes que você oferece",
     "role_company_title": "Selecione os esportes que sua empresa oferece"
   },
   "photo-username-selection": {
@@ -92,7 +92,8 @@
     }
   },
   "activities": {
-    "registration": "Cadastro"
+    "registration": "Cadastro",
+    "activities": "Atividades"
   },
   "activity_sports": {
     "trending-up": "Em alta",
@@ -127,7 +128,9 @@
     "participants": "Participantes",
     "host_since": "Organizador desde",
     "join_now": "Junte-se Agora",
-    "joined": "Entrou"
+    "registration": "Cadastro",
+    "joined": "Entrou",
+    "leave_now": "Sair Agora"
   },
   "create_activity_screen": {
     "title": "Criar Atividade",
@@ -174,6 +177,8 @@
     "failed_to_join": "Falha ao participar da atividade. Por favor, tente novamente.",
     "unexpected_error": "Ocorreu um erro inesperado. Por favor, tente novamente.",
     "user_id_unavailable": "ID do usuário não disponível.",
-    "invalid_max_participants": "Por favor, insira um número válido de participantes máximos."
+    "invalid_max_participants": "Por favor, insira um número válido de participantes máximos.",
+    "left_activity": "Você saiu da atividade.",
+    "failed_to_leave": "Falha ao sair da atividade. Por favor, tente novamente."
   }
 }

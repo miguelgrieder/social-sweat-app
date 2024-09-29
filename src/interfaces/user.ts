@@ -7,10 +7,20 @@ export enum Role {
   Company = 'company',
 }
 
+export interface UserSocialMedias {
+  user_youtube?: string;
+  user_instagram?: string;
+  user_facebook?: string;
+  user_tiktok?: string;
+  user_strava?: string;
+}
+
 export interface UserMetadata {
   role: Role;
   sports?: SportType[];
   birth_date: string; // Expected format: 'YYYY/MM/DD'
+  user_social_medias?: UserSocialMedias;
+  profile_description?: string;
 }
 
 export interface User {
@@ -28,5 +38,13 @@ export interface User {
 
 // Define the FilterUser interface
 export interface FilterUser {
-  role: string;
+  role?: string;
+  id?: string;
+}
+
+export interface UpdateUser {
+  first_name?: string;
+  last_name?: string;
+  username?: string;
+  user_metadata?: Partial<UserMetadata>;
 }

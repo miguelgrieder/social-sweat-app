@@ -1,13 +1,13 @@
 import { create } from 'apisauce';
-import { User, FilterUser } from '@/interfaces/user';
 import { getUserToken } from '@/api/utils/getUserToken';
+import { UpdateUser } from '@/interfaces/user';
 
-export const fetchUsers = async (filterBody: FilterUser): Promise<User[]> => {
+export const updateUser = async (userId: string, updateData: UpdateUser): Promise<boolean> => {
   try {
     const token = await getUserToken();
     if (!token) {
       console.error('User token is not available.');
-      return [];
+      return false;
     }
 
     const api = create({
@@ -17,19 +17,19 @@ export const fetchUsers = async (filterBody: FilterUser): Promise<User[]> => {
       },
     });
 
-    const response = await api.post('/users', filterBody);
+    const response = await api.put(`/users/${userId}`, updateData);
     if (response.ok && response.data) {
-      return response.data.users as User[];
+      return true;
     } else {
-      console.error('Failed to fetch users. Response:', {
+      console.error('Failed to update user. Response:', {
         status: response.status,
         problem: response.problem,
         data: JSON.stringify(response.data, null, 2),
       });
-      return [];
+      return false;
     }
   } catch (error) {
-    console.error('An error occurred while fetching users:', error);
-    return [];
+    console.error('An error occurred while updating user:', error);
+    return false;
   }
 };

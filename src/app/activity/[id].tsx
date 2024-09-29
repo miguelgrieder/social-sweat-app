@@ -9,26 +9,32 @@ import {
   TouchableOpacity,
   Share,
   StatusBar,
+  ActivityIndicator,
+  Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import Animated, {
-  SlideInDown,
-  interpolate,
-  useAnimatedRef,
+  useAnimatedScrollHandler,
   useAnimatedStyle,
-  useScrollViewOffset,
+  useSharedValue,
+  interpolate,
+  Extrapolate,
 } from 'react-native-reanimated';
 import { defaultStyles } from '@/constants/Styles';
 import { Activity } from '@/interfaces/activity';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 import { fetchActivities } from '@/api/fetchActivities';
+import { fetchUsers } from '@/api/fetchUsers';
+import { User } from '@/interfaces/user';
+import { useAuth } from '@clerk/clerk-expo';
+import { userJoinActivity } from '@/api/userJoinActivity';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
 
-const dummy_listing = {
+const dummy_listing: Activity = {
   id: '',
   name: '',
   description: '',
@@ -44,7 +50,7 @@ const dummy_listing = {
     city: '',
     smart_location: '',
     geometry: {
-      type: '',
+      type: 'Point',
       coordinates: {
         latitude: 0,
         longitude: 0,
@@ -52,8 +58,8 @@ const dummy_listing = {
     },
   },
   participants: {
-    current: 0,
-    max: null,
+    participants_user_id: [],
+    max: 1,
   },
   reviews: {
     number_of_reviews: 0,
@@ -61,9 +67,7 @@ const dummy_listing = {
   },
   pictures: [],
   host: {
-    host_picture_url: '',
-    host_name: '',
-    host_since: '',
+    host_user_id: '', // Ensure host_user_id is included
   },
   datetimes: {
     datetime_created: '',
@@ -71,31 +75,58 @@ const dummy_listing = {
     datetime_start: '',
     datetime_finish: '',
   },
+  enabled: true,
 };
 
-const Page = () => {
+const ActivityDetailsScreen = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const [activity, setListing] = useState<Activity>(dummy_listing);
-  useEffect(() => {
-    const getData = async () => {
-      const filterBody = {
-        activity_id: id,
-      };
-      const activities = await fetchActivities(filterBody);
-      setListing(activities[0]);
-    };
-    getData();
-  }, []);
+  const [activity, setActivity] = useState<Activity>(dummy_listing);
+  const [hostUser, setHostUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const navigation = useNavigation();
-  const scrollRef = useAnimatedRef<Animated.ScrollView>();
+  const { userId } = useAuth();
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const filterBody = {
+          activity_id: id,
+        };
+        const activities = await fetchActivities(filterBody);
+
+        if (activities && activities.length > 0) {
+          const activityData = activities[0];
+          setActivity(activityData);
+
+          // Fetch host user data
+          const host_user_id = activityData.host.host_user_id;
+          if (host_user_id) {
+            const users = await fetchUsers({ id: host_user_id });
+            if (users && users.length > 0) {
+              setHostUser(users[0]);
+            }
+          }
+        } else {
+          console.warn('No activities found for the given ID.');
+          setActivity(dummy_listing); // Provide default value
+        }
+      } catch (error) {
+        console.error('Error fetching activity or host data:', error);
+        setActivity(dummy_listing); // Provide default value on error
+      } finally {
+        setLoading(false);
+      }
+    };
+    getData();
+  }, [id]);
 
   const shareListing = async () => {
     // Share functionality of header share button
     try {
       await Share.share({
         title: activity.name,
-        url: activity.pictures[0],
+        url: activity.pictures[0] || '',
       });
     } catch (err) {
       console.log(err);
@@ -126,22 +157,35 @@ const Page = () => {
         </TouchableOpacity> // Header back button
       ),
     });
-  }, []);
+  }, [navigation, shareListing, headerAnimatedStyle]);
 
-  const scrollOffset = useScrollViewOffset(scrollRef);
+  // Use useSharedValue and useAnimatedScrollHandler
+  const scrollY = useSharedValue(0);
+
+  const onScroll = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.value = event.contentOffset.y;
+    },
+  });
 
   const imageAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
         {
           translateY: interpolate(
-            scrollOffset.value,
-            [-IMG_HEIGHT, 0, IMG_HEIGHT, IMG_HEIGHT],
-            [-IMG_HEIGHT / 2, 0, IMG_HEIGHT * 0.75]
+            scrollY.value,
+            [-IMG_HEIGHT, 0, IMG_HEIGHT],
+            [-IMG_HEIGHT / 2, 0, IMG_HEIGHT * 0.75],
+            Extrapolate.CLAMP
           ),
         },
         {
-          scale: interpolate(scrollOffset.value, [-IMG_HEIGHT, 0, IMG_HEIGHT], [2, 1, 1]),
+          scale: interpolate(
+            scrollY.value,
+            [-IMG_HEIGHT, 0, IMG_HEIGHT],
+            [2, 1, 1],
+            Extrapolate.CLAMP
+          ),
         },
       ],
     };
@@ -149,20 +193,77 @@ const Page = () => {
 
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
-      opacity: interpolate(scrollOffset.value, [0, IMG_HEIGHT / 1.5], [0, 1]),
+      opacity: interpolate(scrollY.value, [0, IMG_HEIGHT / 1.5], [0, 1], Extrapolate.CLAMP),
     };
-  }, []);
+  });
+
+  const formatDate = (timestamp: number | null | undefined) => {
+    if (!timestamp) return '';
+    const date = new Date(timestamp);
+    if (isNaN(date.getTime())) return '';
+    return date.toISOString().split('T')[0];
+  };
+
+  const handleJoinActivity = async () => {
+    if (!userId) {
+      Alert.alert(translate('alerts.error'), translate('alerts.must_login_to_join'));
+      return;
+    }
+
+    // Check if the user has already joined
+    if (activity.participants.participants_user_id.includes(userId)) {
+      Alert.alert(translate('alerts.info'), translate('alerts.already_joined'));
+      return;
+    }
+
+    // Check if the activity has reached its maximum participants
+    if (
+      activity.participants.max &&
+      activity.participants.participants_user_id.length >= activity.participants.max
+    ) {
+      Alert.alert(translate('alerts.info'), translate('alerts.max_participants_reached'));
+      return;
+    }
+
+    try {
+      const success = await userJoinActivity(userId, activity.id);
+
+      if (success) {
+        Alert.alert(translate('alerts.success'), translate('alerts.joined_activity'));
+        setActivity((prevActivity) => ({
+          ...prevActivity,
+          participants: {
+            ...prevActivity.participants,
+            participants_user_id: [...prevActivity.participants.participants_user_id, userId],
+          },
+        }));
+      } else {
+        Alert.alert(translate('alerts.error'), translate('alerts.failed_to_join'));
+      }
+    } catch (error) {
+      console.error('Error joining activity:', error);
+      Alert.alert(translate('alerts.error'), translate('alerts.unexpected_error'));
+    }
+  };
+
+  if (loading) {
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="rgba(0,0,0,0.3)" />
       <Animated.ScrollView
         contentContainerStyle={{ paddingBottom: 100 }}
-        ref={scrollRef}
+        onScroll={onScroll}
         scrollEventThrottle={16}
       >
         <Animated.Image
-          source={{ uri: activity.pictures[0] }}
+          source={{ uri: activity.pictures[0] || '' }}
           style={[styles.image, imageAnimatedStyle]}
           resizeMode="cover"
         />
@@ -173,11 +274,12 @@ const Page = () => {
             {activity.activity_type} {translate('common.in')} {activity.location.smart_location}
           </Text>
           <Text style={styles.information}>
-            {activity.participants.current} {translate('activity_screen.participants')}
+            {activity.participants.participants_user_id.length}{' '}
+            {translate('activity_screen.participants')}
           </Text>
-          <View style={{ flexDirection: 'row', gap: 4 }}>
+          <View style={styles.rowContainer}>
             <Ionicons name="star" size={16} />
-            <Text style={styles.ratings}>
+            <Text style={[styles.ratings, { marginLeft: spacing.xxs }]}>
               {activity.reviews.review_scores_rating / 20} · {activity.reviews.number_of_reviews}
               &nbsp;
               {translate('activity_screen.reviews')}
@@ -186,14 +288,22 @@ const Page = () => {
           <View style={styles.divider} />
 
           <View style={styles.hostView}>
-            <Image source={{ uri: activity.host.host_picture_url }} style={styles.host} />
-
-            <View>
-              <Text style={{ fontWeight: '500', fontSize: 16 }}>
-                {translate('activity_screen.hosted_by')} {activity.host.host_name}
-              </Text>
-              <Text>Host since {activity.host.host_since}</Text>
-            </View>
+            {hostUser ? (
+              <>
+                <Image source={{ uri: hostUser.image_url || '' }} style={styles.host} />
+                <View>
+                  <Text style={styles.hostedByText}>
+                    {translate('activity_screen.hosted_by')}{' '}
+                    {`${hostUser.first_name || ''} ${hostUser.last_name || ''}`.trim()}
+                  </Text>
+                  <Text>
+                    {translate('activity_screen.host_since')} {formatDate(hostUser.created_at)}
+                  </Text>
+                </View>
+              </>
+            ) : (
+              <Text>{translate('activity_screen.loading_host_info')}</Text>
+            )}
           </View>
 
           <View style={styles.divider} />
@@ -202,13 +312,8 @@ const Page = () => {
         </View>
       </Animated.ScrollView>
 
-      <Animated.View
-        style={[defaultStyles.footer, { height: 70 }]}
-        entering={SlideInDown.delay(200)}
-      >
-        <View
-          style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}
-        >
+      <View style={[defaultStyles.footer, { height: 70 }]}>
+        <View style={styles.footerContainer}>
           <TouchableOpacity style={styles.footerText}>
             <Text style={styles.footerPrice}>
               {activity.price.unit}
@@ -217,19 +322,46 @@ const Page = () => {
             <Text>{translate('activity_screen.registration')}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[defaultStyles.btn, { paddingHorizontal: 20 }]}>
-            <Text style={defaultStyles.btnText}>{translate('activity_screen.join_now')}</Text>
+          <TouchableOpacity
+            style={[
+              defaultStyles.btn,
+              { paddingHorizontal: 20 },
+              (activity.participants.max &&
+                activity.participants.participants_user_id.length >= activity.participants.max) ||
+              activity.participants.participants_user_id.includes(userId)
+                ? styles.disabledBtn
+                : {},
+            ]}
+            onPress={handleJoinActivity}
+            disabled={
+              (activity.participants.max &&
+                activity.participants.participants_user_id.length >= activity.participants.max) ||
+              activity.participants.participants_user_id.includes(userId)
+            }
+          >
+            <Text style={defaultStyles.btnText}>
+              {activity.participants.participants_user_id.includes(userId)
+                ? translate('activity_screen.joined')
+                : translate('activity_screen.join_now')}
+            </Text>
           </TouchableOpacity>
         </View>
-      </Animated.View>
+      </View>
     </View>
   );
 };
+
+export default ActivityDetailsScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   image: {
     height: IMG_HEIGHT,
@@ -275,6 +407,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
   },
+  hostedByText: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
   footerText: {
     height: '100%',
     justifyContent: 'center',
@@ -285,6 +421,11 @@ const styles = StyleSheet.create({
   footerPrice: {
     fontSize: 18,
     fontFamily: 'mon-sb',
+  },
+  footerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   roundButton: {
     width: 40,
@@ -307,12 +448,15 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: Colors.grey,
   },
-
   description: {
     fontSize: 16,
     marginTop: spacing.sm,
     fontFamily: 'mon',
   },
+  rowContainer: {
+    flexDirection: 'row',
+  },
+  disabledBtn: {
+    backgroundColor: '#ccc',
+  },
 });
-
-export default Page;

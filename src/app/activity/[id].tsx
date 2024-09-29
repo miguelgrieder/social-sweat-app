@@ -10,6 +10,7 @@ import {
   Share,
   StatusBar,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
@@ -27,6 +28,8 @@ import { spacing } from '@/constants/spacing';
 import { fetchActivities } from '@/api/fetchActivities';
 import { fetchUsers } from '@/api/fetchUsers';
 import { User } from '@/interfaces/user';
+import { useAuth } from '@clerk/clerk-expo';
+import { userJoinActivity } from '@/api/userJoinActivity';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
@@ -56,7 +59,7 @@ const dummy_listing: Activity = {
   },
   participants: {
     participants_user_id: [],
-    max: 0,
+    max: 1,
   },
   reviews: {
     number_of_reviews: 0,
@@ -82,6 +85,7 @@ const ActivityDetailsScreen = () => {
   const [loading, setLoading] = useState(true);
 
   const navigation = useNavigation();
+  const { userId } = useAuth();
 
   useEffect(() => {
     const getData = async () => {
@@ -200,6 +204,48 @@ const ActivityDetailsScreen = () => {
     return date.toISOString().split('T')[0];
   };
 
+  const handleJoinActivity = async () => {
+    if (!userId) {
+      Alert.alert(translate('alerts.error'), translate('alerts.must_login_to_join'));
+      return;
+    }
+
+    // Check if the user has already joined
+    if (activity.participants.participants_user_id.includes(userId)) {
+      Alert.alert(translate('alerts.info'), translate('alerts.already_joined'));
+      return;
+    }
+
+    // Check if the activity has reached its maximum participants
+    if (
+      activity.participants.max &&
+      activity.participants.participants_user_id.length >= activity.participants.max
+    ) {
+      Alert.alert(translate('alerts.info'), translate('alerts.max_participants_reached'));
+      return;
+    }
+
+    try {
+      const success = await userJoinActivity(userId, activity.id);
+
+      if (success) {
+        Alert.alert(translate('alerts.success'), translate('alerts.joined_activity'));
+        setActivity((prevActivity) => ({
+          ...prevActivity,
+          participants: {
+            ...prevActivity.participants,
+            participants_user_id: [...prevActivity.participants.participants_user_id, userId],
+          },
+        }));
+      } else {
+        Alert.alert(translate('alerts.error'), translate('alerts.failed_to_join'));
+      }
+    } catch (error) {
+      console.error('Error joining activity:', error);
+      Alert.alert(translate('alerts.error'), translate('alerts.unexpected_error'));
+    }
+  };
+
   if (loading) {
     return (
       <View style={styles.loaderContainer}>
@@ -266,7 +312,7 @@ const ActivityDetailsScreen = () => {
         </View>
       </Animated.ScrollView>
 
-      <Animated.View style={[defaultStyles.footer, { height: 70 }]}>
+      <View style={[defaultStyles.footer, { height: 70 }]}>
         <View style={styles.footerContainer}>
           <TouchableOpacity style={styles.footerText}>
             <Text style={styles.footerPrice}>
@@ -276,11 +322,31 @@ const ActivityDetailsScreen = () => {
             <Text>{translate('activity_screen.registration')}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[defaultStyles.btn, { paddingHorizontal: 20 }]}>
-            <Text style={defaultStyles.btnText}>{translate('activity_screen.join_now')}</Text>
+          <TouchableOpacity
+            style={[
+              defaultStyles.btn,
+              { paddingHorizontal: 20 },
+              (activity.participants.max &&
+                activity.participants.participants_user_id.length >= activity.participants.max) ||
+              activity.participants.participants_user_id.includes(userId)
+                ? styles.disabledBtn
+                : {},
+            ]}
+            onPress={handleJoinActivity}
+            disabled={
+              (activity.participants.max &&
+                activity.participants.participants_user_id.length >= activity.participants.max) ||
+              activity.participants.participants_user_id.includes(userId)
+            }
+          >
+            <Text style={defaultStyles.btnText}>
+              {activity.participants.participants_user_id.includes(userId)
+                ? translate('activity_screen.joined')
+                : translate('activity_screen.join_now')}
+            </Text>
           </TouchableOpacity>
         </View>
-      </Animated.View>
+      </View>
     </View>
   );
 };
@@ -389,5 +455,8 @@ const styles = StyleSheet.create({
   },
   rowContainer: {
     flexDirection: 'row',
+  },
+  disabledBtn: {
+    backgroundColor: '#ccc',
   },
 });

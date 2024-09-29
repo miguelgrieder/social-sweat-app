@@ -126,7 +126,8 @@
     "reviews": "Avaliações",
     "participants": "Participantes",
     "host_since": "Organizador desde",
-    "join_now": "Junte-se Agora"
+    "join_now": "Junte-se Agora",
+    "joined": "Entrou"
   },
   "create_activity_screen": {
     "title": "Criar Atividade",
@@ -154,5 +155,16 @@
   },
   "sports_list": {
     "find_a_sport": "Procure um esporte..."
+  },
+  "alerts": {
+    "error": "Erro",
+    "info": "Informação",
+    "success": "Sucesso",
+    "must_login_to_join": "Você precisa estar logado para participar de uma atividade.",
+    "already_joined": "Você já participou desta atividade.",
+    "max_participants_reached": "Esta atividade atingiu o número máximo de participantes.",
+    "joined_activity": "Você participou da atividade.",
+    "failed_to_join": "Falha ao participar da atividade. Por favor, tente novamente.",
+    "unexpected_error": "Ocorreu um erro inesperado. Por favor, tente novamente."
   }
 }

@@ -132,7 +132,8 @@
     "participants": "Participants",
     "host_since": "Host since",
     "join_now": "Join Now",
-    "registration": "Registration"
+    "registration": "Registration",
+    "joined": "Joined"
   },
   "create_activity_screen": {
     "title": "Create Activity",
@@ -160,5 +161,16 @@
   },
   "sports_list": {
     "find_a_sport": "Find a sport..."
+  },
+  "alerts": {
+    "error": "Error",
+    "info": "Info",
+    "success": "Success",
+    "must_login_to_join": "You must be logged in to join an activity.",
+    "already_joined": "You have already joined this activity.",
+    "max_participants_reached": "This activity has reached its maximum number of participants.",
+    "joined_activity": "You have joined the activity.",
+    "failed_to_join": "Failed to join the activity. Please try again.",
+    "unexpected_error": "An unexpected error occurred. Please try again."
   }
 }

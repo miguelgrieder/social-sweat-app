@@ -48,6 +48,7 @@ const CreateActivity = () => {
   const [locationSmartLocation, setLocationSmartLocation] = useState('');
   const [sport, setSport] = useState(SportType.Soccer);
   const [image, setImage] = useState<string | null>(null);
+  const [maxParticipants, setMaxParticipants] = useState('');
 
   // State to store the selected coordinates
   const [coordinates, setCoordinates] = useState({
@@ -97,18 +98,23 @@ const CreateActivity = () => {
         setLocationSmartLocation(smartLocation);
       } else {
         console.warn('No results found for reverse geocoding.');
-        Alert.alert('Error', 'No location details found.');
+        Alert.alert(translate('alerts.error'), translate('create_activity_screen.no_location_details'));
       }
     } catch (error) {
       console.error('Error while reverse geocoding:', error);
-      Alert.alert('Error', 'Unable to get location details.');
+      Alert.alert(translate('alerts.error'), translate('create_activity_screen.unable_to_get_location'));
     }
   };
 
   // Submit the form data, including the selected coordinates from the map
   const onSubmit = async () => {
     if (!userId) {
-      Alert.alert('Error', 'User ID not available.');
+      Alert.alert(translate('alerts.error'), translate('alerts.user_id_unavailable'));
+      return;
+    }
+    const max = parseInt(maxParticipants, 10);
+    if (isNaN(max) || max <= 0) {
+      Alert.alert(translate('alerts.error'), translate('create_activity_screen.invalid_max_participants'));
       return;
     }
 
@@ -139,7 +145,7 @@ const CreateActivity = () => {
         },
         participants: {
           participants_user_id: [userId],
-          max: 0,
+          max: max,
         },
         reviews: {
           number_of_reviews: 0, // Default values for testing
@@ -161,16 +167,16 @@ const CreateActivity = () => {
       if (result) {
         // Handle success (e.g., show a success message, navigate back)
         console.log('Activity created successfully:', result);
-        ToastAndroid.show('Activity created successfully!', ToastAndroid.SHORT);
+        ToastAndroid.show(translate('create_activity_screen.activity_created_success'), ToastAndroid.SHORT);
         navigation.goBack();
       } else {
         // Handle error (e.g., show an error message)
         console.error('Failed to create activity:', result);
-        Alert.alert('Error', 'Failed to create activity.');
+        Alert.alert(translate('alerts.error'), translate('create_activity_screen.failed_to_create'));
       }
     } catch (error) {
       console.error('Error while creating activity:', error);
-      Alert.alert('Error', 'An error occurred while creating the activity.');
+      Alert.alert(translate('alerts.error'), translate('create_activity_screen.error_creating_activity'));
     }
   };
 
@@ -213,6 +219,17 @@ const CreateActivity = () => {
             style={styles.input}
             value={description}
             onChangeText={setDescription}
+            multiline
+            numberOfLines={4}
+          />
+          {/* Maximum Participants */}
+          {renderTitle('label_max_participants')}
+          <TextInput
+            placeholder={translate('create_activity_screen.placeholder_max_participants')}
+            style={styles.input}
+            value={maxParticipants}
+            onChangeText={(text) => setMaxParticipants(text.replace(/[^0-9]/g, ''))}
+            keyboardType="numeric"
           />
           {/* Activity Type */}
           {renderTitle('label_activity_type')}

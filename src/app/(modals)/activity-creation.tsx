@@ -98,11 +98,17 @@ const CreateActivity = () => {
         setLocationSmartLocation(smartLocation);
       } else {
         console.warn('No results found for reverse geocoding.');
-        Alert.alert(translate('alerts.error'), translate('create_activity_screen.no_location_details'));
+        Alert.alert(
+          translate('alerts.error'),
+          translate('create_activity_screen.no_location_details')
+        );
       }
     } catch (error) {
       console.error('Error while reverse geocoding:', error);
-      Alert.alert(translate('alerts.error'), translate('create_activity_screen.unable_to_get_location'));
+      Alert.alert(
+        translate('alerts.error'),
+        translate('create_activity_screen.unable_to_get_location')
+      );
     }
   };
 
@@ -114,7 +120,10 @@ const CreateActivity = () => {
     }
     const max = parseInt(maxParticipants, 10);
     if (isNaN(max) || max <= 0) {
-      Alert.alert(translate('alerts.error'), translate('create_activity_screen.invalid_max_participants'));
+      Alert.alert(
+        translate('alerts.error'),
+        translate('create_activity_screen.invalid_max_participants')
+      );
       return;
     }
 
@@ -167,16 +176,25 @@ const CreateActivity = () => {
       if (result) {
         // Handle success (e.g., show a success message, navigate back)
         console.log('Activity created successfully:', result);
-        ToastAndroid.show(translate('create_activity_screen.activity_created_success'), ToastAndroid.SHORT);
+        ToastAndroid.show(
+          translate('create_activity_screen.activity_created_success'),
+          ToastAndroid.SHORT
+        );
         navigation.goBack();
       } else {
         // Handle error (e.g., show an error message)
         console.error('Failed to create activity:', result);
-        Alert.alert(translate('alerts.error'), translate('create_activity_screen.failed_to_create'));
+        Alert.alert(
+          translate('alerts.error'),
+          translate('create_activity_screen.failed_to_create')
+        );
       }
     } catch (error) {
       console.error('Error while creating activity:', error);
-      Alert.alert(translate('alerts.error'), translate('create_activity_screen.error_creating_activity'));
+      Alert.alert(
+        translate('alerts.error'),
+        translate('create_activity_screen.error_creating_activity')
+      );
     }
   };
 

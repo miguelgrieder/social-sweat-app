@@ -26,6 +26,7 @@
     "real": "real",
     "language": "Idioma",
     "unknown": "desconhecido",
+    "not_logged_in": "Você não está em uma conta",
     "loading": "carregando"
   },
   "profile_screen": {

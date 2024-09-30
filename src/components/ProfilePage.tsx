@@ -9,7 +9,7 @@ import {
   Linking,
   Button,
 } from 'react-native';
-import { useAuth } from '@clerk/clerk-expo';
+import { useUser, useAuth } from '@clerk/clerk-expo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
@@ -27,33 +27,71 @@ interface ProfilePageProps {
 }
 
 const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
-  const { signOut, isSignedIn, userId: currentUserId } = useAuth();
+  const { isLoaded: isUserLoaded, isSignedIn, user: authUser } = useUser();
+  const { isLoaded: isAuthLoaded, userId: currentUserId, signOut } = useAuth();
   const [user, setUser] = useState<User | null>(null);
   const [isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
-
-  const idToFetch = profileUserId || currentUserId;
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    if (!isUserLoaded || !isAuthLoaded) {
+      // Auth state is still loading
+      return;
+    }
+
+    const idToFetch = profileUserId || currentUserId;
+
+    if (!idToFetch) {
+      setUser(null);
+      setIsCurrentUser(false);
+      return;
+    }
+
+    setIsCurrentUser(currentUserId ? idToFetch === currentUserId : false);
+
     const fetchUserData = async () => {
-      if (!idToFetch) return;
+      setLoading(true);
       try {
         const fetchedUsers = await fetchUsers({ id: idToFetch });
         if (fetchedUsers && fetchedUsers.length > 0) {
           setUser(fetchedUsers[0]);
-          setIsCurrentUser(idToFetch === currentUserId);
+        } else {
+          setUser(null);
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
+        setUser(null);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchUserData();
-  }, [idToFetch, currentUserId]);
+  }, [profileUserId, currentUserId, isUserLoaded, isAuthLoaded, isSignedIn, authUser]);
+
+  if (loading) {
+    return (
+      <SafeAreaView style={defaultStyles.container}>
+        <Text>{translate('common.loading')}</Text>
+      </SafeAreaView>
+    );
+  }
 
   if (!user) {
     return (
       <SafeAreaView style={defaultStyles.container}>
-        <Text>{translate('common.loading')}</Text>
+        {!isSignedIn ? (
+          <View style={styles.loginContainer}>
+            <Text style={styles.loginPrompt}>{translate('common.not_logged_in')}</Text>
+            <Link href={'/(modals)/user/login'} asChild>
+              <TouchableOpacity style={defaultStyles.btn}>
+                <Text style={defaultStyles.btnText}> {translate('common.login')} </Text>
+              </TouchableOpacity>
+            </Link>
+          </View>
+        ) : (
+          <Text>{translate('common.loading')}</Text>
+        )}
       </SafeAreaView>
     );
   }
@@ -190,7 +228,10 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
           {isSignedIn ? (
             <Button
               title={translate('common.logout')}
-              onPress={() => signOut()}
+              onPress={() => {
+                signOut();
+                setUser(null); // Reset the user state upon sign out
+              }}
               color={Colors.dark}
             />
           ) : (
@@ -321,5 +362,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: Colors.primary,
+  },
+  loginContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+  },
+  loginPrompt: {
+    fontSize: 16,
+    marginBottom: spacing.sm,
   },
 });

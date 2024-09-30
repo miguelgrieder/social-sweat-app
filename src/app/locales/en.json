@@ -10,7 +10,8 @@
     "body": "Welcome to the home page"
   },
   "coaches_screen": {
-    "since": "since"
+    "since": "since",
+    "no_coaches_found": "No coaches found!"
   },
   "common": {
     "cancel": "Cancel",

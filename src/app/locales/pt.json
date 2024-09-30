@@ -10,7 +10,8 @@
     "body": "Bem-vindo à página inicial"
   },
   "coaches_screen": {
-    "since": "desde"
+    "since": "desde",
+    "no_coaches_found": "Nenhum Treinador encontrado!"
   },
   "common": {
     "cancel": "Cancelar",

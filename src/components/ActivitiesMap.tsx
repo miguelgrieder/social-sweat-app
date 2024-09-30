@@ -77,8 +77,8 @@ const ActivitiesMap = memo(({ activities }: Props) => {
         {activities?.map((item: Activity) => (
           <Marker
             coordinate={{
-              latitude: +item.location.geometry.coordinates.longitude,
-              longitude: +item.location.geometry.coordinates.latitude,
+              latitude: +item.location.geometry.coordinates.latitude,
+              longitude: +item.location.geometry.coordinates.longitude,
             }}
             key={item.id}
             onPress={() => onMarkerSelected(item)}

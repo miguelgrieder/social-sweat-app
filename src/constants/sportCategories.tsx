@@ -1,4 +1,4 @@
-import { SportType } from "@/interfaces/activity";
+import { SportType } from '@/interfaces/activity';
 
 export interface Category {
   sportType: SportType | string;

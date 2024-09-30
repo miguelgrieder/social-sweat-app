@@ -10,7 +10,8 @@
     "body": "Bem-vindo à página inicial"
   },
   "coaches_screen": {
-    "since": "desde"
+    "since": "desde",
+    "no_coaches_found": "Nenhum Treinador encontrado!"
   },
   "common": {
     "cancel": "Cancelar",
@@ -21,17 +22,20 @@
     "continue": "Continuar",
     "or": "ou",
     "in": "em",
-    "dollar": "dolar",
+    "dollar": "dólar",
     "euro": "euro",
     "real": "real",
     "language": "Idioma",
-    "unknown": "desconhecido"
+    "unknown": "desconhecido",
+    "not_logged_in": "Você não está em uma conta",
+    "loading": "carregando"
   },
   "profile_screen": {
     "header": "Perfil",
     "first_name": "Nome",
     "last_name": "Sobrenome",
-    "since": "Desde"
+    "since": "Desde",
+    "activities_participated": "atividades realizadas"
   },
   "login_modal": {
     "header": "Entrar ou cadastrar-se",
@@ -47,11 +51,16 @@
     "role_coach": "Coach",
     "role_company": "Empresa",
     "role_user_title": "Escolha seus esportes favoritos",
-    "role_coach_title": "Selecione os esportes que vocẽ oferece",
+    "role_coach_title": "Selecione os esportes que você oferece",
     "role_company_title": "Selecione os esportes que sua empresa oferece"
   },
-  "photo-upload": {
-    "header": "Carregar Foto de Perfil",
+  "photo-username-selection": {
+    "header": "Escolha uma foto de perfil e um nome de usuário",
+    "input-label": "Escolha seu nome de usuário",
+    "error-message": "Nome de usuário em uso.",
+    "placeholder": "Nome de usuário",
+    "too-short": "Muito curto",
+    "invalid": "Nome de usuário inválido",
     "description": "Aqui, você pode personalizar seu perfil com uma foto que te represente. Simplesmente selecione uma imagem do seu dispositivo, e nós cuidamos do resto. Certifique-se de que sua foto reflete quem você é, seja um selfie, uma foto favorita ou uma imagem com a qual você se identifique. Vamos tornar seu perfil único!"
   },
   "birthdate-selection": {
@@ -85,7 +94,8 @@
     }
   },
   "activities": {
-    "registration": "Cadastro"
+    "registration": "Cadastro",
+    "activities": "Atividades"
   },
   "activity_sports": {
     "trending-up": "Em alta",
@@ -119,7 +129,10 @@
     "reviews": "Avaliações",
     "participants": "Participantes",
     "host_since": "Organizador desde",
-    "join_now": "Junte-se Agora"
+    "join_now": "Junte-se Agora",
+    "registration": "Cadastro",
+    "joined": "Entrou",
+    "leave_now": "Sair Agora"
   },
   "create_activity_screen": {
     "title": "Criar Atividade",
@@ -128,24 +141,46 @@
     "placeholder_title": "Insira o título da atividade",
     "label_description": "Descrição",
     "placeholder_description": "Insira a descrição da atividade",
+    "label_max_participants": "Participantes Máximos",
+    "placeholder_max_participants": "Digite o número máximo de participantes",
     "label_activity_type": "Tipo de Atividade",
+    "label_sport": "Esporte",
     "label_price": "Preço",
-    "placeholder_price": "R$ 0,00",
+    "placeholder_price": "0,00",
     "label_date_time": "Data e Hora",
     "placeholder_datetime_start": "Insira a data e hora de início",
     "placeholder_datetime_finish": "Insira a data e hora de término",
+    "label_map": "Selecione o Local",
+    "selected_coordinates": "Coordenadas selecionadas",
     "label_location": "Localização",
     "placeholder_country": "Insira o país",
     "placeholder_area": "Insira a área ou região",
     "placeholder_city": "Insira a cidade",
     "placeholder_smart_location": "Insira o local detalhado",
     "label_coordinates": "Coordenadas",
-    "label_map": "Selecione o Local",
-    "selected_coordinates": "Coordenadas selecionadas",
-    "label_sport": "Esporte",
-    "create": "Criar Atividade"
+    "create": "Criar Atividade",
+    "activity_created_success": "Atividade criada com sucesso!",
+    "failed_to_create": "Falha ao criar a atividade.",
+    "error_creating_activity": "Ocorreu um erro ao criar a atividade.",
+    "no_location_details": "Nenhum detalhe de localização encontrado.",
+    "unable_to_get_location": "Não foi possível obter detalhes da localização."
   },
   "sports_list": {
     "find_a_sport": "Procure um esporte..."
+  },
+  "alerts": {
+    "error": "Erro",
+    "info": "Informação",
+    "success": "Sucesso",
+    "must_login_to_join": "Você precisa estar logado para participar de uma atividade.",
+    "already_joined": "Você já participou desta atividade.",
+    "max_participants_reached": "Esta atividade atingiu o número máximo de participantes.",
+    "joined_activity": "Você participou da atividade.",
+    "failed_to_join": "Falha ao participar da atividade. Por favor, tente novamente.",
+    "unexpected_error": "Ocorreu um erro inesperado. Por favor, tente novamente.",
+    "user_id_unavailable": "ID do usuário não disponível.",
+    "invalid_max_participants": "Por favor, insira um número válido de participantes máximos.",
+    "left_activity": "Você saiu da atividade.",
+    "failed_to_leave": "Falha ao sair da atividade. Por favor, tente novamente."
   }
 }

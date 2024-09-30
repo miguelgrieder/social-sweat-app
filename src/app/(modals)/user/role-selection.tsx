@@ -1,38 +1,62 @@
+// src/app/(modals)/user/role-selection.tsx
+
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+  ScrollView,
+  ToastAndroid,
+} from 'react-native';
 import { Stack, useRouter } from 'expo-router';
-import { useUser } from '@clerk/clerk-expo';
+import { useAuth } from '@clerk/clerk-expo';
 import { defaultStyles } from '@/constants/Styles';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 import RNPickerSelect from 'react-native-picker-select';
 import SportsList from '@/components/SportsList';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { updateUser } from '@/api/updateUser';
+import { Role } from '@/interfaces/user';
+import { SportType } from '@/interfaces/activity';
 
 const RoleSelectionScreen = () => {
   const router = useRouter();
-  const { user } = useUser();
+  const { userId } = useAuth();
 
-  const [selectedRole, setSelectedRole] = useState('');
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedRole, setSelectedRole] = useState<Role | ''>('');
+  const [selectedTags, setSelectedTags] = useState<SportType[]>([]);
   const [isButtonDisabled, setButtonDisabled] = useState(false);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const handleRoleSelection = async () => {
-    if (selectedRole && selectedTags.length > 0 && user) {
+    if (selectedRole && selectedTags.length > 0 && userId) {
       setButtonDisabled(true);
       try {
-        await user.update({
-          unsafeMetadata: { ...user.unsafeMetadata, role: selectedRole, sports: [...selectedTags] },
-        });
-        console.log(
-          `Unsafe metadata saved successfully. role: ${selectedRole}, sports: {${selectedTags}}`
-        );
-        router.navigate('/(modals)/user/photo-upload');
-        return;
+        const updateData = {
+          user_metadata: {
+            role: selectedRole,
+            sports: selectedTags,
+          },
+        };
+
+        const success = await updateUser(userId, updateData);
+
+        if (success) {
+          console.log(
+            `User metadata saved successfully. role: ${selectedRole}, sports: ${selectedTags}`
+          );
+          router.navigate('/(modals)/user/photo-username-selection');
+        } else {
+          console.error('Failed to update user.');
+          ToastAndroid.show('Error updating user. Please try again.', ToastAndroid.SHORT);
+        }
       } catch (error) {
-        console.error('Error updating unsafe metadata:', error);
+        console.error('Error updating user:', error);
+        ToastAndroid.show('Error updating user. Please try again.', ToastAndroid.SHORT);
       } finally {
         setButtonDisabled(false);
       }
@@ -43,10 +67,12 @@ const RoleSelectionScreen = () => {
 
   const getRoleBasedListTitle = () => {
     switch (selectedRole) {
-      case 'coach':
+      case Role.Coach:
         return translate('role_selection.role_coach_title');
-      case 'company':
+      case Role.Company:
         return translate('role_selection.role_company_title');
+      case Role.User:
+        return translate('role_selection.role_user_title');
       default:
         return translate('role_selection.role_user_title');
     }
@@ -81,13 +107,13 @@ const RoleSelectionScreen = () => {
           <Text style={styles.description}>{translate('role_selection.description')}</Text>
 
           <RNPickerSelect
-            onValueChange={(itemValue) => setSelectedRole(itemValue)}
+            onValueChange={(itemValue) => setSelectedRole(itemValue || '')}
             items={[
-              { label: translate('role_selection.role_user'), value: 'user' },
-              { label: translate('role_selection.role_coach'), value: 'coach' },
-              { label: translate('role_selection.role_company'), value: 'company' },
+              { label: translate('role_selection.role_user'), value: Role.User },
+              { label: translate('role_selection.role_coach'), value: Role.Coach },
+              { label: translate('role_selection.role_company'), value: Role.Company },
             ]}
-            value={selectedRole}
+            value={selectedRole || null}
             style={pickerSelectStyles}
             placeholder={{
               label: translate('role_selection.select_your_role'),
@@ -102,7 +128,7 @@ const RoleSelectionScreen = () => {
             <Animated.View style={{ opacity: fadeAnim }}>
               <SportsList
                 title={getRoleBasedListTitle()}
-                onSelectedTagsChange={(tags) => {
+                onSelectedTagsChange={(tags: SportType[]) => {
                   setSelectedTags(tags);
                 }}
               />

@@ -1,9 +1,31 @@
 // Define the UserModel interface
+import { SportType } from '@/interfaces/activity';
+
+export enum Role {
+  Coach = 'coach',
+  User = 'user',
+  Company = 'company',
+}
+
+export interface UserSocialMedias {
+  user_youtube?: string;
+  user_instagram?: string;
+  user_facebook?: string;
+  user_tiktok?: string;
+  user_strava?: string;
+}
+
+export interface UserMetadata {
+  role: Role;
+  sports?: SportType[];
+  birth_date: string; // Expected format: 'YYYY/MM/DD'
+  user_social_medias?: UserSocialMedias;
+  profile_description?: string;
+}
+
 export interface User {
   id: string;
-  public_metadata: { [key: string]: any };
-  private_metadata?: { [key: string]: any } | null;
-  unsafe_metadata: { [key: string]: any };
+  user_metadata: UserMetadata;
   email_address?: string | null;
   phone_number?: string | null;
   image_url?: string | null;
@@ -16,5 +38,13 @@ export interface User {
 
 // Define the FilterUser interface
 export interface FilterUser {
-  unsafe_metadata_role: string;
+  role?: string;
+  id?: string;
+}
+
+export interface UpdateUser {
+  first_name?: string;
+  last_name?: string;
+  username?: string;
+  user_metadata?: Partial<UserMetadata>;
 }

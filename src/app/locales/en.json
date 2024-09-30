@@ -10,7 +10,8 @@
     "body": "Welcome to the home page"
   },
   "coaches_screen": {
-    "since": "since"
+    "since": "since",
+    "no_coaches_found": "No coaches found!"
   },
   "common": {
     "cancel": "Cancel",
@@ -25,13 +26,16 @@
     "euro": "euro",
     "real": "real",
     "language": "Language",
-    "unknown": "unknown"
+    "unknown": "unknown",
+    "not_logged_in": "You're not logged in",
+    "loading": "loading"
   },
   "profile_screen": {
     "header": "Profile",
     "first_name": "First Name",
     "last_name": "Last Name",
-    "since": "Since"
+    "since": "Since",
+    "activities_participated": "Activities Participated"
   },
   "login_modal": {
     "header": "Log in or sign up",
@@ -50,8 +54,13 @@
     "role_coach_title": "Select the sports you coach",
     "role_company_title": "Select the sports your company offers"
   },
-  "photo-upload": {
-    "header": "Upload Photo Profile",
+  "photo-username-selection": {
+    "header": "Choose profile picture and username",
+    "input-label": "Select your username",
+    "error-message": "Username already in use.",
+    "placeholder": "Username",
+    "too-short": "Too short",
+    "invalid": "Invalid Username",
     "description": "Here, you can personalize your profile with a picture that represents you. Simply select an image from your device, and we'll handle the rest. Make sure your photo reflects who you are, whether it's a selfie, a favorite snapshot, or an image that resonates with you. Let's make your profile uniquely yours!"
   },
   "birthdate-selection": {
@@ -125,7 +134,9 @@
     "participants": "Participants",
     "host_since": "Host since",
     "join_now": "Join Now",
-    "registration": "Registration"
+    "registration": "Registration",
+    "joined": "Joined",
+    "leave_now": "Leave Now"
   },
   "create_activity_screen": {
     "title": "Create Activity",
@@ -134,24 +145,46 @@
     "placeholder_title": "Enter the activity title",
     "label_description": "Description",
     "placeholder_description": "Enter the activity description",
+    "label_max_participants": "Maximum Participants",
+    "placeholder_max_participants": "Enter maximum number of participants",
     "label_activity_type": "Activity Type",
+    "label_sport": "Sport",
     "label_price": "Price",
-    "placeholder_price": "$0.00",
+    "placeholder_price": "0.00",
     "label_date_time": "Date & Time",
     "placeholder_datetime_start": "Enter start date and time",
     "placeholder_datetime_finish": "Enter finish date and time",
+    "label_map": "Select the location",
+    "selected_coordinates": "Selected coordinates",
     "label_location": "Location",
     "placeholder_country": "Enter the country",
     "placeholder_area": "Enter the area or region",
     "placeholder_city": "Enter the city",
     "placeholder_smart_location": "Enter the detailed location",
     "label_coordinates": "Coordinates",
-    "label_map": "Select the location",
-    "selected_coordinates": "Selected coordinates",
-    "label_sport": "Sport",
-    "create": "Create Activity"
+    "create": "Create Activity",
+    "activity_created_success": "Activity created successfully!",
+    "failed_to_create": "Failed to create activity.",
+    "error_creating_activity": "An error occurred while creating the activity.",
+    "no_location_details": "No location details found.",
+    "unable_to_get_location": "Unable to get location details."
   },
   "sports_list": {
     "find_a_sport": "Find a sport..."
+  },
+  "alerts": {
+    "error": "Error",
+    "info": "Info",
+    "success": "Success",
+    "must_login_to_join": "You must be logged in to join an activity.",
+    "already_joined": "You have already joined this activity.",
+    "max_participants_reached": "This activity has reached its maximum number of participants.",
+    "joined_activity": "You have joined the activity.",
+    "failed_to_join": "Failed to join the activity. Please try again.",
+    "unexpected_error": "An unexpected error occurred. Please try again.",
+    "user_id_unavailable": "User ID not available.",
+    "invalid_max_participants": "Please enter a valid number of maximum participants.",
+    "left_activity": "You have left the activity.",
+    "failed_to_leave": "Failed to leave the activity. Please try again."
   }
 }

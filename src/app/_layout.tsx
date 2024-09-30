@@ -103,7 +103,7 @@ function RootLayoutNav() {
             fontFamily: 'mon-sb',
           },
           headerLeft: () => (
-            <TouchableOpacity onPress={() => router.back()}>
+            <TouchableOpacity onPress={() => router.push(`/(tabs)`)}>
               <Ionicons name="close-outline" size={28} />
             </TouchableOpacity>
           ),

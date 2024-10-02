@@ -30,6 +30,7 @@ import { fetchUsers } from '@/api/fetchUsers';
 import { User } from '@/interfaces/user';
 import { useAuth } from '@clerk/clerk-expo';
 import { userInteractActivity } from '@/api/userInteractActivity';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
@@ -328,7 +329,9 @@ const ActivityDetailsScreen = () => {
         </View>
       </Animated.ScrollView>
 
-      <View style={[defaultStyles.footer, { height: 70 }]}>
+      <View
+        style={[defaultStyles.footer, { height: 70, marginBottom: useSafeAreaInsets().bottom }]}
+      >
         <View style={styles.footerContainer}>
           <TouchableOpacity style={styles.footerText}>
             <Text style={styles.footerPrice}>

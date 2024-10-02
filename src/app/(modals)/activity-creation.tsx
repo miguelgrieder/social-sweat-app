@@ -25,6 +25,7 @@ import { defaultStyles } from '@/constants/Styles';
 import { useNavigation } from 'expo-router';
 import { ActivityType, SportType } from '@/interfaces/activity';
 import RNPickerSelect from 'react-native-picker-select';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 Geocoder.init(process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY);
 
@@ -207,8 +208,9 @@ const CreateActivity = () => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
+      style={{ flex: 1, backgroundColor: Colors.background }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}
     >
       <ScrollView>
         <View style={styles.container}>
@@ -226,6 +228,7 @@ const CreateActivity = () => {
           {renderTitle('label_title')}
           <TextInput
             placeholder={translate('create_activity_screen.placeholder_title')}
+            placeholderTextColor={Colors.grey}
             style={styles.input}
             value={title}
             onChangeText={setTitle}
@@ -234,6 +237,7 @@ const CreateActivity = () => {
           {renderTitle('label_description')}
           <TextInput
             placeholder={translate('create_activity_screen.placeholder_description')}
+            placeholderTextColor={Colors.grey}
             style={styles.input}
             value={description}
             onChangeText={setDescription}
@@ -244,6 +248,7 @@ const CreateActivity = () => {
           {renderTitle('label_max_participants')}
           <TextInput
             placeholder={translate('create_activity_screen.placeholder_max_participants')}
+            placeholderTextColor={Colors.grey}
             style={styles.input}
             value={maxParticipants}
             onChangeText={(text) => setMaxParticipants(text.replace(/[^0-9]/g, ''))}
@@ -290,6 +295,7 @@ const CreateActivity = () => {
           <View style={[styles.pickerContainer, { borderTopWidth: 0 }]}>
             <TextInput
               placeholder="0"
+              placeholderTextColor={Colors.grey}
               style={[styles.input, { borderWidth: StyleSheet.hairlineWidth, marginBottom: 0 }]}
               keyboardType="numeric"
               value={priceValue}
@@ -312,12 +318,14 @@ const CreateActivity = () => {
           {renderTitle('label_date_time')}
           <TextInput
             placeholder={translate('create_activity_screen.placeholder_datetime_start')}
+            placeholderTextColor={Colors.grey}
             style={styles.input}
             value={datetimeStart}
             onChangeText={setDatetimeStart}
           />
           <TextInput
             placeholder={translate('create_activity_screen.placeholder_datetime_finish')}
+            placeholderTextColor={Colors.grey}
             style={styles.input}
             value={datetimeFinish}
             onChangeText={setDatetimeFinish}
@@ -345,18 +353,21 @@ const CreateActivity = () => {
           {renderTitle('label_location')}
           <TextInput
             placeholder={translate('create_activity_screen.placeholder_country')}
+            placeholderTextColor={Colors.grey}
             style={styles.input}
             value={locationCountry}
             onChangeText={setLocationCountry}
           />
           <TextInput
             placeholder={translate('create_activity_screen.placeholder_city')}
+            placeholderTextColor={Colors.grey}
             style={styles.input}
             value={locationCity}
             onChangeText={setLocationCity}
           />
           <TextInput
             placeholder={translate('create_activity_screen.placeholder_smart_location')}
+            placeholderTextColor={Colors.grey}
             style={styles.input}
             value={locationSmartLocation}
             onChangeText={setLocationSmartLocation}
@@ -364,7 +375,14 @@ const CreateActivity = () => {
         </View>
       </ScrollView>
       {/* Create activity button */}
-      <View style={styles.buttonContainer}>
+      <View
+        style={[
+          styles.buttonContainer,
+          {
+            marginBottom: useSafeAreaInsets().bottom,
+          },
+        ]}
+      >
         <TouchableOpacity onPress={onSubmit} style={defaultStyles.btn}>
           <Text style={defaultStyles.btnText}>{translate('create_activity_screen.create')}</Text>
         </TouchableOpacity>
@@ -443,9 +461,9 @@ const pickerSelectStyles = StyleSheet.create({
     height: 54,
     borderRadius: 10,
     color: Colors.grey,
-    paddingHorizontal: 0, // Adjusted to align with the input field
+    paddingHorizontal: spacing.sm,
     paddingRight: spacing.lg,
-    paddingVertical: spacing.sm,
+    paddingVertical: spacing.xs,
   },
   inputAndroid: {
     height: 54,

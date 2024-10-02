@@ -8,7 +8,7 @@ import { Link } from 'expo-router';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 import { sportTypeIconMappings } from '@/constants/sportTypeIconMappings';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { categories } from '@/constants/sportCategories';
 
 interface Props {
@@ -32,63 +32,75 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <SafeAreaView style={styles.safeAreaView}>
-        <View style={styles.actionRow}>
-          <Link href={'/(modals)/search'} asChild>
-            <TouchableOpacity style={styles.searchBtn}>
+    <View style={[styles.container, { paddingTop: useSafeAreaInsets().top }]}>
+      <View style={styles.actionRow}>
+        <Link href={'/(modals)/search'} asChild>
+          <TouchableOpacity style={styles.searchBtn}>
+            <View
+              style={{
+                gap: 10,
+                overflow: 'hidden',
+                flexDirection: 'row',
+                alignItems: 'center',
+                padding: spacing.sm,
+                borderRadius: 30,
+              }}
+            >
               <Ionicons name="search" size={24} />
               <View>
-                <Text style={{ fontFamily: 'mon-sb' }}>
+                <Text style={{ fontFamily: 'mon-sb' }} numberOfLines={1} ellipsizeMode="tail">
                   {translate('explorer_screen.explorer_header.search')}
                 </Text>
-                <Text style={{ color: Colors.grey, fontFamily: 'mon' }}>
+                <Text
+                  style={{ color: Colors.grey, fontFamily: 'mon' }}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
                   {translate('explorer_screen.explorer_header.any_sport')} ·{' '}
                   {translate('explorer_screen.explorer_header.any_location')}
                 </Text>
               </View>
-            </TouchableOpacity>
-          </Link>
-
-          <TouchableOpacity style={styles.filterBtn}>
-            <Ionicons name="options-outline" size={24} />
+            </View>
           </TouchableOpacity>
-        </View>
+        </Link>
 
-        <ScrollView
-          horizontal
-          ref={scrollRef}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            alignItems: 'center',
-            gap: 20,
-            paddingHorizontal: spacing.md,
-          }}
-          style={{ flex: 1 }}
-        >
-          {categories.map((item, index) => (
-            <TouchableOpacity
-              ref={(el) => (itemsRef.current[index] = el)}
-              key={index}
-              style={activeIndex === index ? styles.categoriesBtnActive : styles.categoriesBtn}
-              onPress={() => selectCategory(index)}
-            >
-              <MaterialCommunityIcons
-                name={
-                  sportTypeIconMappings[item.sportType]
-                    ? sportTypeIconMappings[item.sportType]
-                    : item.sportType
-                }
-                size={24}
-                color={activeIndex === index ? '#000' : Colors.grey}
-              />
-              <Text style={activeIndex === index ? styles.categoryTextActive : styles.categoryText}>
-                {translate(`activity_sports.${item.sportType}`)}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-      </SafeAreaView>
+        <TouchableOpacity style={styles.filterBtn}>
+          <Ionicons name="options-outline" size={24} />
+        </TouchableOpacity>
+      </View>
+
+      <ScrollView
+        horizontal
+        ref={scrollRef}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{
+          alignItems: 'center',
+          gap: 20,
+          paddingHorizontal: spacing.md,
+        }}
+      >
+        {categories.map((item, index) => (
+          <TouchableOpacity
+            ref={(el) => (itemsRef.current[index] = el)}
+            key={index}
+            style={activeIndex === index ? styles.categoriesBtnActive : styles.categoriesBtn}
+            onPress={() => selectCategory(index)}
+          >
+            <MaterialCommunityIcons
+              name={
+                sportTypeIconMappings[item.sportType]
+                  ? sportTypeIconMappings[item.sportType]
+                  : item.sportType
+              }
+              size={24}
+              color={activeIndex === index ? '#000' : Colors.grey}
+            />
+            <Text style={activeIndex === index ? styles.categoryTextActive : styles.categoryText}>
+              {translate(`activity_sports.${item.sportType}`)}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
     </View>
   );
 };
@@ -106,10 +118,9 @@ const styles = StyleSheet.create({
       height: 10,
     },
   },
-  safeAreaView: {},
   actionRow: {
     flex: 1,
-    height: 90,
+    paddingVertical: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -117,7 +128,6 @@ const styles = StyleSheet.create({
   },
   searchBtn: {
     flex: 1,
-    gap: 10,
     marginRight: spacing.md,
     shadowOffset: {
       width: 1,
@@ -126,12 +136,8 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowRadius: 8,
     borderRadius: 30,
-    overflow: 'hidden',
-    padding: spacing.sm,
     shadowColor: '#000',
     shadowOpacity: 0.12,
-    alignItems: 'center',
-    flexDirection: 'row',
     borderColor: '#c2c2c2',
     backgroundColor: Colors.background,
     borderWidth: StyleSheet.hairlineWidth,

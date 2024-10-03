@@ -7,7 +7,6 @@ import * as SecureStore from 'expo-secure-store';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { TouchableOpacity } from 'react-native';
-import SearchActivityText from '@/components/SearchActivityText';
 import { translate } from '@/app/services/translate';
 import { FilterActivityInputProvider } from '@/context/FilterActivityInputContext';
 
@@ -121,7 +120,8 @@ function RootLayoutNav() {
           presentation: 'transparentModal',
           animation: 'fade',
           headerTransparent: true,
-          headerTitle: () => <SearchActivityText />,
+          headerTitle: 'Filters',
+          headerTitleAlign: 'center',
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => router.back()}

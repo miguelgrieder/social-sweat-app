@@ -71,7 +71,7 @@
     "description": "Let's nail down your birthdate! Sharing this info helps us fine-tune your experience on our platform. Whether it's for personalized recommendations or celebrating your special day, we're here to make it all about you. Ready to share? Let's do this!"
   },
   "explorer_screen": {
-    "explorer_header": {
+    "activities_header": {
       "search": "Search Experiences",
       "any_sport": "Any sport",
       "any_location": "Any location"

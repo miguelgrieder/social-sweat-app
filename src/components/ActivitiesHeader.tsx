@@ -15,7 +15,7 @@ interface Props {
   onCategoryChanged: (category: string) => void;
 }
 
-const ExploreHeader: React.FC<Props> = ({ onCategoryChanged }) => {
+const ActivitiesHeader: React.FC<Props> = ({ onCategoryChanged }) => {
   const scrollRef = useRef<ScrollView>(null);
   const itemsRef = useRef<Array<TouchableOpacity | null>>([]);
   const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -50,15 +50,15 @@ const ExploreHeader: React.FC<Props> = ({ onCategoryChanged }) => {
               <Ionicons name="search" size={24} />
               <View>
                 <Text style={{ fontFamily: 'mon-sb' }} numberOfLines={1} ellipsizeMode="tail">
-                  {translate('explorer_screen.explorer_header.search')}
+                  {translate('explorer_screen.activities_header.search')}
                 </Text>
                 <Text
                   style={{ color: Colors.grey, fontFamily: 'mon' }}
                   numberOfLines={1}
                   ellipsizeMode="tail"
                 >
-                  {translate('explorer_screen.explorer_header.any_sport')} ·{' '}
-                  {translate('explorer_screen.explorer_header.any_location')}
+                  {translate('explorer_screen.activities_header.any_sport')} ·{' '}
+                  {translate('explorer_screen.activities_header.any_location')}
                 </Text>
               </View>
             </View>
@@ -175,4 +175,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExploreHeader;
+export default ActivitiesHeader;

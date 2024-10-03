@@ -71,7 +71,7 @@
     "description": "Vamos acertar sua data de nascimento! Compartilhar essa informação nos ajuda a refinar sua experiência em nossa plataforma. Seja para recomendações personalizadas ou para celebrar seu dia especial, estamos aqui para fazer tudo sobre você. Pronto para compartilhar? Vamos nessa!"
   },
   "explorer_screen": {
-    "explorer_header": {
+    "activities_header": {
       "search": "Buscar Experiências",
       "any_sport": "Qualquer esporte",
       "any_location": "Qualquer local"

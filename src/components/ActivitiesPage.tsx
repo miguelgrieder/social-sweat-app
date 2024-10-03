@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Stack } from 'expo-router';
-import ExploreHeader from '@/components/ExploreHeader';
+import ActivitiesHeader from '@/components/ActivitiesHeader';
 import ActivitiesMap from '@/components/ActivitiesMap';
 import ActivitiesBottomSheet from '@/components/ActivitiesBottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -24,7 +24,7 @@ export default function ActivitiesPage() {
     try {
       let filterBody: FilterActivityInput = {};
 
-      // Apply category filter (from ExploreHeader)
+      // Apply category filter (from ActivitiesHeader)
       if (category !== 'trending-up') {
         filterBody.sport_types = [category as SportType];
       }
@@ -54,7 +54,7 @@ export default function ActivitiesPage() {
   return (
     <View style={[styles.container, { paddingTop: insets.top + 80 }]}>
       <Stack.Screen options={{ headerShown: false }} />
-      <ExploreHeader onCategoryChanged={handleCategoryChange} />
+      <ActivitiesHeader onCategoryChanged={handleCategoryChange} />
       {loading ? (
         <View style={styles.loaderContainer}>
           <ActivityIndicator size="large" color="#000" />

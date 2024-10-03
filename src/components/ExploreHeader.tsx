@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -9,16 +9,16 @@ import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 import { sportTypeIconMappings } from '@/constants/sportTypeIconMappings';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { categories } from '@/constants/sportCategories';
+import { categories, Category } from '@/constants/sportCategories'; // Ensure you have this type
 
 interface Props {
   onCategoryChanged: (category: string) => void;
 }
 
-const ExploreHeader = ({ onCategoryChanged }: Props) => {
+const ExploreHeader: React.FC<Props> = ({ onCategoryChanged }) => {
   const scrollRef = useRef<ScrollView>(null);
   const itemsRef = useRef<Array<TouchableOpacity | null>>([]);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const selectCategory = (index: number) => {
     const selected = itemsRef.current[index];
@@ -28,7 +28,8 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
     });
 
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    onCategoryChanged(categories[index].name);
+    const selectedSportType = categories[index].sportType;
+    onCategoryChanged(selectedSportType);
   };
 
   return (
@@ -79,7 +80,7 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
           paddingHorizontal: spacing.md,
         }}
       >
-        {categories.map((item, index) => (
+        {categories.map((item: Category, index: number) => (
           <TouchableOpacity
             ref={(el) => (itemsRef.current[index] = el)}
             key={index}

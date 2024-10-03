@@ -84,3 +84,12 @@ interface DateTimes {
   datetime_start: string;
   datetime_finish: string;
 }
+
+export type FilterActivityInput = {
+  activity_id?: string;
+  participant_user_id?: string;
+  host_user_id?: string;
+  activity_type?: ActivityType;
+  price?: number;
+  sport_types?: SportType[];
+};

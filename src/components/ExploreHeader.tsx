@@ -35,7 +35,7 @@ const ExploreHeader: React.FC<Props> = ({ onCategoryChanged }) => {
   return (
     <View style={[styles.container, { paddingTop: useSafeAreaInsets().top }]}>
       <View style={styles.actionRow}>
-        <Link href={'/(modals)/search'} asChild>
+        <Link href={'/(modals)/activities-filter'} asChild>
           <TouchableOpacity style={styles.searchBtn}>
             <View
               style={{

@@ -115,7 +115,7 @@ function RootLayoutNav() {
       <Stack.Screen name="activity/[id]" options={{ headerTitle: '', headerTransparent: true }} />
       <Stack.Screen name="user/[id]" options={{ headerTitle: '', headerTransparent: true }} />
       <Stack.Screen
-        name="(modals)/search"
+        name="(modals)/activities-filter"
         options={{
           presentation: 'transparentModal',
           animation: 'fade',

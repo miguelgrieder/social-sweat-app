@@ -79,7 +79,7 @@
     "explorer_listing_bottom_sheet": {
       "map": "Map"
     },
-    "search": {
+    "activities-filter": {
       "where": "Where",
       "im_flexible": "I'm flexible",
       "title_have_you_exercised": "Have you exercised today?",

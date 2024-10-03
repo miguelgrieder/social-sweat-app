@@ -23,7 +23,7 @@ import { spacing } from '@/constants/spacing';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
-const SearchModal = () => {
+const ActivitiesFilter = () => {
   const router = useRouter();
   const { setFilters } = useFilters();
 
@@ -91,11 +91,13 @@ const SearchModal = () => {
               entering={FadeIn.duration(200)}
               exiting={FadeOut.duration(200)}
             >
-              <Text style={styles.previewText}>{translate('explorer_screen.search.when')}</Text>
+              <Text style={styles.previewText}>
+                {translate('explorer_screen.activities-filter.when')}
+              </Text>
               <Text style={styles.previewdData}>
                 {datetimeStart
                   ? datetimeStart.substring(0, 10)
-                  : translate('explorer_screen.search.any_day')}
+                  : translate('explorer_screen.activities-filter.any_day')}
               </Text>
             </AnimatedTouchableOpacity>
           )}
@@ -104,7 +106,7 @@ const SearchModal = () => {
             <>
               <TouchableOpacity onPress={() => setOpenCard(null)}>
                 <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-                  {translate('explorer_screen.search.whens_your_workout')}
+                  {translate('explorer_screen.activities-filter.whens_your_workout')}
                 </Animated.Text>
               </TouchableOpacity>
               <Animated.View style={styles.cardBody}>
@@ -142,9 +144,13 @@ const SearchModal = () => {
               entering={FadeIn.duration(200)}
               exiting={FadeOut.duration(200)}
             >
-              <Text style={styles.previewText}>{translate('explorer_screen.search.what')}</Text>
+              <Text style={styles.previewText}>
+                {translate('explorer_screen.activities-filter.what')}
+              </Text>
               <Text style={styles.previewdData}>
-                {activityType ? activityType : translate('explorer_screen.search.any_activity')}
+                {activityType
+                  ? activityType
+                  : translate('explorer_screen.activities-filter.any_activity')}
               </Text>
             </AnimatedTouchableOpacity>
           )}
@@ -153,7 +159,7 @@ const SearchModal = () => {
             <>
               <TouchableOpacity onPress={() => setOpenCard(null)}>
                 <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-                  {translate('explorer_screen.search.what_activity_are_you_interested')}
+                  {translate('explorer_screen.activities-filter.what_activity_are_you_interested')}
                 </Animated.Text>
               </TouchableOpacity>
               <Animated.View style={styles.cardBody}>
@@ -191,9 +197,11 @@ const SearchModal = () => {
               entering={FadeIn.duration(200)}
               exiting={FadeOut.duration(200)}
             >
-              <Text style={styles.previewText}>{translate('explorer_screen.search.price')}</Text>
+              <Text style={styles.previewText}>
+                {translate('explorer_screen.activities-filter.price')}
+              </Text>
               <Text style={styles.previewdData}>
-                {price ? `$${price}` : translate('explorer_screen.search.any_price')}
+                {price ? `$${price}` : translate('explorer_screen.activities-filter.any_price')}
               </Text>
             </AnimatedTouchableOpacity>
           )}
@@ -202,14 +210,14 @@ const SearchModal = () => {
             <>
               <TouchableOpacity onPress={() => setOpenCard(null)}>
                 <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-                  {translate('explorer_screen.search.enter_price')}
+                  {translate('explorer_screen.activities-filter.enter_price')}
                 </Animated.Text>
               </TouchableOpacity>
               <Animated.View style={styles.cardBody}>
                 <TextInput
                   style={styles.inputField}
                   keyboardType="numeric"
-                  placeholder={translate('explorer_screen.search.price_placeholder')}
+                  placeholder={translate('explorer_screen.activities-filter.price_placeholder')}
                   value={price}
                   onChangeText={setPrice}
                 />
@@ -228,10 +236,10 @@ const SearchModal = () => {
               exiting={FadeOut.duration(200)}
             >
               <Text style={styles.previewText}>
-                {translate('explorer_screen.search.activity_id')}
+                {translate('explorer_screen.activities-filter.activity_id')}
               </Text>
               <Text style={styles.previewdData}>
-                {activityId || translate('explorer_screen.search.any_activity_id')}
+                {activityId || translate('explorer_screen.activities-filter.any_activity_id')}
               </Text>
             </AnimatedTouchableOpacity>
           )}
@@ -240,13 +248,15 @@ const SearchModal = () => {
             <>
               <TouchableOpacity onPress={() => setOpenCard(null)}>
                 <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-                  {translate('explorer_screen.search.enter_activity_id')}
+                  {translate('explorer_screen.activities-filter.enter_activity_id')}
                 </Animated.Text>
               </TouchableOpacity>
               <Animated.View style={styles.cardBody}>
                 <TextInput
                   style={styles.inputField}
-                  placeholder={translate('explorer_screen.search.activity_id_placeholder')}
+                  placeholder={translate(
+                    'explorer_screen.activities-filter.activity_id_placeholder'
+                  )}
                   value={activityId}
                   onChangeText={setActivityId}
                 />
@@ -265,10 +275,10 @@ const SearchModal = () => {
               exiting={FadeOut.duration(200)}
             >
               <Text style={styles.previewText}>
-                {translate('explorer_screen.search.host_user_id')}
+                {translate('explorer_screen.activities-filter.host_user_id')}
               </Text>
               <Text style={styles.previewdData}>
-                {hostUserId || translate('explorer_screen.search.any_host_user_id')}
+                {hostUserId || translate('explorer_screen.activities-filter.any_host_user_id')}
               </Text>
             </AnimatedTouchableOpacity>
           )}
@@ -277,13 +287,15 @@ const SearchModal = () => {
             <>
               <TouchableOpacity onPress={() => setOpenCard(null)}>
                 <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-                  {translate('explorer_screen.search.enter_host_user_id')}
+                  {translate('explorer_screen.activities-filter.enter_host_user_id')}
                 </Animated.Text>
               </TouchableOpacity>
               <Animated.View style={styles.cardBody}>
                 <TextInput
                   style={styles.inputField}
-                  placeholder={translate('explorer_screen.search.host_user_id_placeholder')}
+                  placeholder={translate(
+                    'explorer_screen.activities-filter.host_user_id_placeholder'
+                  )}
                   value={hostUserId}
                   onChangeText={setHostUserId}
                 />
@@ -312,7 +324,7 @@ const SearchModal = () => {
                 textDecorationLine: 'underline',
               }}
             >
-              {translate('explorer_screen.search.clear_all')}
+              {translate('explorer_screen.activities-filter.clear_all')}
             </Text>
           </TouchableOpacity>
 
@@ -326,7 +338,9 @@ const SearchModal = () => {
               style={defaultStyles.btnIcon}
               color={'#fff'}
             />
-            <Text style={defaultStyles.btnText}>{translate('explorer_screen.search.search')}</Text>
+            <Text style={defaultStyles.btnText}>
+              {translate('explorer_screen.activities-filter.search')}
+            </Text>
           </TouchableOpacity>
         </View>
       </Animated.View>
@@ -442,4 +456,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchModal;
+export default ActivitiesFilter;

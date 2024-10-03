@@ -148,7 +148,8 @@
     "join_now": "Join Now",
     "registration": "Registration",
     "joined": "Joined",
-    "leave_now": "Leave Now"
+    "leave_now": "Leave Now",
+    "no_activities": "No activities available."
   },
   "create_activity_screen": {
     "title": "Create Activity",

@@ -34,7 +34,13 @@ const ActivitiesBottomSheet = ({ activities, category }: Props) => {
       style={styles.sheetContainer}
     >
       <View style={styles.contentContainer}>
-        <Activities activities={activities} category={category} refresh={refresh} />
+        {activities.length === 0 ? (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>{translate('activity_screen.no_activities')}</Text>
+          </View>
+        ) : (
+          <Activities activities={activities} category={category} refresh={refresh} />
+        )}
         <View style={styles.absoluteView}>
           <TouchableOpacity style={styles.btn} onPress={onShowMap}>
             <Text style={{ fontFamily: 'mon-sb', color: '#fff' }}>
@@ -47,9 +53,20 @@ const ActivitiesBottomSheet = ({ activities, category }: Props) => {
     </BottomSheet>
   );
 };
+
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyText: {
+    fontSize: spacing.md,
+    color: Colors.grey,
+    textAlign: 'center',
   },
   absoluteView: {
     position: 'absolute',

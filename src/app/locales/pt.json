@@ -144,7 +144,8 @@
     "join_now": "Junte-se Agora",
     "registration": "Cadastro",
     "joined": "Entrou",
-    "leave_now": "Sair Agora"
+    "leave_now": "Sair Agora",
+    "no_activities": "Nenhuma atividade disponível."
   },
   "create_activity_screen": {
     "title": "Criar Atividade",

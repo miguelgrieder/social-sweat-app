@@ -90,7 +90,19 @@
       "any_activity": "Any activity",
       "what_activity_are_you_interested": "What activity are you interested?",
       "clear_all": "Clear all",
-      "search": "Search"
+      "search": "Search",
+      "price": "Price",
+      "any_price": "Any price",
+      "enter_price": "Enter price",
+      "price_placeholder": "Type the price",
+      "activity_id": "Activity ID",
+      "any_activity_id": "Any activity ID",
+      "enter_activity_id": "Enter the activity ID",
+      "activity_id_placeholder": "Type the activity ID",
+      "host_user_id": "Host User ID",
+      "any_host_user_id": "Any host user ID",
+      "enter_host_user_id": "Enter the host user ID",
+      "host_user_id_placeholder": "Type the host user ID"
     },
     "modal_header_text": {
       "activities": "Activities",

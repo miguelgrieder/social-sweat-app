@@ -6,9 +6,10 @@ import ActivitiesBottomSheet from '@/components/ActivitiesBottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { fetchActivities } from '@/api/fetchActivities';
 import { useFocusEffect } from '@react-navigation/native';
-import { View, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FilterActivityInput, SportType } from '@/interfaces/activity';
+import { useFilters } from '@/context/FilterActivityInputContext';
 
 export default function ActivitiesPage() {
   const [category, setCategory] = useState<string>('trending-up'); // Default to 'Trending'
@@ -16,17 +17,21 @@ export default function ActivitiesPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const insets = useSafeAreaInsets();
 
+  const { filters } = useFilters();
+
   const getData = useCallback(async () => {
     setLoading(true);
     try {
-      let filterBody: FilterActivityInput;
+      let filterBody: FilterActivityInput = {};
 
+      // Apply category filter (from ExploreHeader)
       if (category !== 'trending-up') {
-        filterBody = {
-          sport_types: [category as SportType],
-        };
-      } else {
-        filterBody = {};
+        filterBody.sport_types = [category as SportType];
+      }
+
+      // Apply filters from search modal
+      if (filters) {
+        filterBody = { ...filterBody, ...filters };
       }
 
       const activities = await fetchActivities(filterBody);
@@ -34,7 +39,7 @@ export default function ActivitiesPage() {
     } finally {
       setLoading(false);
     }
-  }, [category]);
+  }, [category, filters]);
 
   useFocusEffect(
     useCallback(() => {

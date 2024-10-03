@@ -90,7 +90,19 @@
       "any_activity": "Qualquer atividade",
       "what_activity_are_you_interested": "Em qual atividade você está interessado?",
       "clear_all": "Limpar tudo",
-      "search": "Buscar"
+      "search": "Buscar",
+      "price": "Preço",
+      "any_price": "Qualquer preço",
+      "enter_price": "Insira o preço",
+      "price_placeholder": "Digite o preço",
+      "activity_id": "ID da Atividade",
+      "any_activity_id": "Qualquer ID de atividade",
+      "enter_activity_id": "Insira o ID da atividade",
+      "activity_id_placeholder": "Digite o ID da atividade",
+      "host_user_id": "ID do Usuário Host",
+      "any_host_user_id": "Qualquer ID de usuário host",
+      "enter_host_user_id": "Insira o ID do usuário host",
+      "host_user_id_placeholder": "Digite o ID do usuário host"
     }
   },
   "activities": {

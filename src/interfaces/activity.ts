@@ -92,4 +92,6 @@ export type FilterActivityInput = {
   activity_type?: ActivityType;
   price?: number;
   sport_types?: SportType[];
+  datetime_start?: string; // ISO 8601 date-time string
+  datetime_finish?: string; // ISO 8601 date-time string
 };

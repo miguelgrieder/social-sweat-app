@@ -1,38 +1,57 @@
-import {
-  View,
-  Image,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  ScrollView,
-} from 'react-native';
 import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { defaultStyles } from '@/constants/Styles';
 import Animated, { FadeIn, FadeOut, SlideInDown } from 'react-native-reanimated';
 import { useRouter } from 'expo-router';
+import { useFilters } from '@/context/FilterActivityInputContext';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
-import { places } from 'assets/data/places';
 import { translate } from '@/app/services/translate';
 
 // @ts-ignore
 import DatePicker from 'react-native-modern-datepicker';
+import { spacing } from '@/constants/spacing';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
-const Page = () => {
+const SearchModal = () => {
   const router = useRouter();
+  const { setFilters } = useFilters();
 
-  const [openCard, setOpenCard] = useState(0);
-  const [selectedPlace, setSelectedPlace] = useState(0);
+  const [openCard, setOpenCard] = useState<number | null>(null);
+
+  const [activityType, setActivityType] = useState<string>(''); // 'spot', 'event', or 'session'
+  const [price, setPrice] = useState<string>(''); // Store as string for TextInput
+  const [activityId, setActivityId] = useState<string>('');
+  const [hostUserId, setHostUserId] = useState<string>('');
+  const [datetimeStart, setDatetimeStart] = useState<string>(''); // ISO 8601 date-time string
 
   const today = new Date().toISOString().substring(0, 10);
 
   const onClearAll = () => {
-    setSelectedPlace(0);
-    setOpenCard(0);
+    setActivityType('');
+    setPrice('');
+    setActivityId('');
+    setHostUserId('');
+    setDatetimeStart('');
+    setOpenCard(null);
+  };
+
+  const onSearch = () => {
+    // Prepare the filters
+    const filters = {
+      activity_type: activityType || undefined,
+      price: price ? parseFloat(price) : undefined,
+      activity_id: activityId || undefined,
+      host_user_id: hostUserId || undefined,
+      datetime_start: datetimeStart || undefined,
+    };
+
+    // Update the filters in context
+    setFilters(filters);
+
+    router.back();
   };
 
   return (
@@ -42,126 +61,209 @@ const Page = () => {
       intensity={70}
       tint="light"
     >
-      {/*  Where */}
-      <View style={styles.card}>
-        {openCard != 0 && (
-          <AnimatedTouchableOpacity
-            onPress={() => setOpenCard(0)}
-            style={styles.cardPreview}
-            entering={FadeIn.duration(200)}
-            exiting={FadeOut.duration(200)}
-          >
-            <Text style={styles.previewText}>{translate('explorer_screen.search.where')}</Text>
-            <Text style={styles.previewdData}>
-              {translate('explorer_screen.search.im_flexible')}
-            </Text>
-          </AnimatedTouchableOpacity>
-        )}
+      <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
+        {/* DateTime Start */}
+        <View style={styles.card}>
+          {openCard !== 1 && (
+            <AnimatedTouchableOpacity
+              onPress={() => setOpenCard(1)}
+              style={styles.cardPreview}
+              entering={FadeIn.duration(200)}
+              exiting={FadeOut.duration(200)}
+            >
+              <Text style={styles.previewText}>{translate('explorer_screen.search.when')}</Text>
+              <Text style={styles.previewdData}>
+                {datetimeStart
+                  ? datetimeStart.substring(0, 10)
+                  : translate('explorer_screen.search.any_day')}
+              </Text>
+            </AnimatedTouchableOpacity>
+          )}
 
-        {openCard == 0 && (
-          <>
-            <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-              {translate('explorer_screen.search.title_have_you_exercised')}
-            </Animated.Text>
-            <Animated.View entering={FadeIn} exiting={FadeOut} style={styles.cardBody}>
-              <View style={styles.searchSection}>
-                <Ionicons style={styles.searchIcon} name="search" size={20} color="#000" />
+          {openCard === 1 && (
+            <>
+              <Animated.Text entering={FadeIn} style={styles.cardHeader}>
+                {translate('explorer_screen.search.whens_your_workout')}
+              </Animated.Text>
+              <Animated.View style={styles.cardBody}>
+                <DatePicker
+                  options={{
+                    defaultFont: 'mon',
+                    headerFont: 'mon-sb',
+                    mainColor: Colors.primary,
+                    borderColor: 'transparent',
+                  }}
+                  current={today}
+                  selected={
+                    datetimeStart ? datetimeStart.substring(0, 10).replace(/-/g, '/') : today
+                  }
+                  mode={'calendar'}
+                  onSelectedChange={(date) => {
+                    if (date) {
+                      const [year, month, day] = date.split('/').map(Number);
+                      const isoDate = new Date(year, month - 1, day).toISOString();
+                      setDatetimeStart(isoDate);
+                    }
+                  }}
+                />
+              </Animated.View>
+            </>
+          )}
+        </View>
+
+        {/* Activity Type */}
+        <View style={styles.card}>
+          {openCard !== 2 && (
+            <AnimatedTouchableOpacity
+              onPress={() => setOpenCard(2)}
+              style={styles.cardPreview}
+              entering={FadeIn.duration(200)}
+              exiting={FadeOut.duration(200)}
+            >
+              <Text style={styles.previewText}>{translate('explorer_screen.search.what')}</Text>
+              <Text style={styles.previewdData}>
+                {activityType ? activityType : translate('explorer_screen.search.any_activity')}
+              </Text>
+            </AnimatedTouchableOpacity>
+          )}
+
+          {openCard === 2 && (
+            <>
+              <Animated.Text entering={FadeIn} style={styles.cardHeader}>
+                {translate('explorer_screen.search.what_activity_are_you_interested')}
+              </Animated.Text>
+              <Animated.View style={styles.cardBody}>
+                {/* Activity Type Options */}
+                {['spot', 'event', 'session'].map((type) => (
+                  <TouchableOpacity
+                    key={type}
+                    style={[
+                      styles.optionButton,
+                      activityType === type && styles.optionButtonSelected,
+                    ]}
+                    onPress={() => setActivityType(type)}
+                  >
+                    <Text
+                      style={[
+                        styles.optionText,
+                        activityType === type && styles.optionTextSelected,
+                      ]}
+                    >
+                      {translate(`activity_types.${type}`)}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </Animated.View>
+            </>
+          )}
+        </View>
+
+        {/* Price */}
+        <View style={styles.card}>
+          {openCard !== 3 && (
+            <AnimatedTouchableOpacity
+              onPress={() => setOpenCard(3)}
+              style={styles.cardPreview}
+              entering={FadeIn.duration(200)}
+              exiting={FadeOut.duration(200)}
+            >
+              <Text style={styles.previewText}>{translate('explorer_screen.search.price')}</Text>
+              <Text style={styles.previewdData}>
+                {price ? `$${price}` : translate('explorer_screen.search.any_price')}
+              </Text>
+            </AnimatedTouchableOpacity>
+          )}
+
+          {openCard === 3 && (
+            <>
+              <Animated.Text entering={FadeIn} style={styles.cardHeader}>
+                {translate('explorer_screen.search.enter_price')}
+              </Animated.Text>
+              <Animated.View style={styles.cardBody}>
                 <TextInput
                   style={styles.inputField}
-                  placeholder="Search activities"
-                  placeholderTextColor={Colors.grey}
+                  keyboardType="numeric"
+                  placeholder={translate('explorer_screen.search.price_placeholder')}
+                  value={price}
+                  onChangeText={setPrice}
                 />
-              </View>
-            </Animated.View>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.placesContainer}
+              </Animated.View>
+            </>
+          )}
+        </View>
+
+        {/* Activity ID */}
+        <View style={styles.card}>
+          {openCard !== 4 && (
+            <AnimatedTouchableOpacity
+              onPress={() => setOpenCard(4)}
+              style={styles.cardPreview}
+              entering={FadeIn.duration(200)}
+              exiting={FadeOut.duration(200)}
             >
-              {places.map((item, index) => (
-                <TouchableOpacity onPress={() => setSelectedPlace(index)} key={index}>
-                  <Image
-                    source={item.img}
-                    style={selectedPlace == index ? styles.placeSelected : styles.place}
-                  />
-                  <Text
-                    style={[
-                      { paddingTop: 6 },
-                      selectedPlace === index ? { fontFamily: 'mon-sb' } : { fontFamily: 'mon' },
-                    ]}
-                  >
-                    {item.title}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </>
-        )}
-      </View>
+              <Text style={styles.previewText}>
+                {translate('explorer_screen.search.activity_id')}
+              </Text>
+              <Text style={styles.previewdData}>
+                {activityId || translate('explorer_screen.search.any_activity_id')}
+              </Text>
+            </AnimatedTouchableOpacity>
+          )}
 
-      {/* When */}
-      <View style={styles.card}>
-        {openCard != 1 && (
-          <AnimatedTouchableOpacity
-            onPress={() => setOpenCard(1)}
-            style={styles.cardPreview}
-            entering={FadeIn.duration(200)}
-            exiting={FadeOut.duration(200)}
-          >
-            <Text style={styles.previewText}>{translate('explorer_screen.search.when')}</Text>
-            <Text style={styles.previewdData}>{translate('explorer_screen.search.any_day')}</Text>
-          </AnimatedTouchableOpacity>
-        )}
+          {openCard === 4 && (
+            <>
+              <Animated.Text entering={FadeIn} style={styles.cardHeader}>
+                {translate('explorer_screen.search.enter_activity_id')}
+              </Animated.Text>
+              <Animated.View style={styles.cardBody}>
+                <TextInput
+                  style={styles.inputField}
+                  placeholder={translate('explorer_screen.search.activity_id_placeholder')}
+                  value={activityId}
+                  onChangeText={setActivityId}
+                />
+              </Animated.View>
+            </>
+          )}
+        </View>
 
-        {openCard == 1 && (
-          <>
-            <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-              {translate('explorer_screen.search.whens_your_workout')}
-            </Animated.Text>
-            <Animated.View style={styles.cardBody}>
-              <DatePicker
-                options={{
-                  defaultFont: 'mon',
-                  headerFont: 'mon-sb',
-                  mainColor: Colors.primary,
-                  borderColor: 'transparent',
-                }}
-                current={today}
-                selected={today}
-                mode={'calendar'}
-              />
-            </Animated.View>
-          </>
-        )}
-      </View>
+        {/* Host User ID */}
+        <View style={styles.card}>
+          {openCard !== 5 && (
+            <AnimatedTouchableOpacity
+              onPress={() => setOpenCard(5)}
+              style={styles.cardPreview}
+              entering={FadeIn.duration(200)}
+              exiting={FadeOut.duration(200)}
+            >
+              <Text style={styles.previewText}>
+                {translate('explorer_screen.search.host_user_id')}
+              </Text>
+              <Text style={styles.previewdData}>
+                {hostUserId || translate('explorer_screen.search.any_host_user_id')}
+              </Text>
+            </AnimatedTouchableOpacity>
+          )}
 
-      {/* Activity */}
-      <View style={styles.card}>
-        {openCard != 2 && (
-          <AnimatedTouchableOpacity
-            onPress={() => setOpenCard(2)}
-            style={styles.cardPreview}
-            entering={FadeIn.duration(200)}
-            exiting={FadeOut.duration(200)}
-          >
-            <Text style={styles.previewText}>{translate('explorer_screen.search.what')}</Text>
-            <Text style={styles.previewdData}>
-              {translate('explorer_screen.search.any_activity')}
-            </Text>
-          </AnimatedTouchableOpacity>
-        )}
-
-        {openCard == 2 && (
-          <>
-            <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-              {translate('explorer_screen.search.what_activity_are_you_interested')}
-            </Animated.Text>
-          </>
-        )}
-      </View>
+          {openCard === 5 && (
+            <>
+              <Animated.Text entering={FadeIn} style={styles.cardHeader}>
+                {translate('explorer_screen.search.enter_host_user_id')}
+              </Animated.Text>
+              <Animated.View style={styles.cardBody}>
+                <TextInput
+                  style={styles.inputField}
+                  placeholder={translate('explorer_screen.search.host_user_id_placeholder')}
+                  value={hostUserId}
+                  onChangeText={setHostUserId}
+                />
+              </Animated.View>
+            </>
+          )}
+        </View>
+      </ScrollView>
 
       {/* Footer */}
-
       <Animated.View
         style={[defaultStyles.footer, { height: 70 }]}
         entering={SlideInDown.delay(200)}
@@ -186,7 +288,7 @@ const Page = () => {
 
           <TouchableOpacity
             style={[defaultStyles.btn, { paddingRight: 20, paddingLeft: 50 }]}
-            onPress={() => router.back()}
+            onPress={onSearch}
           >
             <Ionicons
               name="search-outline"
@@ -249,11 +351,6 @@ const styles = StyleSheet.create({
   searchIcon: {
     padding: 10,
   },
-  inputField: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: '#fff',
-  },
   placesContainer: {
     flexDirection: 'row',
     gap: 25,
@@ -285,6 +382,34 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: Colors.grey,
   },
+  optionButton: {
+    padding: spacing.xs,
+    borderRadius: spacing.xs,
+    borderWidth: 1,
+    borderColor: Colors.grey,
+    marginBottom: spacing.xs,
+  },
+  optionButtonSelected: {
+    backgroundColor: Colors.primary_light,
+    borderColor: Colors.primary,
+  },
+  optionText: {
+    fontFamily: 'mon',
+    color: Colors.dark,
+  },
+  optionTextSelected: {
+    fontFamily: 'mon-sb',
+    color: Colors.primary,
+  },
+  inputField: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: Colors.grey,
+    borderRadius: spacing.xs,
+    paddingHorizontal: spacing.xs,
+    fontFamily: 'mon',
+    marginBottom: spacing.xs,
+  },
 });
 
-export default Page;
+export default SearchModal;

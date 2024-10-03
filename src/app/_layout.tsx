@@ -9,6 +9,7 @@ import Colors from '@/constants/Colors';
 import { TouchableOpacity } from 'react-native';
 import SearchActivityText from '@/components/SearchActivityText';
 import { translate } from '@/app/services/translate';
+import { FilterActivityInputProvider } from '@/context/FilterActivityInputContext';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
@@ -57,8 +58,10 @@ export default function RootLayout() {
 
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY!} tokenCache={tokenCache}>
-      <StatusBar barStyle="dark-content" />
-      <RootLayoutNav />
+      <FilterActivityInputProvider>
+        <StatusBar barStyle="dark-content" />
+        <RootLayoutNav />
+      </FilterActivityInputProvider>
     </ClerkProvider>
   );
 }

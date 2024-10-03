@@ -14,7 +14,7 @@ export const fetchActivities = async (filterBody: any) => {
         Authorization: `Bearer ${token}`,
       },
     });
-
+    console.log(`fetching activities - ${JSON.stringify(filterBody, null, 2)}`);
     const response = await api.post('/activities', filterBody);
     if (response.ok && response.data) {
       return response.data.activities;

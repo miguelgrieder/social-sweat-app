@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+  Pressable,
+} from 'react-native';
 import { BlurView } from 'expo-blur';
 import { defaultStyles } from '@/constants/Styles';
 import Animated, { FadeIn, FadeOut, SlideInDown } from 'react-native-reanimated';
@@ -54,13 +62,25 @@ const SearchModal = () => {
     router.back();
   };
 
+  // Function to close the card when clicking on the background
+  const handleBackgroundPress = () => {
+    if (openCard != null) {
+      setOpenCard(null);
+    }
+  };
+
   return (
-    <BlurView
-      experimentalBlurMethod="dimezisBlurView"
+    <Pressable
       style={styles.container}
-      intensity={70}
-      tint="light"
+      onPress={handleBackgroundPress}
+      pointerEvents={openCard != null ? 'auto' : 'box-none'}
     >
+      <BlurView
+        experimentalBlurMethod="dimezisBlurView"
+        style={StyleSheet.absoluteFill}
+        intensity={70}
+        tint="light"
+      />
       <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
         {/* DateTime Start */}
         <View style={styles.card}>
@@ -82,9 +102,11 @@ const SearchModal = () => {
 
           {openCard === 1 && (
             <>
-              <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-                {translate('explorer_screen.search.whens_your_workout')}
-              </Animated.Text>
+              <TouchableOpacity onPress={() => setOpenCard(null)}>
+                <Animated.Text entering={FadeIn} style={styles.cardHeader}>
+                  {translate('explorer_screen.search.whens_your_workout')}
+                </Animated.Text>
+              </TouchableOpacity>
               <Animated.View style={styles.cardBody}>
                 <DatePicker
                   options={{
@@ -129,9 +151,11 @@ const SearchModal = () => {
 
           {openCard === 2 && (
             <>
-              <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-                {translate('explorer_screen.search.what_activity_are_you_interested')}
-              </Animated.Text>
+              <TouchableOpacity onPress={() => setOpenCard(null)}>
+                <Animated.Text entering={FadeIn} style={styles.cardHeader}>
+                  {translate('explorer_screen.search.what_activity_are_you_interested')}
+                </Animated.Text>
+              </TouchableOpacity>
               <Animated.View style={styles.cardBody}>
                 {/* Activity Type Options */}
                 {['spot', 'event', 'session'].map((type) => (
@@ -176,9 +200,11 @@ const SearchModal = () => {
 
           {openCard === 3 && (
             <>
-              <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-                {translate('explorer_screen.search.enter_price')}
-              </Animated.Text>
+              <TouchableOpacity onPress={() => setOpenCard(null)}>
+                <Animated.Text entering={FadeIn} style={styles.cardHeader}>
+                  {translate('explorer_screen.search.enter_price')}
+                </Animated.Text>
+              </TouchableOpacity>
               <Animated.View style={styles.cardBody}>
                 <TextInput
                   style={styles.inputField}
@@ -212,9 +238,11 @@ const SearchModal = () => {
 
           {openCard === 4 && (
             <>
-              <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-                {translate('explorer_screen.search.enter_activity_id')}
-              </Animated.Text>
+              <TouchableOpacity onPress={() => setOpenCard(null)}>
+                <Animated.Text entering={FadeIn} style={styles.cardHeader}>
+                  {translate('explorer_screen.search.enter_activity_id')}
+                </Animated.Text>
+              </TouchableOpacity>
               <Animated.View style={styles.cardBody}>
                 <TextInput
                   style={styles.inputField}
@@ -247,9 +275,11 @@ const SearchModal = () => {
 
           {openCard === 5 && (
             <>
-              <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-                {translate('explorer_screen.search.enter_host_user_id')}
-              </Animated.Text>
+              <TouchableOpacity onPress={() => setOpenCard(null)}>
+                <Animated.Text entering={FadeIn} style={styles.cardHeader}>
+                  {translate('explorer_screen.search.enter_host_user_id')}
+                </Animated.Text>
+              </TouchableOpacity>
               <Animated.View style={styles.cardBody}>
                 <TextInput
                   style={styles.inputField}
@@ -300,7 +330,7 @@ const SearchModal = () => {
           </TouchableOpacity>
         </View>
       </Animated.View>
-    </BlurView>
+    </Pressable>
   );
 };
 

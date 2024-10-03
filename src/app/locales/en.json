@@ -7,7 +7,8 @@
   },
   "home_screen": {
     "header": "Home",
-    "body": "Welcome to the home page"
+    "body": "Welcome to the home page",
+    "my_activities": "My Activities"
   },
   "coaches_screen": {
     "since": "since",

@@ -11,7 +11,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FilterActivityInput, SportType } from '@/interfaces/activity';
 import { useFilters } from '@/context/FilterActivityInputContext';
 
-export default function ActivitiesPage() {
+interface ActivitiesPageProps {
+  initialFilter?: FilterActivityInput;
+}
+
+export default function ActivitiesPage({ initialFilter }: ActivitiesPageProps) {
   const [category, setCategory] = useState<string>('trending-up'); // Default to 'Trending'
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -24,14 +28,19 @@ export default function ActivitiesPage() {
     try {
       let filterBody: FilterActivityInput = {};
 
+      // Apply filters from search modal
+      if (filters) {
+        filterBody = { ...filterBody, ...filters };
+      }
+
       // Apply category filter (from ActivitiesHeader)
       if (category !== 'trending-up') {
         filterBody.sport_types = [category as SportType];
       }
 
-      // Apply filters from search modal
-      if (filters) {
-        filterBody = { ...filterBody, ...filters };
+      // Apply initial filter (overrides any existing fields)
+      if (initialFilter) {
+        filterBody = { ...filterBody, ...initialFilter };
       }
 
       const activities = await fetchActivities(filterBody);
@@ -39,7 +48,7 @@ export default function ActivitiesPage() {
     } finally {
       setLoading(false);
     }
-  }, [category, filters]);
+  }, [category, filters, initialFilter]);
 
   useFocusEffect(
     useCallback(() => {

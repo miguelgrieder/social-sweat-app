@@ -35,9 +35,9 @@ const Layout = () => {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="activities"
         options={{
-          tabBarLabel: translate('navbar.explore'),
+          tabBarLabel: translate('navbar.activities'),
           tabBarIcon: ({ size, color }) => <Ionicons name="search" size={size} color={color} />,
         }}
       />

@@ -7,8 +7,8 @@ import * as SecureStore from 'expo-secure-store';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { TouchableOpacity } from 'react-native';
-import SearchActivityText from '@/components/SearchActivityText';
 import { translate } from '@/app/services/translate';
+import { FilterActivityInputProvider } from '@/context/FilterActivityInputContext';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
@@ -57,8 +57,10 @@ export default function RootLayout() {
 
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY!} tokenCache={tokenCache}>
-      <StatusBar barStyle="dark-content" />
-      <RootLayoutNav />
+      <FilterActivityInputProvider>
+        <StatusBar barStyle="dark-content" />
+        <RootLayoutNav />
+      </FilterActivityInputProvider>
     </ClerkProvider>
   );
 }
@@ -113,12 +115,13 @@ function RootLayoutNav() {
       <Stack.Screen name="activity/[id]" options={{ headerTitle: '', headerTransparent: true }} />
       <Stack.Screen name="user/[id]" options={{ headerTitle: '', headerTransparent: true }} />
       <Stack.Screen
-        name="(modals)/search"
+        name="(modals)/activities-filter"
         options={{
           presentation: 'transparentModal',
           animation: 'fade',
           headerTransparent: true,
-          headerTitle: () => <SearchActivityText />,
+          headerTitle: 'Filters',
+          headerTitleAlign: 'center',
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => router.back()}

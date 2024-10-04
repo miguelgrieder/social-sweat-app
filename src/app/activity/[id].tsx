@@ -11,6 +11,8 @@ import {
   StatusBar,
   ActivityIndicator,
   Alert,
+  Platform,
+  Linking,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
@@ -30,6 +32,8 @@ import { fetchUsers } from '@/api/fetchUsers';
 import { User } from '@/interfaces/user';
 import { useAuth } from '@clerk/clerk-expo';
 import { userInteractActivity } from '@/api/userInteractActivity';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import MapView, { Marker } from 'react-native-maps';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
@@ -86,6 +90,7 @@ const ActivityDetailsScreen = () => {
 
   const navigation = useNavigation();
   const { userId } = useAuth();
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     const getData = async () => {
@@ -256,6 +261,19 @@ const ActivityDetailsScreen = () => {
     }
   };
 
+  const handleMapPress = () => {
+    const latitude = activity.location.geometry.coordinates.latitude;
+    const longitude = activity.location.geometry.coordinates.longitude;
+    const url = Platform.select({
+      ios: `maps://app?daddr=${latitude},${longitude}`,
+      android: `geo:${latitude},${longitude}?q=${latitude},${longitude}`,
+    });
+
+    if (url != null) {
+      Linking.openURL(url);
+    }
+  };
+
   if (loading) {
     return (
       <View style={styles.loaderContainer}>
@@ -287,11 +305,13 @@ const ActivityDetailsScreen = () => {
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{activity.name}</Text>
           <Text style={styles.location}>
-            {activity.activity_type} {translate('common.in')} {activity.location.smart_location}
+            {activity.activity_type} {translate('common.in')} {activity.location.city}
           </Text>
+          <Text style={styles.location}>{activity.location.smart_location}</Text>
           <Text style={styles.information}>
-            {activity.participants.participants_user_id.length}{' '}
-            {translate('activity_screen.participants')}
+            {translate('activity_screen.participants')}:{' '}
+            {activity.participants.participants_user_id.length}
+            {activity.participants.max ? ` / ${activity.participants.max}` : ''}
           </Text>
           <View style={styles.rowContainer}>
             <Ionicons name="star" size={16} />
@@ -325,10 +345,33 @@ const ActivityDetailsScreen = () => {
           <View style={styles.divider} />
 
           <Text style={styles.description}>{activity.description}</Text>
+
+          {/* MapView added here */}
+          <View style={styles.mapContainer}>
+            <MapView
+              style={styles.map}
+              initialRegion={{
+                latitude: activity.location.geometry.coordinates.latitude,
+                longitude: activity.location.geometry.coordinates.longitude,
+                latitudeDelta: 0.005,
+                longitudeDelta: 0.005,
+              }}
+              scrollEnabled={false}
+              zoomEnabled={false}
+              onPress={handleMapPress}
+            >
+              <Marker
+                coordinate={{
+                  latitude: activity.location.geometry.coordinates.latitude,
+                  longitude: activity.location.geometry.coordinates.longitude,
+                }}
+              />
+            </MapView>
+          </View>
         </View>
       </Animated.ScrollView>
 
-      <View style={[defaultStyles.footer, { height: 70 }]}>
+      <View style={[defaultStyles.footer, { height: 70, marginBottom: insets.bottom }]}>
         <View style={styles.footerContainer}>
           <TouchableOpacity style={styles.footerText}>
             <Text style={styles.footerPrice}>
@@ -466,5 +509,14 @@ const styles = StyleSheet.create({
   },
   disabledBtn: {
     backgroundColor: '#ccc',
+  },
+  mapContainer: {
+    height: 200,
+    width: '100%',
+    marginTop: spacing.lg,
+  },
+  map: {
+    flex: 1,
+    width: '100%',
   },
 });

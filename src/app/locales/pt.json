@@ -1,13 +1,14 @@
 {
   "navbar": {
     "home": "Início",
-    "explore": "Explorar",
+    "activities": "Atividades",
     "coaches": "Treinadores",
     "profile": "Perfil"
   },
   "home_screen": {
     "header": "Início",
-    "body": "Bem-vindo à página inicial"
+    "body": "Bem-vindo à página inicial",
+    "my_activities": "Minhas atividades"
   },
   "coaches_screen": {
     "since": "desde",
@@ -71,7 +72,7 @@
     "description": "Vamos acertar sua data de nascimento! Compartilhar essa informação nos ajuda a refinar sua experiência em nossa plataforma. Seja para recomendações personalizadas ou para celebrar seu dia especial, estamos aqui para fazer tudo sobre você. Pronto para compartilhar? Vamos nessa!"
   },
   "explorer_screen": {
-    "explorer_header": {
+    "activities_header": {
       "search": "Buscar Experiências",
       "any_sport": "Qualquer esporte",
       "any_location": "Qualquer local"
@@ -79,7 +80,7 @@
     "explorer_listing_bottom_sheet": {
       "map": "Mapa"
     },
-    "search": {
+    "activities-filter": {
       "where": "Onde",
       "im_flexible": "Estou flexível",
       "title_have_you_exercised": "Você se exercitou hoje?",
@@ -90,7 +91,19 @@
       "any_activity": "Qualquer atividade",
       "what_activity_are_you_interested": "Em qual atividade você está interessado?",
       "clear_all": "Limpar tudo",
-      "search": "Buscar"
+      "search": "Buscar",
+      "price": "Preço",
+      "any_price": "Qualquer preço",
+      "enter_price": "Insira o preço",
+      "price_placeholder": "Digite o preço",
+      "activity_id": "ID da Atividade",
+      "any_activity_id": "Qualquer ID de atividade",
+      "enter_activity_id": "Insira o ID da atividade",
+      "activity_id_placeholder": "Digite o ID da atividade",
+      "host_user_id": "ID do Usuário Host",
+      "any_host_user_id": "Qualquer ID de usuário host",
+      "enter_host_user_id": "Insira o ID do usuário host",
+      "host_user_id_placeholder": "Digite o ID do usuário host"
     }
   },
   "activities": {
@@ -132,7 +145,10 @@
     "join_now": "Junte-se Agora",
     "registration": "Cadastro",
     "joined": "Entrou",
-    "leave_now": "Sair Agora"
+    "leave_now": "Sair Agora",
+    "no_activities": "Nenhuma atividade disponível.",
+    "my_activities": "Minhas Atividades",
+    "activities": "Atividades"
   },
   "create_activity_screen": {
     "title": "Criar Atividade",

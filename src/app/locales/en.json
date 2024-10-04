@@ -151,7 +151,8 @@
     "joined": "Joined",
     "leave_now": "Leave Now",
     "no_activities": "No activities available.",
-    "my_activities": "My Activities"
+    "my_activities": "My Activities",
+    "activities": "Activities"
   },
   "create_activity_screen": {
     "title": "Create Activity",

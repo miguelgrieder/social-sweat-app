@@ -19,7 +19,7 @@ interface ActivitiesPageProps {
 
 export default function ActivitiesPage({
   initialFilter,
-  callerSource = null,
+  callerSource = 'activities',
 }: ActivitiesPageProps) {
   const [category, setCategory] = useState<string>('trending-up'); // Default to 'Trending'
   const [items, setItems] = useState<any[]>([]);
@@ -66,20 +66,14 @@ export default function ActivitiesPage({
   };
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top + 80 }]}>
+    <View style={[styles.container, { paddingTop: insets.top }]}>
       <Stack.Screen
-        options={
-          Boolean(callerSource)
-            ? {
-                headerShown: true,
-                title: translate(`activity_screen.${callerSource}`),
-                headerShadowVisible: false,
-                headerTitleAlign: 'center',
-              }
-            : {
-                headerShown: false,
-              }
-        }
+        options={{
+          headerShown: true,
+          title: translate(`activity_screen.${callerSource}`),
+          headerShadowVisible: false,
+          headerTitleAlign: 'center',
+        }}
       />
       <ActivitiesHeader onCategoryChanged={handleCategoryChange} />
       {loading ? (

@@ -147,7 +147,8 @@
     "joined": "Entrou",
     "leave_now": "Sair Agora",
     "no_activities": "Nenhuma atividade disponível.",
-    "my_activities": "Minhas atividades."
+    "my_activities": "Minhas Atividades",
+    "activities": "Atividades"
   },
   "create_activity_screen": {
     "title": "Criar Atividade",

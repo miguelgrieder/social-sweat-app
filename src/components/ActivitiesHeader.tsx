@@ -33,7 +33,7 @@ const ActivitiesHeader: React.FC<Props> = ({ onCategoryChanged }) => {
   };
 
   return (
-    <View style={[styles.container, { paddingTop: useSafeAreaInsets().top }]}>
+    <View style={styles.container}>
       <View style={styles.actionRow}>
         <Link href={'/(modals)/activities-filter'} asChild>
           <TouchableOpacity style={styles.searchBtn}>
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
   actionRow: {
     flex: 1,
-    paddingVertical: 10,
+    paddingBottom: spacing.xs,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

@@ -9,5 +9,5 @@ export default function MyActivitiesTab() {
     participant_user_id: user.id,
   };
 
-  return <ActivitiesPage initialFilter={initialFilter} />;
+  return <ActivitiesPage initialFilter={initialFilter} callerSource={'my_activities'} />;
 }

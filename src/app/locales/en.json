@@ -150,7 +150,8 @@
     "registration": "Registration",
     "joined": "Joined",
     "leave_now": "Leave Now",
-    "no_activities": "No activities available."
+    "no_activities": "No activities available.",
+    "my_activities": "My Activities"
   },
   "create_activity_screen": {
     "title": "Create Activity",

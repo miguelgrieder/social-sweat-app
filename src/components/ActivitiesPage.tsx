@@ -10,12 +10,17 @@ import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FilterActivityInput, SportType } from '@/interfaces/activity';
 import { useFilters } from '@/context/FilterActivityInputContext';
+import { translate } from '@/app/services/translate';
 
 interface ActivitiesPageProps {
   initialFilter?: FilterActivityInput;
+  callerSource: string;
 }
 
-export default function ActivitiesPage({ initialFilter }: ActivitiesPageProps) {
+export default function ActivitiesPage({
+  initialFilter,
+  callerSource = null,
+}: ActivitiesPageProps) {
   const [category, setCategory] = useState<string>('trending-up'); // Default to 'Trending'
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -62,7 +67,20 @@ export default function ActivitiesPage({ initialFilter }: ActivitiesPageProps) {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top + 80 }]}>
-      <Stack.Screen options={{ headerShown: false }} />
+      <Stack.Screen
+        options={
+          Boolean(callerSource)
+            ? {
+                headerShown: true,
+                title: translate(`activity_screen.${callerSource}`),
+                headerShadowVisible: false,
+                headerTitleAlign: 'center',
+              }
+            : {
+                headerShown: false,
+              }
+        }
+      />
       <ActivitiesHeader onCategoryChanged={handleCategoryChange} />
       {loading ? (
         <View style={styles.loaderContainer}>

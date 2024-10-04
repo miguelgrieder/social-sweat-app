@@ -146,7 +146,8 @@
     "registration": "Cadastro",
     "joined": "Entrou",
     "leave_now": "Sair Agora",
-    "no_activities": "Nenhuma atividade disponível."
+    "no_activities": "Nenhuma atividade disponível.",
+    "my_activities": "Minhas atividades."
   },
   "create_activity_screen": {
     "title": "Criar Atividade",

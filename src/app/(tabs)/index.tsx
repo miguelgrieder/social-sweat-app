@@ -40,7 +40,7 @@ const Home = () => {
       </Link>
 
       {/* My Activities Button */}
-      <Link href={'/(tabs)/activity/my-activities'} asChild>
+      <Link href={'activity/my-activities'} asChild>
         <TouchableOpacity style={defaultStyles.btn}>
           <Text style={defaultStyles.btnText}>{translate('home_screen.my_activities')}</Text>
         </TouchableOpacity>

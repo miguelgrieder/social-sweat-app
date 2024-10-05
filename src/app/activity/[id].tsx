@@ -65,10 +65,6 @@ const dummy_listing: Activity = {
     participants_user_id: [],
     max: 1,
   },
-  reviews: {
-    number_of_reviews: 0,
-    review_scores_rating: 0,
-  },
   pictures: [],
   host: {
     host_user_id: '', // Ensure host_user_id is included
@@ -150,9 +146,6 @@ const ActivityDetailsScreen = () => {
         <View style={styles.bar}>
           <TouchableOpacity style={styles.roundButton} onPress={shareListing}>
             <Ionicons name="share-outline" size={22} color={'#000'} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.roundButton}>
-            <Ionicons name="heart-outline" size={22} color={'#000'} />
           </TouchableOpacity>
         </View> // Header share and hearth button
       ),
@@ -313,14 +306,6 @@ const ActivityDetailsScreen = () => {
             {activity.participants.participants_user_id.length}
             {activity.participants.max ? ` / ${activity.participants.max}` : ''}
           </Text>
-          <View style={styles.rowContainer}>
-            <Ionicons name="star" size={16} />
-            <Text style={[styles.ratings, { marginLeft: spacing.xxs }]}>
-              {activity.reviews.review_scores_rating / 20} · {activity.reviews.number_of_reviews}
-              &nbsp;
-              {translate('activity_screen.reviews')}
-            </Text>
-          </View>
           <View style={styles.divider} />
 
           <View style={styles.hostView}>

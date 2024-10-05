@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Linking,
   Button,
+  ActivityIndicator,
 } from 'react-native';
 import { useUser, useAuth } from '@clerk/clerk-expo';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -72,7 +73,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
   if (loading) {
     return (
       <SafeAreaView style={defaultStyles.container}>
-        <Text>{translate('common.loading')}</Text>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
       </SafeAreaView>
     );
   }
@@ -371,5 +374,10 @@ const styles = StyleSheet.create({
   loginPrompt: {
     fontSize: 16,
     marginBottom: spacing.sm,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

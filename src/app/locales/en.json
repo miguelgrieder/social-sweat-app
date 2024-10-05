@@ -8,7 +8,8 @@
   "home_screen": {
     "header": "Home",
     "body": "Welcome to the home page",
-    "my_activities": "My Activities"
+    "my_activities": "My Activities",
+    "update_profile": "Update profile"
   },
   "coaches_screen": {
     "since": "since",

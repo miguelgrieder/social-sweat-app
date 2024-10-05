@@ -34,6 +34,13 @@ const Home = () => {
 
       {/* Buttons Container */}
       <View style={styles.buttonsContainer}>
+        {/* Update Profile Button */}
+        <Link href={'/(modals)/user/role-selection'} asChild>
+          <TouchableOpacity style={defaultStyles.btn}>
+            <Text style={defaultStyles.btnText}>{translate('home_screen.update_profile')}</Text>
+          </TouchableOpacity>
+        </Link>
+
         {/* Activity Creation Button */}
         <Link href={'/(modals)/activity-creation'} asChild>
           <TouchableOpacity style={defaultStyles.btn}>

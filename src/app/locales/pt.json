@@ -8,7 +8,8 @@
   "home_screen": {
     "header": "Início",
     "body": "Bem-vindo à página inicial",
-    "my_activities": "Minhas atividades"
+    "my_activities": "Minhas atividades",
+    "update_profile": "Atualizar perfil"
   },
   "coaches_screen": {
     "since": "desde",

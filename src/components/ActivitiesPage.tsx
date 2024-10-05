@@ -11,7 +11,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FilterActivityInput, SportType } from '@/interfaces/activity';
 import { useFilters } from '@/context/FilterActivityInputContext';
 import { translate } from '@/app/services/translate';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { spacing } from '@/constants/spacing';
 
 interface ActivitiesPageProps {
   initialFilter?: FilterActivityInput;
@@ -77,7 +78,7 @@ export default function ActivitiesPage({
           headerRight: () => (
             <Link href={'/(modals)/activities-filter'} asChild>
               <TouchableOpacity style={styles.filterBtn}>
-                <Ionicons name="options-outline" size={24} />
+                <MaterialCommunityIcons name="filter-variant" size={spacing.lg} />
               </TouchableOpacity>
             </Link>
           ),
@@ -110,5 +111,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  filterBtn: {
+    paddingRight: spacing.md,
   },
 });

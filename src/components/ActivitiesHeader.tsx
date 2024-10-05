@@ -104,12 +104,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     borderWidth: StyleSheet.hairlineWidth,
   },
-  filterBtn: {
-    padding: spacing.sm,
-    borderWidth: 1,
-    borderColor: '#A2A0A2',
-    borderRadius: spacing.lg,
-  },
   categoryText: {
     fontSize: 14,
     fontFamily: 'mon-sb',

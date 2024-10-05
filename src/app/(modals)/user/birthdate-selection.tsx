@@ -8,6 +8,8 @@ import { defaultStyles } from '@/constants/Styles';
 import DateInputField from '@/components/DateInputField';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { updateUser } from '@/api/updateUser';
+import Colors from '@/constants/Colors';
+import { Ionicons } from '@expo/vector-icons';
 
 const BirthdateSelectionScreen = () => {
   const router = useRouter();
@@ -41,7 +43,18 @@ const BirthdateSelectionScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Stack.Screen options={{ headerShown: false }} />
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          headerTransparent: true,
+          headerTitle: '',
+          headerLeft: () => (
+            <TouchableOpacity style={styles.roundButton} onPress={() => router.back()}>
+              <Ionicons name="chevron-back" size={24} color={'#000'} />
+            </TouchableOpacity> // Header back button
+          ),
+        }}
+      />
       <Text style={styles.header}>{translate('birthdate-selection.header')}</Text>
       <DateInputField
         onDateSelected={(date) => {
@@ -75,6 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   header: {
+    paddingTop: spacing.xl,
     fontSize: 24,
     fontWeight: '700',
     fontFamily: 'mon-b',
@@ -93,6 +107,15 @@ const styles = StyleSheet.create({
   },
   disabledContinueBtn: {
     backgroundColor: '#ccc',
+  },
+  roundButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 50,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: Colors.primary,
   },
 });
 

@@ -10,7 +10,7 @@ import {
   ScrollView,
   ToastAndroid,
 } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
+import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { useAuth } from '@clerk/clerk-expo';
 import { defaultStyles } from '@/constants/Styles';
 import { translate } from '@/app/services/translate';
@@ -21,10 +21,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { updateUser } from '@/api/updateUser';
 import { Role } from '@/interfaces/user';
 import { SportType } from '@/interfaces/activity';
+import Colors from '@/constants/Colors';
+import { Ionicons } from '@expo/vector-icons';
 
 const RoleSelectionScreen = () => {
   const router = useRouter();
   const { userId } = useAuth();
+  const { showBackButton } = useLocalSearchParams();
+  const showBack = showBackButton === '1';
 
   const [selectedRole, setSelectedRole] = useState<Role | ''>('');
   const [selectedTags, setSelectedTags] = useState<SportType[]>([]);
@@ -92,7 +96,21 @@ const RoleSelectionScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Stack.Screen options={{ headerShown: false }} />
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          headerTransparent: true,
+          headerTitle: '',
+          headerLeft: showBack
+            ? () => (
+                <TouchableOpacity style={styles.roundButton} onPress={() => router.back()}>
+                  <Ionicons name="chevron-back" size={24} color="#000" />
+                </TouchableOpacity>
+              )
+            : null,
+        }}
+      />
+
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false} // Remove a barra de rolagem vertical
@@ -169,6 +187,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   header: {
+    paddingTop: spacing.xl,
     fontFamily: 'mon-b',
     fontWeight: 'bold',
     fontSize: 48,
@@ -200,6 +219,15 @@ const styles = StyleSheet.create({
   },
   disabledBtn: {
     backgroundColor: '#ccc',
+  },
+  roundButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 50,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: Colors.primary,
   },
 });
 

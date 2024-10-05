@@ -16,6 +16,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 
 const isUsernameAvailable = (username) => {
   const takenUsernames = ['user', 'admin', 'testuser'];
@@ -103,7 +104,18 @@ const UsernameSetupScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Stack.Screen options={{ headerShown: false }} />
+      <Stack.Screen
+        options={{
+          headerTransparent: true,
+          headerTitle: '',
+          headerShown: true,
+          headerLeft: () => (
+            <TouchableOpacity style={styles.roundButton} onPress={() => router.back()}>
+              <Ionicons name="chevron-back" size={24} color={'#000'} />
+            </TouchableOpacity> // Header back button
+          ),
+        }}
+      />
       <Text style={styles.header}>{translate('photo-username-selection.header')}</Text>
       {user && (
         <TouchableOpacity onPress={handleImageCapture}>
@@ -160,6 +172,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   header: {
+    paddingTop: spacing.xl,
     fontSize: 24,
     fontWeight: '700',
     fontFamily: 'mon-b',
@@ -216,5 +229,14 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 12,
     textAlign: 'center',
+  },
+  roundButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 50,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: Colors.primary,
   },
 });

@@ -45,6 +45,13 @@ const Home = () => {
           <Text style={defaultStyles.btnText}>{translate('home_screen.my_activities')}</Text>
         </TouchableOpacity>
       </Link>
+
+      {/* Next Activities Button */}
+      <Link href={'/(modals)/my-next-activities'} asChild>
+        <TouchableOpacity style={defaultStyles.btn}>
+          <Text style={defaultStyles.btnText}>{translate('activity_screen.my_next_activities')}</Text>
+        </TouchableOpacity>
+      </Link>
     </View>
   );
 };

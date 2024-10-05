@@ -32,28 +32,31 @@ const Home = () => {
         />
       </View>
 
-      {/* Activity Creation Button */}
-      <Link href={'/(modals)/activity-creation'} asChild>
-        <TouchableOpacity style={defaultStyles.btn}>
-          <Text style={defaultStyles.btnText}>{translate('create_activity_screen.title')}</Text>
-        </TouchableOpacity>
-      </Link>
+      {/* Buttons Container */}
+      <View style={styles.buttonsContainer}>
+        {/* Activity Creation Button */}
+        <Link href={'/(modals)/activity-creation'} asChild>
+          <TouchableOpacity style={defaultStyles.btn}>
+            <Text style={defaultStyles.btnText}>{translate('create_activity_screen.title')}</Text>
+          </TouchableOpacity>
+        </Link>
 
-      {/* My Activities Button */}
-      <Link href={'/(modals)/my-activities'} asChild>
-        <TouchableOpacity style={defaultStyles.btn}>
-          <Text style={defaultStyles.btnText}>{translate('home_screen.my_activities')}</Text>
-        </TouchableOpacity>
-      </Link>
+        {/* My Activities Button */}
+        <Link href={'/(modals)/my-activities'} asChild>
+          <TouchableOpacity style={defaultStyles.btn}>
+            <Text style={defaultStyles.btnText}>{translate('home_screen.my_activities')}</Text>
+          </TouchableOpacity>
+        </Link>
 
-      {/* Next Activities Button */}
-      <Link href={'/(modals)/my-next-activities'} asChild>
-        <TouchableOpacity style={defaultStyles.btn}>
-          <Text style={defaultStyles.btnText}>
-            {translate('activity_screen.my_next_activities')}
-          </Text>
-        </TouchableOpacity>
-      </Link>
+        {/* Next Activities Button */}
+        <Link href={'/(modals)/my-next-activities'} asChild>
+          <TouchableOpacity style={defaultStyles.btn}>
+            <Text style={defaultStyles.btnText}>
+              {translate('activity_screen.my_next_activities')}
+            </Text>
+          </TouchableOpacity>
+        </Link>
+      </View>
     </View>
   );
 };
@@ -77,6 +80,9 @@ const styles = StyleSheet.create({
   },
   languageLabel: {
     fontSize: 16,
+  },
+  buttonsContainer: {
+    gap: spacing.xs,
   },
 });
 

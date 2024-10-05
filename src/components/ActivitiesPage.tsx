@@ -1,16 +1,17 @@
 import React, { useCallback, useState } from 'react';
-import { Stack } from 'expo-router';
+import { Link, Stack } from 'expo-router';
 import ActivitiesHeader from '@/components/ActivitiesHeader';
 import ActivitiesMap from '@/components/ActivitiesMap';
 import ActivitiesBottomSheet from '@/components/ActivitiesBottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { fetchActivities } from '@/api/fetchActivities';
 import { useFocusEffect } from '@react-navigation/native';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FilterActivityInput, SportType } from '@/interfaces/activity';
 import { useFilters } from '@/context/FilterActivityInputContext';
 import { translate } from '@/app/services/translate';
+import { Ionicons } from '@expo/vector-icons';
 
 interface ActivitiesPageProps {
   initialFilter?: FilterActivityInput;
@@ -73,6 +74,13 @@ export default function ActivitiesPage({
           title: translate(`activity_screen.${callerSource}`),
           headerShadowVisible: false,
           headerTitleAlign: 'center',
+          headerRight: () => (
+            <Link href={'/(modals)/activities-filter'} asChild>
+              <TouchableOpacity style={styles.filterBtn}>
+                <Ionicons name="options-outline" size={24} />
+              </TouchableOpacity>
+            </Link>
+          ),
         }}
       />
       <ActivitiesHeader onCategoryChanged={handleCategoryChange} />

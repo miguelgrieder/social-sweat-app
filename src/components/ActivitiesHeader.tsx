@@ -1,14 +1,11 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import React, { useRef, useState } from 'react';
 import Colors from '@/constants/Colors';
-import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
-import { Link } from 'expo-router';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 import { sportTypeIconMappings } from '@/constants/sportTypeIconMappings';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { categories, Category } from '@/constants/sportCategories'; // Ensure you have this type
 
 interface Props {
@@ -34,42 +31,6 @@ const ActivitiesHeader: React.FC<Props> = ({ onCategoryChanged }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.actionRow}>
-        <Link href={'/(modals)/activities-filter'} asChild>
-          <TouchableOpacity style={styles.searchBtn}>
-            <View
-              style={{
-                gap: 10,
-                overflow: 'hidden',
-                flexDirection: 'row',
-                alignItems: 'center',
-                padding: spacing.sm,
-                borderRadius: 30,
-              }}
-            >
-              <Ionicons name="search" size={24} />
-              <View>
-                <Text style={{ fontFamily: 'mon-sb' }} numberOfLines={1} ellipsizeMode="tail">
-                  {translate('explorer_screen.activities_header.search')}
-                </Text>
-                <Text
-                  style={{ color: Colors.grey, fontFamily: 'mon' }}
-                  numberOfLines={1}
-                  ellipsizeMode="tail"
-                >
-                  {translate('explorer_screen.activities_header.any_sport')} ·{' '}
-                  {translate('explorer_screen.activities_header.any_location')}
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </Link>
-
-        <TouchableOpacity style={styles.filterBtn}>
-          <Ionicons name="options-outline" size={24} />
-        </TouchableOpacity>
-      </View>
-
       <ScrollView
         horizontal
         ref={scrollRef}

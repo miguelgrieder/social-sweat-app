@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import { useUser, useAuth } from '@clerk/clerk-expo';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 
 import { translate } from '@/app/services/translate';
@@ -103,10 +102,6 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
 
   return (
     <SafeAreaView style={defaultStyles.container}>
-      <View style={styles.headerContainer}>
-        {isCurrentUser && <Ionicons name="notifications-outline" size={26} />}
-      </View>
-
       <ScrollView contentContainerStyle={styles.contentContainer}>
         {/* Profile Image */}
         <View style={styles.profileImageContainer}>
@@ -251,13 +246,6 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
 export default ProfilePage;
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: spacing.xs,
-    paddingHorizontal: spacing.lg,
-  },
   header: {
     fontFamily: 'mon-b',
     fontSize: 24,

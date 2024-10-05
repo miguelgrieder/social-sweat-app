@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { TouchableOpacity } from 'react-native';
 import React from 'react';
+import { spacing } from '@/constants/spacing';
 
 const Layout = () => {
   return (
@@ -19,6 +20,16 @@ const Layout = () => {
       <Tabs.Screen
         name="index"
         options={{
+          headerShown: true,
+          title: translate(`home_screen.header`),
+          headerShadowVisible: false,
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'mon-b',
+            fontWeight: 'bold',
+            fontStyle: 'italic',
+            fontSize: spacing.lg,
+          },
           tabBarLabel: translate('navbar.home'),
           tabBarIcon: ({ size, color }) => (
             <Ionicons name="home-outline" size={size} color={color} />
@@ -35,6 +46,10 @@ const Layout = () => {
       <Tabs.Screen
         name="coaches"
         options={{
+          headerShown: true,
+          title: translate(`coaches_screen.header`),
+          headerShadowVisible: false,
+          headerTitleAlign: 'center',
           tabBarLabel: translate('navbar.coaches'),
           tabBarIcon: ({ size, color }) => (
             <MaterialCommunityIcons

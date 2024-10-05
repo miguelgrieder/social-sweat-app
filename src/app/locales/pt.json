@@ -6,12 +6,13 @@
     "profile": "Perfil"
   },
   "home_screen": {
-    "header": "Início",
+    "header": "SocialSweat",
     "body": "Bem-vindo à página inicial",
     "my_activities": "Minhas atividades",
     "update_profile": "Atualizar perfil"
   },
   "coaches_screen": {
+    "header": "Treinadores",
     "since": "desde",
     "no_coaches_found": "Nenhum Treinador encontrado!"
   },

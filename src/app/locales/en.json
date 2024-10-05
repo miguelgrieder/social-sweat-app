@@ -6,12 +6,13 @@
     "profile": "Profile"
   },
   "home_screen": {
-    "header": "Home",
+    "header": "SocialSweat",
     "body": "Welcome to the home page",
     "my_activities": "My Activities",
     "update_profile": "Update profile"
   },
   "coaches_screen": {
+    "header": "Coaches",
     "since": "since",
     "no_coaches_found": "No coaches found!"
   },

@@ -18,8 +18,8 @@ const Home = () => {
   return (
     <View style={styles.container}>
       {/* Language Switcher */}
+      <Text style={styles.languageLabel}>{translate('common.language')}</Text>
       <View style={styles.languageSwitcher}>
-        <Text style={styles.languageLabel}>{translate('common.language')}</Text>
         <RNPickerSelect
           onValueChange={(itemValue) => changeLanguage(itemValue)}
           items={[
@@ -28,7 +28,7 @@ const Home = () => {
           ]}
           value={selectedLanguage}
           style={pickerSelectStyles}
-          placeholder={{}}
+          placeholder={{ label: translate('common.language'), value: null }}
         />
       </View>
 
@@ -49,7 +49,9 @@ const Home = () => {
       {/* Next Activities Button */}
       <Link href={'/(modals)/my-next-activities'} asChild>
         <TouchableOpacity style={defaultStyles.btn}>
-          <Text style={defaultStyles.btnText}>{translate('activity_screen.my_next_activities')}</Text>
+          <Text style={defaultStyles.btnText}>
+            {translate('activity_screen.my_next_activities')}
+          </Text>
         </TouchableOpacity>
       </Link>
     </View>
@@ -65,9 +67,13 @@ const styles = StyleSheet.create({
   },
   languageSwitcher: {
     marginBottom: spacing.md,
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ABABAB',
+    borderRadius: spacing.xs,
+    paddingHorizontal: spacing.xxs,
+    paddingVertical: spacing.xxs,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
   },
   languageLabel: {
     fontSize: 16,
@@ -78,17 +84,15 @@ const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
     fontSize: 16,
     paddingVertical: spacing.sm,
-    paddingHorizontal: 0,
+    paddingHorizontal: spacing.xs,
     color: 'black',
     paddingRight: spacing.lg,
-    width: 150,
   },
   inputAndroid: {
     fontSize: 16,
-    paddingHorizontal: 0,
+    paddingHorizontal: spacing.xs,
     paddingVertical: spacing.sm,
     color: 'black',
     paddingRight: spacing.lg,
-    width: 150,
   },
 });

@@ -8,7 +8,7 @@
   "home_screen": {
     "header": "SocialSweat",
     "body": "Bem-vindo à página inicial",
-    "my_activities": "Minhas atividades",
+    "hosted_activities": "Atividades Criadas",
     "update_profile": "Atualizar perfil"
   },
   "coaches_screen": {
@@ -149,7 +149,7 @@
     "joined": "Entrou",
     "leave_now": "Sair Agora",
     "no_activities": "Nenhuma atividade disponível.",
-    "my_activities": "Minhas Atividades",
+    "hosted_activities": "Atividades Criadas",
     "my_next_activities": "Minhas próximas Atividades",
     "activities": "Atividades"
   },

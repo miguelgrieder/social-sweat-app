@@ -182,7 +182,11 @@
     "failed_to_create": "Falha ao criar a atividade.",
     "error_creating_activity": "Ocorreu um erro ao criar a atividade.",
     "no_location_details": "Nenhum detalhe de localização encontrado.",
-    "unable_to_get_location": "Não foi possível obter detalhes da localização."
+    "unable_to_get_location": "Não foi possível obter detalhes da localização.",
+    "invalid_max_participants": "Por favor, insira um número válido de participantes máximos.",
+    "datetime_required": "As datas e horas de início e término são necessárias.",
+    "datetime_finish_after_start": "A data e hora de término devem ser após a data e hora de início.",
+    "unauthorized_activity_type": "Você não pode criar este tipo de atividade."
   },
   "sports_list": {
     "find_a_sport": "Procure um esporte..."
@@ -200,6 +204,9 @@
     "user_id_unavailable": "ID do usuário não disponível.",
     "invalid_max_participants": "Por favor, insira um número válido de participantes máximos.",
     "left_activity": "Você saiu da atividade.",
-    "failed_to_leave": "Falha ao sair da atividade. Por favor, tente novamente."
+    "failed_to_leave": "Falha ao sair da atividade. Por favor, tente novamente.",
+    "role_unavailable": "Função do usuário não disponível.",
+    "user_unavailable": "Dados do usuário indisponíveis.",
+    "user_data_loading": "Os dados do usuário estão carregando. Por favor, aguarde."
   }
 }

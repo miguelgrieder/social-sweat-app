@@ -18,7 +18,7 @@ import Geocoder from 'react-native-geocoding';
 import { spacing } from '@/constants/spacing';
 import Colors from '@/constants/Colors';
 import { createActivity } from '@/api/createActivity';
-import { useAuth } from '@clerk/clerk-expo';
+import { useAuth, useUser } from '@clerk/clerk-expo';
 import { translate } from '@/app/services/translate';
 import { capitalize } from '@/utils/utils';
 import { defaultStyles } from '@/constants/Styles';
@@ -27,6 +27,8 @@ import { ActivityType, SportType } from '@/interfaces/activity';
 import RNPickerSelect from 'react-native-picker-select';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { fetchUsers } from '@/api/fetchUsers';
+import { Role, User } from '@/interfaces/user';
 
 Geocoder.init(process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY);
 
@@ -37,6 +39,8 @@ const CreateActivity = () => {
   }, [navigation]);
 
   const { userId } = useAuth();
+  const { user: clerkUser, isLoaded, isSignedIn } = useUser(); // Fetch user using Clerk's useUser
+  const [user, setUser] = useState<User | null>(null);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -59,6 +63,37 @@ const CreateActivity = () => {
     latitude: 37.78825,
     longitude: -122.4324, // Default coordinates (San Francisco)
   });
+
+  // Define activity type permissions based on roles
+  const roleActivityMap: { [key in Role]: ActivityType[] } = {
+    [Role.Company]: [ActivityType.Spot, ActivityType.Session, ActivityType.Event],
+    [Role.Coach]: [ActivityType.Session, ActivityType.Event],
+    [Role.User]: [ActivityType.Event],
+  };
+
+  // Fetch and set user data
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (isLoaded && isSignedIn && clerkUser) {
+        try {
+          const fetchedUsers = await fetchUsers({ id: userId });
+          if (fetchedUsers && fetchedUsers.length > 0) {
+            setUser(fetchedUsers[0]);
+          } else {
+            setUser(null);
+          }
+        } catch (error) {
+          console.error('CreateActivity - Error fetching user data:', error);
+          setUser(null);
+        }
+      }
+    };
+    fetchUserData();
+  }, [isLoaded, isSignedIn, clerkUser]);
+
+  useEffect(() => {
+    navigation.setOptions({ title: translate('create_activity_screen.title') });
+  }, [navigation]);
 
   // Function to handle selecting an image from the gallery
   const onCaptureImage = async () => {
@@ -116,12 +151,44 @@ const CreateActivity = () => {
     }
   };
 
+  // Function to check if the user can create the selected activity type
+  const canCreateActivityType = (role: Role, activityType: ActivityType): boolean => {
+    const allowedTypes = roleActivityMap[role];
+    return allowedTypes.includes(activityType);
+  };
+
   // Submit the form data, including the selected coordinates from the map
   const onSubmit = async () => {
     if (!userId) {
       Alert.alert(translate('alerts.error'), translate('alerts.user_id_unavailable'));
       return;
     }
+
+    if (!isLoaded) {
+      Alert.alert(translate('alerts.error'), translate('alerts.user_data_loading'));
+      return;
+    }
+
+    if (!user) {
+      Alert.alert(translate('alerts.error'), translate('alerts.user_unavailable'));
+      return;
+    }
+
+    const userRole = user.user_metadata.role;
+
+    if (!userRole) {
+      Alert.alert(translate('alerts.error'), translate('alerts.role_unavailable'));
+      return;
+    }
+
+    if (!canCreateActivityType(userRole, activityType)) {
+      Alert.alert(
+        translate('alerts.error'),
+        translate('create_activity_screen.unauthorized_activity_type')
+      );
+      return;
+    }
+
     const max = parseInt(maxParticipants, 10);
     if (isNaN(max) || max <= 0) {
       Alert.alert(
@@ -228,7 +295,7 @@ const CreateActivity = () => {
     >
       <ScrollView>
         <View style={styles.container}>
-          {/* Image selection*/}
+          {/* Image selection */}
           <TouchableOpacity style={styles.imageUpload} onPress={onCaptureImage}>
             {image ? (
               <Image source={{ uri: image }} style={styles.uploadedImage} />

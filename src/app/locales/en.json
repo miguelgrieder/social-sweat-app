@@ -186,7 +186,11 @@
     "failed_to_create": "Failed to create activity.",
     "error_creating_activity": "An error occurred while creating the activity.",
     "no_location_details": "No location details found.",
-    "unable_to_get_location": "Unable to get location details."
+    "unable_to_get_location": "Unable to get location details.",
+    "invalid_max_participants": "Please enter a valid number of maximum participants.",
+    "datetime_required": "Both start and finish date & time are required.",
+    "datetime_finish_after_start": "Finish date & time must be after start date & time.",
+    "unauthorized_activity_type": "You are cannot to create this type of activity."
   },
   "sports_list": {
     "find_a_sport": "Find a sport..."
@@ -204,6 +208,9 @@
     "user_id_unavailable": "User ID not available.",
     "invalid_max_participants": "Please enter a valid number of maximum participants.",
     "left_activity": "You have left the activity.",
-    "failed_to_leave": "Failed to leave the activity. Please try again."
+    "failed_to_leave": "Failed to leave the activity. Please try again.",
+    "role_unavailable": "User role not available.",
+    "user_unavailable": "User data is unavailable.",
+    "user_data_loading": "User data is loading. Please wait."
   }
 }

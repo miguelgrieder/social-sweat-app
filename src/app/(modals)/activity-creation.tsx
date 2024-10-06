@@ -26,6 +26,7 @@ import { useNavigation } from 'expo-router';
 import { ActivityType, SportType } from '@/interfaces/activity';
 import RNPickerSelect from 'react-native-picker-select';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 Geocoder.init(process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY);
 
@@ -42,8 +43,10 @@ const CreateActivity = () => {
   const [activityType, setActivityType] = useState(ActivityType.Spot);
   const [priceValue, setPriceValue] = useState('');
   const [priceUnit, setPriceUnit] = useState('$');
-  const [datetimeStart, setDatetimeStart] = useState('');
-  const [datetimeFinish, setDatetimeFinish] = useState('');
+  const [datetimeStart, setDatetimeStart] = useState<Date | null>(null);
+  const [datetimeFinish, setDatetimeFinish] = useState<Date | null>(null);
+  const [isDatePickerVisibleStart, setDatePickerVisibilityStart] = useState(false);
+  const [isDatePickerVisibleFinish, setDatePickerVisibilityFinish] = useState(false);
   const [locationCountry, setLocationCountry] = useState('Brazil');
   const [locationCity, setLocationCity] = useState('');
   const [locationSmartLocation, setLocationSmartLocation] = useState('');
@@ -127,6 +130,17 @@ const CreateActivity = () => {
       );
       return;
     }
+    if (!datetimeStart || !datetimeFinish) {
+      Alert.alert(translate('alerts.error'), translate('create_activity_screen.datetime_required'));
+      return;
+    }
+    if (datetimeFinish <= datetimeStart) {
+      Alert.alert(
+        translate('alerts.error'),
+        translate('create_activity_screen.datetime_finish_after_start')
+      );
+      return;
+    }
 
     try {
       const data = {
@@ -168,8 +182,8 @@ const CreateActivity = () => {
         datetimes: {
           datetime_created: new Date().toISOString(),
           datetime_deleted: null,
-          datetime_start: datetimeStart,
-          datetime_finish: datetimeFinish,
+          datetime_start: datetimeStart.toISOString(),
+          datetime_finish: datetimeFinish.toISOString(),
         },
       };
 
@@ -316,20 +330,46 @@ const CreateActivity = () => {
           </View>
           {/* Date & Time */}
           {renderTitle('label_date_time')}
-          <TextInput
-            placeholder={translate('create_activity_screen.placeholder_datetime_start')}
-            placeholderTextColor={Colors.grey}
-            style={styles.input}
-            value={datetimeStart}
-            onChangeText={setDatetimeStart}
+
+          {/* Start DateTime Picker */}
+          <TouchableOpacity onPress={() => setDatePickerVisibilityStart(true)} style={styles.input}>
+            <Text style={{ color: datetimeStart ? Colors.grey : Colors.grey }}>
+              {datetimeStart
+                ? datetimeStart.toLocaleString()
+                : translate('create_activity_screen.placeholder_datetime_start')}
+            </Text>
+          </TouchableOpacity>
+          <DateTimePickerModal
+            isVisible={isDatePickerVisibleStart}
+            mode="datetime"
+            onConfirm={(date) => {
+              setDatetimeStart(date);
+              setDatePickerVisibilityStart(false);
+            }}
+            onCancel={() => setDatePickerVisibilityStart(false)}
           />
-          <TextInput
-            placeholder={translate('create_activity_screen.placeholder_datetime_finish')}
-            placeholderTextColor={Colors.grey}
+
+          {/* Finish DateTime Picker */}
+          <TouchableOpacity
+            onPress={() => setDatePickerVisibilityFinish(true)}
             style={styles.input}
-            value={datetimeFinish}
-            onChangeText={setDatetimeFinish}
+          >
+            <Text style={{ color: datetimeFinish ? Colors.grey : Colors.grey }}>
+              {datetimeFinish
+                ? datetimeFinish.toLocaleString()
+                : translate('create_activity_screen.placeholder_datetime_finish')}
+            </Text>
+          </TouchableOpacity>
+          <DateTimePickerModal
+            isVisible={isDatePickerVisibleFinish}
+            mode="datetime"
+            onConfirm={(date) => {
+              setDatetimeFinish(date);
+              setDatePickerVisibilityFinish(false);
+            }}
+            onCancel={() => setDatePickerVisibilityFinish(false)}
           />
+
           {/* Location */}
           {renderTitle('label_map')}
           <View style={styles.mapContainer}>
@@ -404,6 +444,7 @@ const styles = StyleSheet.create({
     borderRadius: spacing.sm,
     marginBottom: spacing.md,
     borderWidth: StyleSheet.hairlineWidth,
+    justifyContent: 'center', //  new
   },
   imageUpload: {
     height: 240,

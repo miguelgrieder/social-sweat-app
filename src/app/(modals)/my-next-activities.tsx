@@ -6,7 +6,7 @@ export default function NextActivitiesTab() {
   const { user } = useUser();
 
   const initialFilter = {
-    host_user_id: user.id,
+    participant_user_id: user.id,
   };
 
   return <ActivitiesPage initialFilter={initialFilter} callerSource={'my_next_activities'} />;

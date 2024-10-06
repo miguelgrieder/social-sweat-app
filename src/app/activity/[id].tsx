@@ -34,6 +34,7 @@ import { useAuth } from '@clerk/clerk-expo';
 import { userInteractActivity } from '@/api/userInteractActivity';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MapView, { Marker } from 'react-native-maps';
+import { formatDateTime } from '@/utils/utils';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
@@ -301,6 +302,23 @@ const ActivityDetailsScreen = () => {
             {activity.activity_type} {translate('common.in')} {activity.location.city}
           </Text>
           <Text style={styles.location}>{activity.location.smart_location}</Text>
+
+          {activity.datetimes.datetime_start && (
+            <Text style={styles.information}>
+              {translate('activity_screen.datetime_start')}
+              {': '}
+              {formatDateTime(activity.datetimes.datetime_start)}
+            </Text>
+          )}
+
+          {Boolean(activity.datetimes.datetime_finish) && (
+            <Text style={styles.information}>
+              {translate('activity_screen.datetime_finish')}
+              {': '}
+              {formatDateTime(activity.datetimes.datetime_finish)}
+            </Text>
+          )}
+
           <Text style={styles.information}>
             {translate('activity_screen.participants')}:{' '}
             {activity.participants.participants_user_id.length}

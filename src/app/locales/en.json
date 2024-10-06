@@ -155,7 +155,9 @@
     "no_activities": "No activities available.",
     "hosted_activities": "Hosted Activities",
     "my_next_activities": "My next Activities",
-    "activities": "Activities"
+    "activities": "Activities",
+    "datetime_start": "Start at",
+    "datetime_finish": "Finish at"
   },
   "create_activity_screen": {
     "title": "Create Activity",

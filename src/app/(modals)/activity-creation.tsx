@@ -91,9 +91,13 @@ const CreateActivity = () => {
     fetchUserData();
   }, [isLoaded, isSignedIn, clerkUser]);
 
+  // Reset datetime when activity type changes to Spot
   useEffect(() => {
-    navigation.setOptions({ title: translate('create_activity_screen.title') });
-  }, [navigation]);
+    if (activityType === ActivityType.Spot) {
+      setDatetimeStart(null);
+      setDatetimeFinish(null);
+    }
+  }, [activityType]);
 
   // Function to handle selecting an image from the gallery
   const onCaptureImage = async () => {
@@ -197,19 +201,37 @@ const CreateActivity = () => {
       );
       return;
     }
-    if (!datetimeStart || !datetimeFinish) {
-      Alert.alert(translate('alerts.error'), translate('create_activity_screen.datetime_required'));
-      return;
-    }
-    if (datetimeFinish <= datetimeStart) {
-      Alert.alert(
-        translate('alerts.error'),
-        translate('create_activity_screen.datetime_finish_after_start')
-      );
-      return;
+
+    // Validate datetime fields only if activity type is not Spot
+    if (activityType !== ActivityType.Spot) {
+      if (!datetimeStart || !datetimeFinish) {
+        Alert.alert(
+          translate('alerts.error'),
+          translate('create_activity_screen.datetime_required')
+        );
+        return;
+      }
+      if (datetimeFinish <= datetimeStart) {
+        Alert.alert(
+          translate('alerts.error'),
+          translate('create_activity_screen.datetime_finish_after_start')
+        );
+        return;
+      }
     }
 
     try {
+      // Construct datetimes object conditionally
+      const datetimes: any = {
+        datetime_created: new Date().toISOString(),
+        datetime_deleted: null,
+      };
+
+      if (activityType !== ActivityType.Spot && datetimeStart && datetimeFinish) {
+        datetimes.datetime_start = datetimeStart.toISOString();
+        datetimes.datetime_finish = datetimeFinish.toISOString();
+      }
+
       const data = {
         id: Date.now().toString(), // Generate a unique ID for testing; replace with appropriate logic
         enabled: true,
@@ -246,12 +268,7 @@ const CreateActivity = () => {
         host: {
           host_user_id: userId,
         },
-        datetimes: {
-          datetime_created: new Date().toISOString(),
-          datetime_deleted: null,
-          datetime_start: datetimeStart.toISOString(),
-          datetime_finish: datetimeFinish.toISOString(),
-        },
+        datetimes: datetimes,
       };
 
       const result = await createActivity({ activity: data });
@@ -395,48 +412,52 @@ const CreateActivity = () => {
               placeholder={{}}
             />
           </View>
-          {/* Date & Time */}
-          {renderTitle('label_date_time')}
-
-          {/* Start DateTime Picker */}
-          <TouchableOpacity onPress={() => setDatePickerVisibilityStart(true)} style={styles.input}>
-            <Text style={{ color: datetimeStart ? Colors.grey : Colors.grey }}>
-              {datetimeStart
-                ? datetimeStart.toLocaleString()
-                : translate('create_activity_screen.placeholder_datetime_start')}
-            </Text>
-          </TouchableOpacity>
-          <DateTimePickerModal
-            isVisible={isDatePickerVisibleStart}
-            mode="datetime"
-            onConfirm={(date) => {
-              setDatetimeStart(date);
-              setDatePickerVisibilityStart(false);
-            }}
-            onCancel={() => setDatePickerVisibilityStart(false)}
-          />
-
-          {/* Finish DateTime Picker */}
-          <TouchableOpacity
-            onPress={() => setDatePickerVisibilityFinish(true)}
-            style={styles.input}
-          >
-            <Text style={{ color: datetimeFinish ? Colors.grey : Colors.grey }}>
-              {datetimeFinish
-                ? datetimeFinish.toLocaleString()
-                : translate('create_activity_screen.placeholder_datetime_finish')}
-            </Text>
-          </TouchableOpacity>
-          <DateTimePickerModal
-            isVisible={isDatePickerVisibleFinish}
-            mode="datetime"
-            onConfirm={(date) => {
-              setDatetimeFinish(date);
-              setDatePickerVisibilityFinish(false);
-            }}
-            onCancel={() => setDatePickerVisibilityFinish(false)}
-          />
-
+          {/* Date & Time - Only show if activity type is not Spot */}
+          {activityType !== ActivityType.Spot && (
+            <>
+              {renderTitle('label_date_time')}
+              {/* Start DateTime Picker */}
+              <TouchableOpacity
+                onPress={() => setDatePickerVisibilityStart(true)}
+                style={styles.input}
+              >
+                <Text style={{ color: datetimeStart ? Colors.grey : Colors.grey }}>
+                  {datetimeStart
+                    ? datetimeStart.toLocaleString()
+                    : translate('create_activity_screen.placeholder_datetime_start')}
+                </Text>
+              </TouchableOpacity>
+              <DateTimePickerModal
+                isVisible={isDatePickerVisibleStart}
+                mode="datetime"
+                onConfirm={(date) => {
+                  setDatetimeStart(date);
+                  setDatePickerVisibilityStart(false);
+                }}
+                onCancel={() => setDatePickerVisibilityStart(false)}
+              />
+              {/* Finish DateTime Picker */}
+              <TouchableOpacity
+                onPress={() => setDatePickerVisibilityFinish(true)}
+                style={styles.input}
+              >
+                <Text style={{ color: datetimeFinish ? Colors.grey : Colors.grey }}>
+                  {datetimeFinish
+                    ? datetimeFinish.toLocaleString()
+                    : translate('create_activity_screen.placeholder_datetime_finish')}
+                </Text>
+              </TouchableOpacity>
+              <DateTimePickerModal
+                isVisible={isDatePickerVisibleFinish}
+                mode="datetime"
+                onConfirm={(date) => {
+                  setDatetimeFinish(date);
+                  setDatePickerVisibilityFinish(false);
+                }}
+                onCancel={() => setDatePickerVisibilityFinish(false)}
+              />
+            </>
+          )}
           {/* Location */}
           {renderTitle('label_map')}
           <View style={styles.mapContainer}>

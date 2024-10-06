@@ -44,6 +44,7 @@ const CreateActivity = () => {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [description_private, setDescriptionPrivate] = useState('');
   const [activityType, setActivityType] = useState(ActivityType.Spot);
   const [priceValue, setPriceValue] = useState('');
   const [priceUnit, setPriceUnit] = useState('$');
@@ -237,6 +238,7 @@ const CreateActivity = () => {
         enabled: true,
         name: title,
         description: description,
+        description_private: description_private,
         activity_type: activityType,
         sport_type: sport,
         price: {
@@ -339,6 +341,17 @@ const CreateActivity = () => {
             style={styles.input}
             value={description}
             onChangeText={setDescription}
+            multiline
+            numberOfLines={4}
+          />
+          {/* Description Private */}
+          {renderTitle('label_description_private')}
+          <TextInput
+            placeholder={translate('create_activity_screen.placeholder_description_private')}
+            placeholderTextColor={Colors.grey}
+            style={styles.input}
+            value={description_private}
+            onChangeText={setDescriptionPrivate}
             multiline
             numberOfLines={4}
           />

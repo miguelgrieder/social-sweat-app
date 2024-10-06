@@ -349,6 +349,17 @@ const ActivityDetailsScreen = () => {
 
           <Text style={styles.description}>{activity.description}</Text>
 
+          {isParticipant && (
+            <>
+              <View style={styles.divider} />
+              <Text style={styles.description}>
+                {activity.description_private
+                  ? activity.description_private
+                  : translate('activity_screen.no_description_private')}
+              </Text>
+            </>
+          )}
+
           {/* MapView added here */}
           <View style={styles.mapContainer}>
             <MapView

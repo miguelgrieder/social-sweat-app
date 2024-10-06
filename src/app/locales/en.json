@@ -157,7 +157,8 @@
     "my_next_activities": "My next Activities",
     "activities": "Activities",
     "datetime_start": "Start at",
-    "datetime_finish": "Finish at"
+    "datetime_finish": "Finish at",
+    "no_description_private": "No privivate description"
   },
   "create_activity_screen": {
     "title": "Create Activity",

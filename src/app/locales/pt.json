@@ -152,7 +152,8 @@
     "hosted_activities": "Atividades Criadas",
     "my_next_activities": "Minhas próximas Atividades",
     "datetime_start": "Início",
-    "datetime_finish": "Fim"
+    "datetime_finish": "Fim",
+    "no_description_private": "Nenhuma descrição privada"
   },
   "create_activity_screen": {
     "title": "Criar Atividade",

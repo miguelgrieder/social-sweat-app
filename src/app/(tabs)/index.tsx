@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { translate } from '@/app/services/translate';
 import { Link } from 'expo-router';
@@ -14,6 +14,15 @@ const Home = () => {
     setSelectedLanguage(lang);
     i18next.changeLanguage(lang); // Change the language using i18next
   };
+
+  // Update selectedLanguage when the language changes
+  useEffect(() => {
+    const handleLanguageChange = (lng) => setSelectedLanguage(lng);
+    i18next.on('languageChanged', handleLanguageChange);
+    return () => {
+      i18next.off('languageChanged', handleLanguageChange);
+    };
+  }, [i18next]);
 
   return (
     <View style={styles.container}>

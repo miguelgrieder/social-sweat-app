@@ -3,19 +3,48 @@ import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import en from '../locales/en.json';
 import pt from '../locales/pt.json';
+import { loadString, saveString } from '../../utils/storage/storage'; // Adjust the path as needed
+
+// Create a custom language detector
+const languageDetector = {
+  type: 'languageDetector',
+  async: true,
+  detect: async (callback) => {
+    try {
+      // Load the saved language from storage
+      const savedLanguage = await loadString('user-language');
+      if (savedLanguage) {
+        callback(savedLanguage);
+      } else {
+        // Default to 'en' if no language is saved
+        callback('en');
+      }
+    } catch (error) {
+      console.error('Error loading language from storage:', error);
+      callback('en');
+    }
+  },
+  init: () => {},
+  cacheUserLanguage: (language) => {
+    // Save the selected language to storage
+    saveString('user-language', language);
+  },
+};
 
 export const languageResources = {
   en: { translation: en },
   pt: { translation: pt },
 };
 
-i18next.use(initReactI18next).init({
-  lng: 'en', // Default language
-  fallbackLng: 'en', // Fallback language
-  resources: languageResources,
-  interpolation: {
-    escapeValue: false, // React already escapes
-  },
-});
+i18next
+  .use(languageDetector) // Use the custom language detector
+  .use(initReactI18next)
+  .init({
+    fallbackLng: 'en', // Fallback language
+    resources: languageResources,
+    interpolation: {
+      escapeValue: false, // React already escapes values
+    },
+  });
 
 export default i18next;

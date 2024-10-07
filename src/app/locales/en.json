@@ -106,10 +106,6 @@
       "any_host_user_id": "Any host user ID",
       "enter_host_user_id": "Enter the host user ID",
       "host_user_id_placeholder": "Type the host user ID"
-    },
-    "modal_header_text": {
-      "activities": "Activities",
-      "coaches": "Coaches"
     }
   },
   "activities": {
@@ -158,7 +154,7 @@
     "activities": "Activities",
     "datetime_start": "Start at",
     "datetime_finish": "Finish at",
-    "no_description_private": "No privivate description"
+    "no_description_private": "No private description"
   },
   "create_activity_screen": {
     "title": "Create Activity",
@@ -195,7 +191,7 @@
     "invalid_max_participants": "Please enter a valid number of maximum participants.",
     "datetime_required": "Both start and finish date & time are required.",
     "datetime_finish_after_start": "Finish date & time must be after start date & time.",
-    "unauthorized_activity_type": "You are cannot to create this type of activity."
+    "unauthorized_activity_type": "You cannot create this type of activity."
   },
   "sports_list": {
     "find_a_sport": "Find a sport..."

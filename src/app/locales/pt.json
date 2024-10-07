@@ -48,7 +48,7 @@
     "header": "SocialSweat",
     "subtitle": "Onde o Fitness Encontra a Comunidade.",
     "about_you": "Conte-nos sobre você",
-    "description": "Compartilhe um pouco sobre você para que possamos adaptar o SocialSweat perfeitamente às suas necessidades. Seja seus interesses fitness, objetivos ou atividades preferidas, estamos aqui para tornar sua experiência pessoal. Vamos começar!",
+    "description": "Compartilhe um pouco sobre você para que possamos adaptar o SocialSweat perfeitamente às suas necessidades. Seja seus interesses fitness, objetivos ou atividades preferidas, estamos aqui para tornar sua experiência personal. Vamos começar!",
     "select_your_role": "Você é...",
     "role_user": "Usuário",
     "role_coach": "Coach",
@@ -140,6 +140,7 @@
     "event": "evento"
   },
   "activity_screen": {
+    "activities": "Atividades",
     "hosted_by": "Organizado por",
     "reviews": "Avaliações",
     "participants": "Participantes",

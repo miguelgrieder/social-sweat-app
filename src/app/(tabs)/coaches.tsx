@@ -14,17 +14,25 @@ import { fetchUsers } from '@/api/fetchUsers';
 import { User } from '@/interfaces/user';
 import { capitalize } from '@/utils/utils';
 import { spacing } from '@/constants/spacing';
+import ActivitiesHeader from '@/components/ActivitiesHeader';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Coaches = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter(); // Initialize the router
+  const insets = useSafeAreaInsets();
+  let [category, setCategory] = useState<string | null>(null);
 
   useEffect(() => {
     const getUsers = async () => {
       setLoading(true);
+      if (category === 'trending-up') {
+        category = null;
+      }
       const filterBody = {
         role: 'coach',
+        sport_type: category,
       };
 
       try {
@@ -36,7 +44,7 @@ const Coaches = () => {
     };
 
     getUsers();
-  }, []);
+  }, [category]);
 
   const renderItem = ({ item }: { item: User }) => {
     const fullName =
@@ -86,8 +94,13 @@ const Coaches = () => {
     );
   };
 
+  const handleCategoryChange = (selectedCategory: string) => {
+    setCategory(selectedCategory);
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top + 22 }]}>
+      <ActivitiesHeader onCategoryChanged={handleCategoryChange} />
       {loading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#0000ff" />

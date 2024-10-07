@@ -39,7 +39,9 @@ export interface User {
 // Define the FilterUser interface
 export interface FilterUser {
   role?: string;
+  sport_type?: SportType;
   id?: string;
+  username?: string;
 }
 
 export interface UpdateUser {

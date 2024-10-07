@@ -1,4 +1,4 @@
-import { StatusBar } from 'react-native';
+import { StatusBar } from 'expo-status-bar'; // Updated import
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack, useRouter } from 'expo-router';
 import { useEffect } from 'react';
@@ -9,6 +9,7 @@ import Colors from '@/constants/Colors';
 import { TouchableOpacity } from 'react-native';
 import { translate } from '@/app/services/translate';
 import { FilterActivityInputProvider } from '@/context/FilterActivityInputContext';
+import * as NavigationBar from 'expo-navigation-bar'; // Import NavigationBar
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
@@ -51,6 +52,12 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
+  // Set the navigation bar appearance (Android only)
+  useEffect(() => {
+    NavigationBar.setBackgroundColorAsync(Colors.background); // White background
+    NavigationBar.setButtonStyleAsync('dark'); // Dark icons
+  }, []);
+
   if (!loaded) {
     return null;
   }
@@ -58,7 +65,8 @@ export default function RootLayout() {
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY!} tokenCache={tokenCache}>
       <FilterActivityInputProvider>
-        <StatusBar barStyle="dark-content" />
+        {/* Status Bar Configuration */}
+        <StatusBar style="dark" backgroundColor={Colors.background} />
         <RootLayoutNav />
       </FilterActivityInputProvider>
     </ClerkProvider>

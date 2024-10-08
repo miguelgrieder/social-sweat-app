@@ -125,9 +125,8 @@ const styles = StyleSheet.create({
 
   scrollContainer: {
     height: 300,
-    borderWidth: 0,
-    borderRadius: 14,
-    paddingVertical: 1.0,
+    borderColor: Colors.grey,
+    borderWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: 4,
   },
 

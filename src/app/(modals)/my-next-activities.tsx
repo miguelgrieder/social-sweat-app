@@ -13,6 +13,7 @@ export default function NextActivitiesTab() {
 
   const initialFilter = {
     participant_user_id: user.id,
+    datetime_start: new Date().toISOString(),
   };
 
   return <ActivitiesPage initialFilter={initialFilter} callerSource={'my_next_activities'} />;

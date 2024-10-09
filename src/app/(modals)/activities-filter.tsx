@@ -31,7 +31,7 @@ const ActivitiesFilter = () => {
 
   const [activityType, setActivityType] = useState<string>(''); // 'spot', 'event', or 'session'
   const [price, setPrice] = useState<string>(''); // Store as string for TextInput
-  const [activityId, setActivityId] = useState<string>('');
+  const [activityName, setActivityName] = useState<string>('');
   const [hostUserId, setHostUserId] = useState<string>('');
   const [datetimeStart, setDatetimeStart] = useState<string>(''); // ISO 8601 date-time string
 
@@ -40,7 +40,7 @@ const ActivitiesFilter = () => {
   const onClearAll = () => {
     setActivityType('');
     setPrice('');
-    setActivityId('');
+    setActivityName('');
     setHostUserId('');
     setDatetimeStart('');
     setOpenCard(null);
@@ -51,7 +51,7 @@ const ActivitiesFilter = () => {
     const filters = {
       activity_type: activityType || undefined,
       price: price ? parseFloat(price) : undefined,
-      activity_id: activityId || undefined,
+      activity_name: activityName || undefined,
       host_user_id: hostUserId || undefined,
       datetime_start: datetimeStart || undefined,
     };
@@ -236,10 +236,10 @@ const ActivitiesFilter = () => {
               exiting={FadeOut.duration(200)}
             >
               <Text style={styles.previewText}>
-                {translate('explorer_screen.activities-filter.activity_id')}
+                {translate('explorer_screen.activities-filter.activity_name')}
               </Text>
               <Text style={styles.previewdData}>
-                {activityId || translate('explorer_screen.activities-filter.any_activity_id')}
+                {activityName || translate('explorer_screen.activities-filter.any_activity_name')}
               </Text>
             </AnimatedTouchableOpacity>
           )}
@@ -248,17 +248,17 @@ const ActivitiesFilter = () => {
             <>
               <TouchableOpacity onPress={() => setOpenCard(null)}>
                 <Animated.Text entering={FadeIn} style={styles.cardHeader}>
-                  {translate('explorer_screen.activities-filter.enter_activity_id')}
+                  {translate('explorer_screen.activities-filter.enter_activity_name')}
                 </Animated.Text>
               </TouchableOpacity>
               <Animated.View style={styles.cardBody}>
                 <TextInput
                   style={styles.inputField}
                   placeholder={translate(
-                    'explorer_screen.activities-filter.activity_id_placeholder'
+                    'explorer_screen.activities-filter.activity_name_placeholder'
                   )}
-                  value={activityId}
-                  onChangeText={setActivityId}
+                  value={activityName}
+                  onChangeText={setActivityName}
                 />
               </Animated.View>
             </>

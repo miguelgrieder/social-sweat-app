@@ -88,6 +88,7 @@ interface DateTimes {
 
 export type FilterActivityInput = {
   activity_id?: string;
+  activity_name?: string;
   participant_user_id?: string;
   host_user_id?: string;
   activity_type?: ActivityType;

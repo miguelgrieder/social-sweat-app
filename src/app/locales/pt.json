@@ -83,27 +83,23 @@
       "map": "Mapa"
     },
     "activities-filter": {
+      "any": "Qualquer",
       "where": "Onde",
       "im_flexible": "Estou flexível",
       "title_have_you_exercised": "Você se exercitou hoje?",
       "when": "Quando",
-      "any_day": "Qualquer dia",
       "whens_your_workout": "Quando é o seu treino?",
       "what": "O quê",
-      "any_activity": "Qualquer atividade",
       "what_activity_are_you_interested": "Em qual atividade você está interessado?",
       "clear_all": "Limpar tudo",
       "search": "Buscar",
       "price": "Preço",
-      "any_price": "Qualquer preço",
       "enter_price": "Insira o preço",
       "price_placeholder": "Digite o preço",
       "activity_name": "Nome da Atividade",
-      "any_activity_name": "Qualquer",
       "enter_activity_name": "Insira o nome da atividade",
       "activity_name_placeholder": "Digite o nome da atividade",
       "host_user_id": "ID do Usuário Host",
-      "any_host_user_id": "Qualquer ID de usuário host",
       "enter_host_user_id": "Insira o ID do usuário host",
       "host_user_id_placeholder": "Digite o ID do usuário host"
     }

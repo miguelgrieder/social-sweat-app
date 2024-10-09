@@ -22,6 +22,7 @@ import Colors from '@/constants/Colors';
 import { defaultStyles } from '@/constants/Styles';
 import { spacing } from '@/constants/spacing';
 import SportTag from '@/components/SportTag';
+import NotLoggedInMessage from '@/components/NotLoggedInMessage';
 
 interface ProfilePageProps {
   profileUserId?: string;
@@ -84,14 +85,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
     return (
       <SafeAreaView style={defaultStyles.container}>
         {!isSignedIn ? (
-          <View style={styles.loginContainer}>
-            <Text style={styles.loginPrompt}>{translate('common.not_logged_in')}</Text>
-            <Link href={'/(modals)/user/login'} asChild>
-              <TouchableOpacity style={defaultStyles.btn}>
-                <Text style={defaultStyles.btnText}> {translate('common.login')} </Text>
-              </TouchableOpacity>
-            </Link>
-          </View>
+          <NotLoggedInMessage addLink={true} />
         ) : (
           <Text>{translate('common.loading')}</Text>
         )}
@@ -140,7 +134,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
         {user.user_metadata.sports && user.user_metadata.sports.length > 0 && (
           <View style={styles.sportsContainer}>
             {user.user_metadata.sports.map((sport, index) => (
-              <SportTag sport={sport} />
+              <SportTag key={index} sport={sport} />
             ))}
           </View>
         )}
@@ -340,15 +334,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: Colors.primary,
-  },
-  loginContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-  },
-  loginPrompt: {
-    fontSize: 16,
-    marginBottom: spacing.sm,
   },
   loadingContainer: {
     flex: 1,

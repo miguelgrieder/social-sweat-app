@@ -34,7 +34,7 @@ import { useAuth } from '@clerk/clerk-expo';
 import { userInteractActivity } from '@/api/userInteractActivity';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MapView, { Marker } from 'react-native-maps';
-import { formatDateTime } from '@/utils/utils';
+import { capitalize, formatDateTime } from '@/utils/utils';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
@@ -299,8 +299,11 @@ const ActivityDetailsScreen = () => {
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{activity.name}</Text>
           <Text style={styles.location}>
-            {activity.activity_type} {translate('common.in')} {activity.location.city}
+            {capitalize(translate(`activity_types.${activity.activity_type.toLowerCase()}`))}
+            {' - '}
+            {translate(`activity_sports.${activity.sport_type.toLowerCase()}`)}
           </Text>
+
           <Text style={styles.location}>{activity.location.smart_location}</Text>
 
           {activity.datetimes.datetime_start && (
@@ -381,6 +384,9 @@ const ActivityDetailsScreen = () => {
                 }}
               />
             </MapView>
+            <Text style={styles.location}>
+              {activity.location.country}, {activity.location.city}
+            </Text>
           </View>
         </View>
       </Animated.ScrollView>

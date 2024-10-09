@@ -16,6 +16,9 @@ import { capitalize } from '@/utils/utils';
 import { spacing } from '@/constants/spacing';
 import ActivitiesHeader from '@/components/ActivitiesHeader';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { sportTypeIconMappings } from '@/constants/sportTypeIconMappings';
+import Colors from '@/constants/Colors';
 
 const Coaches = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -78,8 +81,15 @@ const Coaches = () => {
           {sportsList.length > 0 && (
             <View style={styles.sportsContainer}>
               {sportsList.map((sport, index) => (
-                <View key={index} style={styles.sportBadge}>
-                  <Text style={styles.sportText}>{sport}</Text>
+                <View key={index} style={styles.tag}>
+                  <MaterialCommunityIcons
+                    name={sportTypeIconMappings[sport.toLowerCase()] ? sportTypeIconMappings[sport.toLowerCase()] : sport}
+                    size={spacing.sm}
+                    color={Colors.primary}
+                  />
+                  <Text style={styles.tagText}>
+                    {translate(`activity_sports.${sport.toLowerCase()}`)}
+                  </Text>
                 </View>
               ))}
             </View>
@@ -162,18 +172,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginTop: spacing.xs,
   },
-  sportBadge: {
-    backgroundColor: '#e0e0e0',
-    borderRadius: spacing.xs,
-    paddingHorizontal: spacing.xs,
-    paddingVertical: spacing.xxs,
-    marginRight: spacing.xs,
-    marginTop: spacing.xxs,
-  },
-  sportText: {
-    fontSize: 12,
-    color: '#555',
-  },
   profileDescription: {
     fontSize: 14,
     color: '#444',
@@ -195,5 +193,21 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 16,
     color: '#666',
+  },
+  tagText: {
+    color: Colors.primary,
+  },
+  tag: {
+    borderWidth: 1,
+    borderRadius: 20,
+    gap: spacing.xxxs,
+    margin: spacing.xxxs,
+    paddingVertical: spacing.xxxs,
+    position: 'relative',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: spacing.xxs,
+    borderColor: Colors.primary,
+    backgroundColor: Colors.primary_light,
   },
 });

@@ -138,7 +138,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
         {user.user_metadata.sports && user.user_metadata.sports.length > 0 && (
           <View style={styles.sportsContainer}>
             {user.user_metadata.sports.map((sport, index) => (
-              <SportTag key={index} sport={sport} />
+              <SportTag sport={sport} />
             ))}
           </View>
         )}

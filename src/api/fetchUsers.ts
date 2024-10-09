@@ -7,7 +7,6 @@ export const fetchUsers = async (filterBody: FilterUser): Promise<User[]> => {
     const token = await getUserToken();
     if (!token) {
       console.error('User token is not available.');
-      return [];
     }
 
     const api = create({

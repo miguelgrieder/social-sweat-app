@@ -6,7 +6,6 @@ export const fetchActivities = async (filterBody: any) => {
     const token = await getUserToken();
     if (!token) {
       console.error('User token is not available.');
-      return [];
     }
     const api = create({
       baseURL: process.env.EXPO_PUBLIC_API_MICROSERVICE,

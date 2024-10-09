@@ -117,7 +117,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
         </View>
 
         {/* User Role */}
-        <Text style={styles.userRole}>{capitalize(user.user_metadata.role)}</Text>
+        <Text style={styles.userRole}>
+          {capitalize(translate(`role_selection.role_${user.user_metadata.role}`))}
+        </Text>
 
         {/* Name */}
         {user.first_name && (

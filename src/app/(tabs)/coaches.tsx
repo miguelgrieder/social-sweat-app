@@ -77,7 +77,7 @@ const Coaches = () => {
           {sportsList.length > 0 && (
             <View style={styles.sportsContainer}>
               {sportsList.map((sport, index) => (
-                <SportTag sport={sport} />
+                <SportTag key={index} sport={sport} />
               ))}
             </View>
           )}

@@ -21,6 +21,7 @@ import { capitalize } from '@/utils/utils';
 import Colors from '@/constants/Colors';
 import { defaultStyles } from '@/constants/Styles';
 import { spacing } from '@/constants/spacing';
+import SportTag from '@/components/SportTag';
 
 interface ProfilePageProps {
   profileUserId?: string;
@@ -73,7 +74,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
     return (
       <SafeAreaView style={defaultStyles.container}>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color={Colors.primary} />
         </View>
       </SafeAreaView>
     );
@@ -137,11 +138,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
         {user.user_metadata.sports && user.user_metadata.sports.length > 0 && (
           <View style={styles.sportsContainer}>
             {user.user_metadata.sports.map((sport, index) => (
-              <View key={index} style={styles.sportBadge}>
-                <Text style={styles.sportText}>
-                  {translate(`activity_sports.${sport.toLowerCase()}`)}
-                </Text>
-              </View>
+              <SportTag key={index} sport={sport} />
             ))}
           </View>
         )}
@@ -290,18 +287,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     marginBottom: spacing.lg,
-  },
-  sportBadge: {
-    backgroundColor: '#e0e0e0',
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    marginRight: 8,
-    marginTop: 4,
-  },
-  sportText: {
-    fontSize: 12,
-    color: '#555',
   },
   socialMediaContainer: {
     flexDirection: 'row',

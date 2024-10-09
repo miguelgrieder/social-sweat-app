@@ -97,7 +97,7 @@ const ActivitiesFilter = () => {
               <Text style={styles.previewdData}>
                 {datetimeStart
                   ? datetimeStart.substring(0, 10)
-                  : translate('explorer_screen.activities-filter.any_day')}
+                  : translate('explorer_screen.activities-filter.any')}
               </Text>
             </AnimatedTouchableOpacity>
           )}
@@ -150,7 +150,7 @@ const ActivitiesFilter = () => {
               <Text style={styles.previewdData}>
                 {activityType
                   ? activityType
-                  : translate('explorer_screen.activities-filter.any_activity')}
+                  : translate('explorer_screen.activities-filter.any')}
               </Text>
             </AnimatedTouchableOpacity>
           )}
@@ -201,7 +201,7 @@ const ActivitiesFilter = () => {
                 {translate('explorer_screen.activities-filter.price')}
               </Text>
               <Text style={styles.previewdData}>
-                {price ? `$${price}` : translate('explorer_screen.activities-filter.any_price')}
+                {price ? `$${price}` : translate('explorer_screen.activities-filter.any')}
               </Text>
             </AnimatedTouchableOpacity>
           )}
@@ -239,7 +239,7 @@ const ActivitiesFilter = () => {
                 {translate('explorer_screen.activities-filter.activity_name')}
               </Text>
               <Text style={styles.previewdData}>
-                {activityName || translate('explorer_screen.activities-filter.any_activity_name')}
+                {activityName || translate('explorer_screen.activities-filter.any')}
               </Text>
             </AnimatedTouchableOpacity>
           )}
@@ -278,7 +278,7 @@ const ActivitiesFilter = () => {
                 {translate('explorer_screen.activities-filter.host_user_id')}
               </Text>
               <Text style={styles.previewdData}>
-                {hostUserId || translate('explorer_screen.activities-filter.any_host_user_id')}
+                {hostUserId || translate('explorer_screen.activities-filter.any')}
               </Text>
             </AnimatedTouchableOpacity>
           )}

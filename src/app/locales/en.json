@@ -83,27 +83,23 @@
       "map": "Map"
     },
     "activities-filter": {
+      "any": "Any",
       "where": "Where",
       "im_flexible": "I'm flexible",
       "title_have_you_exercised": "Have you exercised today?",
       "when": "When",
-      "any_day": "Any day",
       "whens_your_workout": "When's your workout?",
       "what": "What",
-      "any_activity": "Any activity",
       "what_activity_are_you_interested": "What activity are you interested?",
       "clear_all": "Clear all",
       "search": "Search",
       "price": "Price",
-      "any_price": "Any price",
       "enter_price": "Enter price",
       "price_placeholder": "Type the price",
       "activity_name": "Activity Name",
-      "any_activity_name": "Any",
       "enter_activity_name": "Enter the activity name",
       "activity_name_placeholder": "Type the activity name",
       "host_user_id": "Host User ID",
-      "any_host_user_id": "Any host user ID",
       "enter_host_user_id": "Enter the host user ID",
       "host_user_id_placeholder": "Type the host user ID"
     }

@@ -6,9 +6,9 @@ import {
   FlatList,
   StyleSheet,
   ActivityIndicator,
-  TouchableOpacity, // Import TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
-import { useRouter } from 'expo-router'; // Import useRouter
+import { useRouter } from 'expo-router';
 import { translate } from '@/app/services/translate';
 import { fetchUsers } from '@/api/fetchUsers';
 import { User } from '@/interfaces/user';
@@ -16,26 +16,22 @@ import { capitalize } from '@/utils/utils';
 import { spacing } from '@/constants/spacing';
 import ActivitiesHeader from '@/components/ActivitiesHeader';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { sportTypeIconMappings } from '@/constants/sportTypeIconMappings';
 import Colors from '@/constants/Colors';
+import SportTag from '@/components/SportTag';
 
 const Coaches = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const router = useRouter(); // Initialize the router
+  const router = useRouter();
   const insets = useSafeAreaInsets();
-  let [category, setCategory] = useState<string | null>(null);
+  const [category, setCategory] = useState<string | null>(null);
 
   useEffect(() => {
     const getUsers = async () => {
       setLoading(true);
-      if (category === 'trending-up') {
-        category = null;
-      }
       const filterBody = {
         role: 'coach',
-        sport_type: category,
+        sport_type: category === 'trending-up' ? null : category,
       };
 
       try {
@@ -81,16 +77,7 @@ const Coaches = () => {
           {sportsList.length > 0 && (
             <View style={styles.sportsContainer}>
               {sportsList.map((sport, index) => (
-                <View key={index} style={styles.tag}>
-                  <MaterialCommunityIcons
-                    name={sportTypeIconMappings[sport.toLowerCase()] ? sportTypeIconMappings[sport.toLowerCase()] : sport}
-                    size={spacing.sm}
-                    color={Colors.primary}
-                  />
-                  <Text style={styles.tagText}>
-                    {translate(`activity_sports.${sport.toLowerCase()}`)}
-                  </Text>
-                </View>
+                <SportTag sport={sport} />
               ))}
             </View>
           )}
@@ -151,7 +138,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: spacing.sm,
-    backgroundColor: '#ccc', // Placeholder background color
+    backgroundColor: '#ccc',
   },
   infoContainer: {
     marginLeft: spacing.md,
@@ -193,21 +180,5 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 16,
     color: '#666',
-  },
-  tagText: {
-    color: Colors.primary,
-  },
-  tag: {
-    borderWidth: 1,
-    borderRadius: 20,
-    gap: spacing.xxxs,
-    margin: spacing.xxxs,
-    paddingVertical: spacing.xxxs,
-    position: 'relative',
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingHorizontal: spacing.xxs,
-    borderColor: Colors.primary,
-    backgroundColor: Colors.primary_light,
   },
 });

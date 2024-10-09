@@ -8,7 +8,7 @@ import { BottomSheetFlatList, BottomSheetFlatListMethods } from '@gorhom/bottom-
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
 import { Ionicons } from '@expo/vector-icons';
-import { formatDateTime } from '@/utils/utils';
+import { capitalize, formatDateTime } from '@/utils/utils';
 
 interface Props {
   activities: any[];
@@ -68,7 +68,9 @@ const Activities = ({ activities: items, category, refresh }: Props) => {
                 {item.price.unit} {item.price.value}
               </Text>
               <Text style={{ fontFamily: 'mon', fontSize: spacing.md }}>
-                {item.activity_type} - {item.sport_type}
+                {capitalize(translate(`activity_types.${item.activity_type.toLowerCase()}`))}
+                {' - '}
+                {translate(`activity_sports.${item.sport_type.toLowerCase()}`)}
               </Text>
             </View>
           </Animated.View>

@@ -15,10 +15,10 @@ interface Props {
 }
 
 const INITIAL_REGION = {
-  latitude: 52.52,
-  longitude: 13.405,
-  latitudeDelta: 9,
-  longitudeDelta: 9,
+  latitude: -27.598,
+  longitude: -48.4892,
+  latitudeDelta: 1,
+  longitudeDelta: 1,
 };
 
 const onMarkerSelected = (activity: Activity) => {

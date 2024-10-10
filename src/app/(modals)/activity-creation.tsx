@@ -61,8 +61,8 @@ const CreateActivity = () => {
 
   // State to store the selected coordinates
   const [coordinates, setCoordinates] = useState({
-    latitude: 37.78825,
-    longitude: -122.4324, // Default coordinates (San Francisco)
+    latitude: -27.598,
+    longitude: -48.4892, // Default coordinates (San Francisco)
   });
 
   // Define activity type permissions based on roles

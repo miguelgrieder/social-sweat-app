@@ -39,7 +39,9 @@
     "first_name": "First Name",
     "last_name": "Last Name",
     "since": "Since",
-    "activities_participated": "Activities Participated"
+    "activities_participated": "Activities Participated",
+    "activities_participating": "Activities Participating",
+    "activities_created": "Activities Created"
   },
   "login_modal": {
     "header": "Log in or sign up",

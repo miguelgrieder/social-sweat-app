@@ -15,11 +15,18 @@ export interface UserSocialMedias {
   user_strava?: string;
 }
 
+export interface UserMetrics {
+  activities_created?: number;
+  activities_participated?: number;
+  activities_participating?: number;
+}
+
 export interface UserMetadata {
   role: Role;
   sports?: SportType[];
   birth_date: string; // Expected format: 'YYYY/MM/DD'
   user_social_medias?: UserSocialMedias;
+  user_metrics?: UserMetrics;
   profile_description?: string;
 }
 

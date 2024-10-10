@@ -39,7 +39,9 @@
     "first_name": "Nome",
     "last_name": "Sobrenome",
     "since": "Desde",
-    "activities_participated": "atividades realizadas"
+    "activities_participated": "Atividades Realizadas",
+    "activities_participating": "Atividades Inscrito",
+    "activities_created": "Atividades Criadas"
   },
   "login_modal": {
     "header": "Entrar ou cadastrar-se",

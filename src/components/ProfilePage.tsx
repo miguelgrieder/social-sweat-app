@@ -196,19 +196,23 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
             <Text style={styles.cardTitle}>
               {translate('profile_screen.activities_participated')}
             </Text>
-            <Text style={styles.cardValue}>3</Text>
+            <Text style={styles.cardValue}>
+              {user.user_metadata.user_metrics?.activities_participated}
+            </Text>
           </View>
           <View style={styles.card}>
             <Text style={styles.cardTitle}>
-              {translate('profile_screen.activities_participated')}
+              {translate('profile_screen.activities_participating')}
             </Text>
-            <Text style={styles.cardValue}>1</Text>
+            <Text style={styles.cardValue}>
+              {user.user_metadata.user_metrics?.activities_participating}
+            </Text>
           </View>
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>
-              {translate('profile_screen.activities_participated')}
+            <Text style={styles.cardTitle}>{translate('profile_screen.activities_created')}</Text>
+            <Text style={styles.cardValue}>
+              {user.user_metadata.user_metrics?.activities_created}
             </Text>
-            <Text style={styles.cardValue}>2</Text>
           </View>
         </View>
       </ScrollView>

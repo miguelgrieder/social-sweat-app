@@ -8,6 +8,7 @@ import MapView from 'react-native-map-clustering';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { spacing } from '@/constants/spacing';
 import { sportTypeIconMappings } from '@/constants/sportTypeIconMappings';
+import Colors from '@/constants/Colors';
 
 interface Props {
   activities: Activity[] | null;
@@ -41,7 +42,7 @@ const ActivitiesMap = memo(({ activities }: Props) => {
         <View style={styles.marker}>
           <Text
             style={{
-              color: '#000',
+              color: Colors.primary,
               textAlign: 'center',
               fontFamily: 'mon-sb',
             }}
@@ -69,8 +70,8 @@ const ActivitiesMap = memo(({ activities }: Props) => {
         showsMyLocationButton
         initialRegion={INITIAL_REGION}
         animationEnabled={false}
-        clusterColor="#fff"
-        clusterTextColor="#000"
+        clusterColor={Colors.primary}
+        clusterTextColor={Colors.primary_light}
         clusterFontFamily="mon-sb"
         renderCluster={renderCluster}
       >
@@ -84,7 +85,11 @@ const ActivitiesMap = memo(({ activities }: Props) => {
             onPress={() => onMarkerSelected(item)}
           >
             <View style={styles.marker}>
-              <MaterialCommunityIcons name={sportTypeIconMappings[item.sport_type]} size={20} />
+              <MaterialCommunityIcons
+                name={sportTypeIconMappings[item.sport_type]}
+                size={20}
+                color={Colors.primary}
+              />
             </View>
           </Marker>
         ))}
@@ -101,9 +106,11 @@ const styles = StyleSheet.create({
     padding: spacing.xs,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: Colors.primary_light,
+    borderColor: Colors.primary,
     elevation: 5,
     borderRadius: 12,
+    borderWidth: 1,
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 6,

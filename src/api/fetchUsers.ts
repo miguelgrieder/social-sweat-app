@@ -16,7 +16,7 @@ export const fetchUsers = async (filterBody: FilterUser): Promise<User[]> => {
       },
     });
 
-    const response = await api.post('/users', filterBody);
+    const response = await api.post('/users/', filterBody);
     if (response.ok && response.data) {
       return response.data.users as User[];
     } else {

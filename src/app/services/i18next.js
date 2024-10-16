@@ -36,7 +36,7 @@ export const languageResources = {
   pt: { translation: pt },
 };
 
-i18next
+export const initI18next = i18next
   .use(languageDetector) // Use the custom language detector
   .use(initReactI18next)
   .init({
@@ -45,6 +45,12 @@ i18next
     interpolation: {
       escapeValue: false, // React already escapes values
     },
+  })
+  .then(() => {
+    console.log('i18next initialized successfully');
+  })
+  .catch((error) => {
+    console.error('i18next initialization failed:', error);
   });
 
 export default i18next;

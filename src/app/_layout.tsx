@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar'; // Updated import
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack, useRouter } from 'expo-router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
 import * as SecureStore from 'expo-secure-store';
 import { Ionicons } from '@expo/vector-icons';
@@ -10,6 +10,7 @@ import { TouchableOpacity } from 'react-native';
 import { translate } from '@/app/services/translate';
 import { FilterActivityInputProvider } from '@/context/FilterActivityInputContext';
 import * as NavigationBar from 'expo-navigation-bar'; // Import NavigationBar
+import { initI18next } from '@/app/services/i18next';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
@@ -35,22 +36,36 @@ const tokenCache = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
+  const [fontsLoaded, fontsError] = useFonts({
     mon: require('../../assets/fonts/Montserrat-Regular.ttf'),
     'mon-sb': require('../../assets/fonts/Montserrat-SemiBold.ttf'),
     'mon-b': require('../../assets/fonts/Montserrat-Bold.ttf'),
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+  const [i18nInitialized, setI18nInitialized] = useState(false);
 
   useEffect(() => {
-    if (loaded) {
+    if (fontsError) throw fontsError;
+  }, [fontsError]);
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        // Wait for i18next to initialize
+        await initI18next;
+        setI18nInitialized(true);
+      } catch (e) {
+        console.error('Error initializing i18next:', e);
+      }
+    }
+    prepare();
+  }, []);
+
+  useEffect(() => {
+    if (fontsLoaded && i18nInitialized) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [fontsLoaded, i18nInitialized]);
 
   // Set the navigation bar appearance (Android only)
   useEffect(() => {
@@ -58,8 +73,8 @@ export default function RootLayout() {
     NavigationBar.setButtonStyleAsync('dark'); // Dark icons
   }, []);
 
-  if (!loaded) {
-    return null;
+  if (!fontsLoaded || !i18nInitialized) {
+    return null; // TODO render a loading indicator
   }
 
   return (

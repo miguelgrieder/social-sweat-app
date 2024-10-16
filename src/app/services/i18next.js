@@ -1,9 +1,9 @@
 import 'intl-pluralrules'; // Import the polyfill for Intl.PluralRules
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import en from '../locales/en.json';
-import pt from '../locales/pt.json';
-import { loadString, saveString } from '../../utils/storage/storage'; // Adjust the path as needed
+import en from '@/app/locales/en.json';
+import pt from '@/app/locales/pt.json';
+import { loadString, saveString } from '@/utils/storage/storage';
 
 // Create a custom language detector
 const languageDetector = {

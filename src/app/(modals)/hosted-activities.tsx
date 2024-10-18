@@ -35,6 +35,7 @@ export default function HostedActivitiesTab() {
   }
 
   const initialFilter = {
+    enabled: null,
     host_user_id: user.id,
   };
 

@@ -153,7 +153,9 @@
     "activities": "Activities",
     "datetime_start": "Start at",
     "datetime_finish": "Finish at",
-    "no_description_private": "No private description"
+    "no_description_private": "No private description",
+    "enable": "Enable",
+    "disable": "Disable"
   },
   "create_activity_screen": {
     "title": "Create Activity",
@@ -211,6 +213,11 @@
     "failed_to_leave": "Failed to leave the activity. Please try again.",
     "role_unavailable": "User role not available.",
     "user_unavailable": "User data is unavailable.",
-    "user_data_loading": "User data is loading. Please wait."
+    "user_data_loading": "User data is loading. Please wait.",
+    "activity_enabled": "Activity has been enabled.",
+    "activity_disabled": "Activity has been disabled.",
+    "failed_to_enable_activity": "Failed to enable the activity.",
+    "failed_to_disable_activity": "Failed to disable the activity.",
+    "must_login_to_modify": "You must be logged in to modify the activity."
   }
 }

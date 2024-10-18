@@ -1,6 +1,7 @@
 export interface Activity {
   id: string;
   name: string;
+  enabled: boolean;
   description: string;
   description_private?: string;
   activity_type: ActivityType;

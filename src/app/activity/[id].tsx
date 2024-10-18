@@ -32,6 +32,7 @@ import { fetchUsers } from '@/api/fetchUsers';
 import { User } from '@/interfaces/user';
 import { useAuth } from '@clerk/clerk-expo';
 import { userInteractActivity } from '@/api/userInteractActivity';
+import { updateActivityState } from '@/api/activity/updateActivityState';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MapView, { Marker } from 'react-native-maps';
 import { capitalize, formatDateTime } from '@/utils/utils';
@@ -68,7 +69,7 @@ const dummy_listing: Activity = {
   },
   pictures: [],
   host: {
-    host_user_id: '', // Ensure host_user_id is included
+    host_user_id: '',
   },
   datetimes: {
     datetime_created: '',
@@ -255,6 +256,44 @@ const ActivityDetailsScreen = () => {
     }
   };
 
+  const handleUpdateActivityState = async () => {
+    if (!userId) {
+      Alert.alert(translate('alerts.error'), translate('alerts.must_login_to_modify'));
+      return;
+    }
+
+    const action = activity.enabled ? 'disable' : 'enable';
+
+    try {
+      const success = await updateActivityState(userId, activity.id, action);
+
+      if (success) {
+        Alert.alert(
+          translate('alerts.success'),
+          action === 'enable'
+            ? translate('alerts.activity_enabled')
+            : translate('alerts.activity_disabled')
+        );
+
+        // Update the activity state
+        setActivity((prevActivity) => ({
+          ...prevActivity,
+          enabled: action === 'enable',
+        }));
+      } else {
+        Alert.alert(
+          translate('alerts.error'),
+          action === 'enable'
+            ? translate('alerts.failed_to_enable_activity')
+            : translate('alerts.failed_to_disable_activity')
+        );
+      }
+    } catch (error) {
+      console.error(`Error trying to ${action} activity:`, error);
+      Alert.alert(translate('alerts.error'), translate('alerts.unexpected_error'));
+    }
+  };
+
   const handleMapPress = () => {
     const latitude = activity.location.geometry.coordinates.latitude;
     const longitude = activity.location.geometry.coordinates.longitude;
@@ -388,6 +427,22 @@ const ActivityDetailsScreen = () => {
               {activity.location.country}, {activity.location.city}
             </Text>
           </View>
+
+          {userId === activity.host.host_user_id && (
+            <TouchableOpacity
+              style={[
+                defaultStyles.btn,
+                { marginVertical: spacing.md, backgroundColor: Colors.grey },
+              ]}
+              onPress={handleUpdateActivityState}
+            >
+              <Text style={defaultStyles.btnText}>
+                {activity.enabled
+                  ? translate('activity_screen.disable')
+                  : translate('activity_screen.enable')}
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </Animated.ScrollView>
 

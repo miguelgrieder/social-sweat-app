@@ -153,7 +153,9 @@
     "my_next_activities": "Minhas próximas Atividades",
     "datetime_start": "Início",
     "datetime_finish": "Fim",
-    "no_description_private": "Nenhuma descrição privada"
+    "no_description_private": "Nenhuma descrição privada",
+    "enable": "Ativar",
+    "disable": "Desativar"
   },
   "create_activity_screen": {
     "title": "Criar Atividade",
@@ -211,6 +213,11 @@
     "failed_to_leave": "Falha ao sair da atividade. Por favor, tente novamente.",
     "role_unavailable": "Função do usuário não disponível.",
     "user_unavailable": "Dados do usuário indisponíveis.",
-    "user_data_loading": "Os dados do usuário estão carregando. Por favor, aguarde."
+    "user_data_loading": "Os dados do usuário estão carregando. Por favor, aguarde.",
+    "activity_enabled": "A atividade foi ativada.",
+    "activity_disabled": "A atividade foi desativada.",
+    "failed_to_enable_activity": "Falha ao ativar a atividade.",
+    "failed_to_disable_activity": "Falha ao desativar a atividade.",
+    "must_login_to_modify": "Você precisa estar logado para modificar a atividade."
   }
 }

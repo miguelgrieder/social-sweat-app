@@ -208,12 +208,12 @@ export default SocialSelectionScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 26,
+    paddingHorizontal: spacing.lg,
     backgroundColor: '#fff',
   },
   scrollContainer: {
     flexGrow: 1,
-    paddingVertical: 20,
+    paddingVertical: spacing.md,
     gap: spacing.lg,
     justifyContent: 'flex-start',
   },
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
     fontFamily: 'mon-sb',
   },
   description: {
-    fontSize: 14,
+    fontSize: spacing.sm,
     fontWeight: '500',
     color: '#6C6C6C',
     fontFamily: 'mon-sb',
@@ -254,14 +254,14 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#c2c2c2',
-    borderRadius: 10,
+    borderRadius: spacing.sm,
     padding: spacing.sm,
     fontSize: spacing.md,
   },
   descriptionInput: {
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#c2c2c2',
-    borderRadius: 10,
+    borderRadius: spacing.sm,
     padding: spacing.sm,
     fontSize: spacing.md,
     height: 100, // Set a fixed height for the description input
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
   roundButton: {
     width: 40,
     height: 40,
-    borderRadius: 50,
+    borderRadius: spacing.xxl,
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',

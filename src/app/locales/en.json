@@ -194,6 +194,28 @@
     "datetime_finish_after_start": "Finish date & time must be after start date & time.",
     "unauthorized_activity_type": "You cannot create this type of activity."
   },
+  "social_selection_screen": {
+    "header": "Connect with Others",
+    "subtitle": "Share your social information so others can know you",
+    "about_you": "Share your social information so others can know you",
+    "profile_description": "Profile Bio",
+    "enter_profile_description": "Enter your profile bio",
+    "user_phone": "Phone Number",
+    "enter_phone": "Enter your phone number",
+    "use_phone": "Allow Phone Calls",
+    "use_sms": "Allow SMS Messages",
+    "use_whatsapp": "Allow WhatsApp",
+    "user_instagram": "Instagram",
+    "enter_instagram": "Enter your Instagram username",
+    "user_facebook": "Facebook",
+    "enter_facebook": "Enter your Facebook username",
+    "user_youtube": "YouTube",
+    "enter_youtube": "Enter your YouTube channel username",
+    "user_tiktok": "TikTok",
+    "enter_tiktok": "Enter your TikTok channel username",
+    "user_strava": "Strava",
+    "enter_strava": "Enter your Strava username"
+  },
   "sports_list": {
     "find_a_sport": "Find a sport..."
   },

@@ -194,6 +194,27 @@
     "datetime_finish_after_start": "A data e hora de término devem ser após a data e hora de início.",
     "unauthorized_activity_type": "Você não pode criar este tipo de atividade."
   },
+  "social_selection_screen": {
+    "header": "Conecte-se com outros",
+    "subtitle": "Compartilhe para os outros poderem te conhecer",
+    "profile_description": "Perfil Bio",
+    "enter_profile_description": "Insira uma descrição para seu perfil",
+    "user_phone": "Número de Telefone",
+    "enter_phone": "Insira seu número de telefone",
+    "use_phone": "Permitir Chamadas Telefônicas",
+    "use_sms": "Permitir Mensagens SMS",
+    "use_whatsapp": "Permitir WhatsApp",
+    "user_instagram": "Instagram",
+    "enter_instagram": "Insira seu nome de usuário do Instagram",
+    "user_facebook": "Facebook",
+    "enter_facebook": "Insira seu nome de usuário do Facebook",
+    "user_youtube": "YouTube",
+    "enter_youtube": "Insira seu canal do YouTube",
+    "user_tiktok": "TikTok",
+    "enter_tiktok": "Insira seu nome de usuário do TikTok",
+    "user_strava": "Strava",
+    "enter_strava": "Insira seu nome de usuário do Strava"
+  },
   "sports_list": {
     "find_a_sport": "Procure um esporte..."
   },

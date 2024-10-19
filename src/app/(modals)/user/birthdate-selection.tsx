@@ -29,7 +29,7 @@ const BirthdateSelectionScreen = () => {
 
         if (success) {
           console.log('Birthdate saved successfully:', selectedBirthDate);
-          router.navigate('/(tabs)/');
+          router.navigate('/(modals)/user/social-selection');
         } else {
           console.error('Failed to update birthdate.');
           ToastAndroid.show('Error updating birthdate. Please try again.', ToastAndroid.SHORT);

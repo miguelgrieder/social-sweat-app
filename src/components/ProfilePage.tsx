@@ -141,48 +141,119 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
 
         {/* Social Media Buttons */}
         <View style={styles.socialMediaContainer}>
-          {user.user_metadata.user_social_medias &&
-            Object.entries(user.user_metadata.user_social_medias).map(([key, value]) => {
-              if (value) {
-                let baseUrl = '';
-                let iconSource = null;
-                switch (key) {
-                  case 'user_youtube':
-                    baseUrl = 'https://youtube.com/channel/';
-                    iconSource = require('assets/images/user_default_image.jpg');
-                    break;
-                  case 'user_instagram':
-                    baseUrl = 'https://instagram.com/';
-                    iconSource = require('assets/images/user_default_image.jpg');
-                    break;
-                  case 'user_facebook':
-                    baseUrl = 'https://facebook.com/';
-                    iconSource = require('assets/images/user_default_image.jpg');
-                    break;
-                  case 'user_tiktok':
-                    baseUrl = 'https://tiktok.com/@';
-                    iconSource = require('assets/images/user_default_image.jpg');
-                    break;
-                  case 'user_strava':
-                    baseUrl = 'https://www.strava.com/athletes/';
-                    iconSource = require('assets/images/user_default_image.jpg');
-                    break;
-                  default:
-                    break;
+          {user.user_metadata.user_social_medias && (
+            <>
+              {/* Handle user_phone */}
+              {user.user_metadata.user_social_medias.user_phone &&
+                (() => {
+                  const value = user.user_metadata.user_social_medias.user_phone;
+                  const usePhone = user.user_metadata.user_social_medias.use_phone === true;
+                  const useSms = user.user_metadata.user_social_medias.use_sms === true;
+                  const useWhatsApp = user.user_metadata.user_social_medias.use_whatsapp === true;
+                  const phoneIcons = [];
+
+                  if (usePhone) {
+                    const phoneUrl = `tel:${value}`;
+                    phoneIcons.push(
+                      <TouchableOpacity
+                        key={`user_phone_phone`}
+                        onPress={() => Linking.openURL(phoneUrl)}
+                        style={styles.socialMediaButton}
+                      >
+                        <Image
+                          source={require('assets/images/phone_logo.png')}
+                          style={styles.socialMediaIcon}
+                        />
+                      </TouchableOpacity>
+                    );
+                  }
+
+                  if (useSms) {
+                    const smsUrl = `sms:${value}`;
+                    phoneIcons.push(
+                      <TouchableOpacity
+                        key={`user_phone_sms`}
+                        onPress={() => Linking.openURL(smsUrl)}
+                      >
+                        <Image
+                          source={require('assets/images/sms_logo.png')}
+                          style={styles.socialMediaIcon}
+                        />
+                      </TouchableOpacity>
+                    );
+                  }
+
+                  if (useWhatsApp) {
+                    const whatsappUrl = `whatsapp://send?phone=${value}`;
+                    phoneIcons.push(
+                      <TouchableOpacity
+                        key={`user_phone_whatsapp`}
+                        onPress={() => Linking.openURL(whatsappUrl)}
+                      >
+                        <Image
+                          source={require('assets/images/whatsapp_logo.png')}
+                          style={styles.socialMediaIcon}
+                        />
+                      </TouchableOpacity>
+                    );
+                  }
+
+                  if (phoneIcons.length > 0) {
+                    return <>{phoneIcons}</>;
+                  } else {
+                    return null;
+                  }
+                })()}
+
+              {/* Handle other social media links */}
+              {Object.entries(user.user_metadata.user_social_medias).map(([key, value]) => {
+                if (
+                  value &&
+                  key !== 'user_phone' &&
+                  key !== 'use_phone' &&
+                  key !== 'use_sms' &&
+                  key !== 'use_whatsapp'
+                ) {
+                  let baseUrl = '';
+                  let iconSource = null;
+                  switch (key) {
+                    case 'user_youtube':
+                      baseUrl = 'https://youtube.com/channel/';
+                      iconSource = require('assets/images/youtube_logo.png');
+                      break;
+                    case 'user_instagram':
+                      baseUrl = 'https://instagram.com/';
+                      iconSource = require('assets/images/instagram_logo.png');
+                      break;
+                    case 'user_facebook':
+                      baseUrl = 'https://facebook.com/';
+                      iconSource = require('assets/images/facebook_logo.png');
+                      break;
+                    case 'user_tiktok':
+                      baseUrl = 'https://tiktok.com/@';
+                      iconSource = require('assets/images/tiktok_logo.png');
+                      break;
+                    case 'user_strava':
+                      baseUrl = 'https://www.strava.com/athletes/';
+                      iconSource = require('assets/images/strava_logo.png');
+                      break;
+                    default:
+                      break;
+                  }
+                  const url = baseUrl + value;
+                  return (
+                    <TouchableOpacity
+                      key={key}
+                      onPress={() => Linking.openURL(url)}
+                    >
+                      <Image source={iconSource} style={styles.socialMediaIcon} />
+                    </TouchableOpacity>
+                  );
                 }
-                const url = baseUrl + value;
-                return (
-                  <TouchableOpacity
-                    key={key}
-                    onPress={() => Linking.openURL(url)}
-                    style={styles.socialMediaButton}
-                  >
-                    <Image source={iconSource} style={styles.socialMediaIcon} />
-                  </TouchableOpacity>
-                );
-              }
-              return null;
-            })}
+                return null;
+              })}
+            </>
+          )}
         </View>
 
         {/* Profile Description */}
@@ -290,11 +361,10 @@ const styles = StyleSheet.create({
   },
   socialMediaContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
     marginBottom: spacing.lg,
-  },
-  socialMediaButton: {
-    marginHorizontal: spacing.sm,
+    gap: spacing.sm
   },
   socialMediaIcon: {
     width: 40,

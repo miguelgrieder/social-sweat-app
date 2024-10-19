@@ -8,11 +8,15 @@ export enum Role {
 }
 
 export interface UserSocialMedias {
+  user_phone?: string;
   user_youtube?: string;
   user_instagram?: string;
   user_facebook?: string;
   user_tiktok?: string;
   user_strava?: string;
+  use_phone?: boolean;
+  use_sms?: boolean;
+  use_whatsapp?: boolean;
 }
 
 export interface UserMetrics {
@@ -25,8 +29,8 @@ export interface UserMetadata {
   role: Role;
   sports?: SportType[];
   birth_date: string; // Expected format: 'YYYY/MM/DD'
-  user_social_medias?: UserSocialMedias;
-  user_metrics?: UserMetrics;
+  user_social_medias: UserSocialMedias;
+  user_metrics: UserMetrics;
   profile_description?: string;
 }
 

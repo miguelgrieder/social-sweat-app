@@ -242,10 +242,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
                   }
                   const url = baseUrl + value;
                   return (
-                    <TouchableOpacity
-                      key={key}
-                      onPress={() => Linking.openURL(url)}
-                    >
+                    <TouchableOpacity key={key} onPress={() => Linking.openURL(url)}>
                       <Image source={iconSource} style={styles.socialMediaIcon} />
                     </TouchableOpacity>
                   );
@@ -364,7 +361,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     marginBottom: spacing.lg,
-    gap: spacing.sm
+    gap: spacing.sm,
   },
   socialMediaIcon: {
     width: 40,

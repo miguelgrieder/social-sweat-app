@@ -240,6 +240,7 @@
     "activity_disabled": "Activity has been disabled.",
     "failed_to_enable_activity": "Failed to enable the activity.",
     "failed_to_disable_activity": "Failed to disable the activity.",
-    "must_login_to_modify": "You must be logged in to modify the activity."
+    "must_login_to_modify": "You must be logged in to modify the activity.",
+    "max_selection_reached": "Maximum selection limit reached."
   }
 }

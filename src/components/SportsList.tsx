@@ -1,5 +1,13 @@
 import { translate } from '@/app/services/translate';
-import { StyleSheet, Text, TouchableOpacity, View, TextInput, ScrollView } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  TextInput,
+  ScrollView,
+  Alert,
+} from 'react-native';
 import { useState, useEffect } from 'react';
 import Colors from '@/constants/Colors';
 import { spacing } from '@/constants/spacing';
@@ -11,9 +19,15 @@ interface SportsListProps {
   showInput?: boolean;
   title?: string;
   onSelectedTagsChange: (selectedTags: string[]) => void;
+  maxSelectedSports?: number; // Added optional prop
 }
 
-const SportsList = ({ showInput, title, onSelectedTagsChange }: SportsListProps) => {
+const SportsList = ({
+  showInput,
+  title,
+  onSelectedTagsChange,
+  maxSelectedSports = 5,
+}: SportsListProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
@@ -35,9 +49,15 @@ const SportsList = ({ showInput, title, onSelectedTagsChange }: SportsListProps)
     if (selectedTags.includes(sportType)) {
       setSelectedTags(selectedTags.filter((t) => t !== sportType));
     } else {
-      setSelectedTags([...selectedTags, sportType]);
+      if (selectedTags.length < maxSelectedSports) {
+        setSelectedTags([...selectedTags, sportType]);
+      } else {
+        Alert.alert(translate('alerts.error'), translate('alerts.max_selection_reached'));
+      }
     }
   };
+
+  const isMaxSelected = selectedTags.length >= maxSelectedSports;
 
   return (
     <View style={styles.container}>
@@ -60,7 +80,12 @@ const SportsList = ({ showInput, title, onSelectedTagsChange }: SportsListProps)
             <TouchableOpacity
               key={index}
               onPress={() => toggleTag(category.sportType)}
-              style={[styles.tag, selectedTags.includes(category.sportType) && styles.tagSelected]}
+              style={[
+                styles.tag,
+                selectedTags.includes(category.sportType) && styles.tagSelected,
+                !selectedTags.includes(category.sportType) && isMaxSelected && styles.tagDisabled,
+              ]}
+              disabled={!selectedTags.includes(category.sportType) && isMaxSelected}
             >
               <MaterialCommunityIcons
                 name={
@@ -153,6 +178,10 @@ const styles = StyleSheet.create({
 
   tagSelected: {
     backgroundColor: Colors.primary,
+  },
+
+  tagDisabled: {
+    opacity: 0.5, // Visually indicate disabled state
   },
 
   tagText: {

@@ -239,6 +239,7 @@
     "activity_disabled": "A atividade foi desativada.",
     "failed_to_enable_activity": "Falha ao ativar a atividade.",
     "failed_to_disable_activity": "Falha ao desativar a atividade.",
-    "must_login_to_modify": "Você precisa estar logado para modificar a atividade."
+    "must_login_to_modify": "Você precisa estar logado para modificar a atividade.",
+    "max_selection_reached": "Limite máximo de items atingido"
   }
 }

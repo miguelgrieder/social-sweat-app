@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { Link, Stack } from 'expo-router';
-import ActivitiesHeader from '@/components/ActivitiesHeader';
-import ActivitiesMap from '@/components/ActivitiesMap';
-import ActivitiesBottomSheet from '@/components/ActivitiesBottomSheet';
+import ActivitiesHeader from '@/components/activity/ActivitiesHeader';
+import ActivitiesMap from '@/components/activity/ActivitiesMap';
+import ActivitiesBottomSheet from '@/components/activity/ActivitiesBottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { fetchActivities } from '@/api/fetchActivities';
 import { useFocusEffect } from '@react-navigation/native';

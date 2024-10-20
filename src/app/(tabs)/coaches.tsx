@@ -14,7 +14,7 @@ import { fetchUsers } from '@/api/fetchUsers';
 import { User } from '@/interfaces/user';
 import { capitalize } from '@/utils/utils';
 import { spacing } from '@/constants/spacing';
-import ActivitiesHeader from '@/components/ActivitiesHeader';
+import ActivitiesHeader from '@/components/activity/ActivitiesHeader';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Colors from '@/constants/Colors';
 import SportTag from '@/components/SportTag';

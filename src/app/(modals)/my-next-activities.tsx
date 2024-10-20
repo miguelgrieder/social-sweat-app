@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import ActivitiesPage from '@/components/ActivitiesPage';
+import ActivitiesPage from '@/components/activity/ActivitiesPage';
 import { useUser } from '@clerk/clerk-expo';
 import { useFilters } from '@/context/FilterActivityInputContext';
 import NotLoggedInMessage from '@/components/NotLoggedInMessage';

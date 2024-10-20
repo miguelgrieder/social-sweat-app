@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useMemo, useRef, useState } from 'react';
 import { Activity } from '@/interfaces/activity';
 import BottomSheet from '@gorhom/bottom-sheet';
-import Activities from '@/components/Activities';
+import Activities from '@/components/activity/Activities';
 import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { translate } from '@/app/services/translate';

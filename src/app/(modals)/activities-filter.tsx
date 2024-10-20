@@ -20,6 +20,7 @@ import { translate } from '@/app/services/translate';
 // @ts-ignore
 import DatePicker from 'react-native-modern-datepicker';
 import { spacing } from '@/constants/spacing';
+import { capitalize } from '@/utils/utils';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
@@ -148,7 +149,9 @@ const ActivitiesFilter = () => {
                 {translate('explorer_screen.activities-filter.what')}
               </Text>
               <Text style={styles.previewdData}>
-                {activityType ? activityType : translate('explorer_screen.activities-filter.any')}
+                {activityType
+                  ? capitalize(translate(`activity_types.${activityType.toLowerCase()}`))
+                  : translate('explorer_screen.activities-filter.any')}
               </Text>
             </AnimatedTouchableOpacity>
           )}

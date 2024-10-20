@@ -424,7 +424,7 @@ const ActivityDetailsScreen = () => {
               />
             </MapView>
             <Text style={styles.location}>
-              {activity.location.country}, {activity.location.city}
+              {translate('country.' + activity.location.country)}, {activity.location.city}
             </Text>
           </View>
 

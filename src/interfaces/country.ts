@@ -12,7 +12,7 @@ export enum CountryType {
 // Mapping of country names to CountryType enum values
 export const countryNameToCountryType: { [key: string]: CountryType } = {
   brazil: CountryType.Brazil,
-  'united states': CountryType.UnitedStates,
+  united_states: CountryType.UnitedStates,
   argentina: CountryType.Argentina,
   paraguai: CountryType.Paraguai,
   chile: CountryType.Chile,

@@ -32,7 +32,9 @@
     "unknown": "unknown",
     "not_logged_in": "You're not logged in",
     "unauthorized": "Unauthorized",
-    "loading": "loading..."
+    "loading": "loading...",
+    "min": "min",
+    "characters": "characters"
   },
   "profile_screen": {
     "header": "Profile",
@@ -158,6 +160,9 @@
   "create_activity_screen": {
     "title": "Create Activity",
     "upload_photo": "Upload Activity Photo",
+    "label_image": "Image",
+    "label_smart_location": "Smart Location",
+    "label_city": "City",
     "label_title": "Title",
     "placeholder_title": "Enter the activity title",
     "label_description": "Description",
@@ -190,6 +195,8 @@
     "invalid_max_participants": "Please enter a valid number of maximum participants.",
     "datetime_required": "Both start and finish date & time are required.",
     "datetime_finish_after_start": "Finish date & time must be after start date & time.",
+    "required_fields_missing": "The required fields are missing",
+    "fields_too_short": "These fields are too short",
     "unauthorized_activity_type": "You cannot create this type of activity."
   },
   "social_selection_screen": {

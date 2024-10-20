@@ -42,27 +42,27 @@ const CreateActivity = () => {
   const { user: clerkUser, isLoaded, isSignedIn } = useUser(); // Fetch user using Clerk's useUser
   const [user, setUser] = useState<User | null>(null);
 
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [description_private, setDescriptionPrivate] = useState('');
+  const [title, setTitle] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [description_private, setDescriptionPrivate] = useState(null);
   const [activityType, setActivityType] = useState(ActivityType.Spot);
-  const [priceValue, setPriceValue] = useState('');
+  const [priceValue, setPriceValue] = useState(null);
   const [priceUnit, setPriceUnit] = useState('$');
   const [datetimeStart, setDatetimeStart] = useState<Date | null>(null);
   const [datetimeFinish, setDatetimeFinish] = useState<Date | null>(null);
   const [isDatePickerVisibleStart, setDatePickerVisibilityStart] = useState(false);
   const [isDatePickerVisibleFinish, setDatePickerVisibilityFinish] = useState(false);
   const [locationCountry, setLocationCountry] = useState('Brazil');
-  const [locationCity, setLocationCity] = useState('');
-  const [locationSmartLocation, setLocationSmartLocation] = useState('');
+  const [locationCity, setLocationCity] = useState(null);
+  const [locationSmartLocation, setLocationSmartLocation] = useState(null);
   const [sport, setSport] = useState(SportType.Soccer);
   const [image, setImage] = useState<string | null>(null);
-  const [maxParticipants, setMaxParticipants] = useState('');
+  const [maxParticipants, setMaxParticipants] = useState(null);
 
   // State to store the selected coordinates
   const [coordinates, setCoordinates] = useState({
     latitude: -27.598,
-    longitude: -48.4892, // Default coordinates (San Francisco)
+    longitude: -48.4892, // Default coordinates
   });
 
   // Define activity type permissions based on roles
@@ -109,7 +109,7 @@ const CreateActivity = () => {
       base64: true,
     });
 
-    if (!result.canceled) {
+    if (!result.canceled && result.assets && result.assets.length > 0) {
       const base64 = `data:image/png;base64,${result.assets[0].base64}`;
       setImage(base64);
     }
@@ -160,6 +160,45 @@ const CreateActivity = () => {
   const canCreateActivityType = (role: Role, activityType: ActivityType): boolean => {
     const allowedTypes = roleActivityMap[role];
     return allowedTypes.includes(activityType);
+  };
+
+  // Function to validate required fields
+  const validateRequiredFields = (fields) => {
+    const missingFields = [];
+    const tooShortFields = [];
+
+    fields.forEach((field) => {
+      if (!field.value) {
+        missingFields.push(field.name);
+      } else if (field.minLength && field.value.length < field.minLength) {
+        tooShortFields.push({ name: field.name, minLength: field.minLength });
+      }
+    });
+
+    if (missingFields.length > 0) {
+      const missingFieldsString = missingFields.join(', ');
+      Alert.alert(
+        translate('alerts.error'),
+        translate('create_activity_screen.required_fields_missing') + ': ' + missingFieldsString
+      );
+      return false;
+    }
+
+    if (tooShortFields.length > 0) {
+      const tooShortFieldsString = tooShortFields
+        .map(
+          (f) =>
+            `${f.name} (${translate('common.min')} ${f.minLength} ${translate('common.characters')})`
+        )
+        .join(', ');
+      Alert.alert(
+        translate('alerts.error'),
+        translate('create_activity_screen.fields_too_short') + ': ' + tooShortFieldsString
+      );
+      return false;
+    }
+
+    return true;
   };
 
   // Submit the form data, including the selected coordinates from the map
@@ -221,6 +260,26 @@ const CreateActivity = () => {
       }
     }
 
+    // Validate required fields
+    const requiredFields = [
+      { value: title, name: translate('create_activity_screen.label_title'), minLength: 5 },
+      {
+        value: description,
+        name: translate('create_activity_screen.label_description'),
+        minLength: 10,
+      },
+      { value: locationCity, name: translate('create_activity_screen.label_city') },
+      {
+        value: locationSmartLocation,
+        name: translate('create_activity_screen.label_smart_location'),
+      },
+      { value: image, name: translate('create_activity_screen.label_image') },
+    ];
+
+    if (!validateRequiredFields(requiredFields)) {
+      return;
+    }
+
     try {
       // Construct datetimes object conditionally
       const datetimes: any = {
@@ -242,7 +301,7 @@ const CreateActivity = () => {
         activity_type: activityType,
         sport_type: sport,
         price: {
-          value: parseFloat(priceValue.replace(/[^0-9.]/g, '')) || 0,
+          value: parseFloat(priceValue?.replace(/[^0-9.]/g, '')) || 0,
           unit: priceUnit,
         },
         location: {
@@ -394,7 +453,7 @@ const CreateActivity = () => {
           {/* Sport Type */}
           {renderTitle('label_sport')}
           <View style={styles.pickerContainer}>
-            <ji
+            <RNPickerSelect
               onValueChange={(itemValue) => setSport(itemValue)}
               items={sportItems}
               value={sport}

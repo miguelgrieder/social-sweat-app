@@ -32,7 +32,9 @@
     "unknown": "desconhecido",
     "not_logged_in": "Você não está em uma conta",
     "unauthorized": "Não autorizado",
-    "loading": "carregando..."
+    "loading": "carregando...",
+    "min": "min",
+    "characters": "caracteres"
   },
   "profile_screen": {
     "header": "Perfil",
@@ -158,6 +160,9 @@
   "create_activity_screen": {
     "title": "Criar Atividade",
     "upload_photo": "Enviar Foto da Atividade",
+    "label_image": "Imagem",
+    "label_smart_location": "Local Detalhado",
+    "label_city": "Cidade",
     "label_title": "Título",
     "placeholder_title": "Insira o título da atividade",
     "label_description": "Descrição",
@@ -190,6 +195,8 @@
     "invalid_max_participants": "Por favor, insira um número válido de participantes máximos.",
     "datetime_required": "As datas e horas de início e término são necessárias.",
     "datetime_finish_after_start": "A data e hora de término devem ser após a data e hora de início.",
+    "required_fields_missing": "Estes campos obrigatórios precisam ser preenchidos",
+    "fields_too_short": "Estes campos estão muito curtos",
     "unauthorized_activity_type": "Você não pode criar este tipo de atividade."
   },
   "social_selection_screen": {

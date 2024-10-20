@@ -8,10 +8,9 @@ import { spacing } from '@/constants/spacing';
 
 interface SportTagProps {
   sport: string;
-  key?: number;
 }
 
-const SportTag: React.FC<SportTagProps> = ({ sport, key }) => {
+const SportTag: React.FC<SportTagProps> = ({ sport }) => {
   const iconName = sportTypeIconMappings[sport.toLowerCase()] || sport;
 
   return (

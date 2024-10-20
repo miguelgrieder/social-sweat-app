@@ -1,12 +1,21 @@
-import Colors from '@/constants/Colors';
-import { useOAuth } from '@clerk/clerk-expo';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
+import { useOAuth, useAuth } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { View, StyleSheet, TextInput, Text, TouchableOpacity } from 'react-native';
 import { useWarmUpBrowser } from '@/hooks/useWarmUpBrowser';
 import { defaultStyles } from '@/constants/Styles';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
+import Colors from '@/constants/Colors';
+import { fetchUsers } from '@/api/fetchUsers';
 
 enum Strategy {
   Google = 'oauth_google',
@@ -22,6 +31,40 @@ const Page = () => {
   const { startOAuthFlow: appleAuth } = useOAuth({ strategy: 'oauth_apple' });
   const { startOAuthFlow: facebookAuth } = useOAuth({ strategy: 'oauth_facebook' });
 
+  const { userId, isLoaded } = useAuth(); // Get userId and isLoaded from useAuth
+  const [isLoggingIn, setIsLoggingIn] = useState(false); // State to track if login is in progress
+
+  // Effect to check user role after login
+  useEffect(() => {
+    const checkUserRole = async () => {
+      if (isLoggingIn && isLoaded && userId) {
+        try {
+          const fetchedUsers = await fetchUsers({ id: userId });
+          if (fetchedUsers && fetchedUsers.length > 0) {
+            const user = fetchedUsers[0];
+            if (user.user_metadata.role) {
+              // User has a role, navigate to main page
+              router.navigate('/(tabs)/');
+            } else {
+              // User doesn't have a role, navigate to role selection
+              router.push('/(modals)/user/role-selection');
+            }
+          } else {
+            // User not found, navigate to role selection
+            router.push('/(modals)/user/role-selection');
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+          router.push('/(modals)/user/role-selection');
+        } finally {
+          setIsLoggingIn(false);
+        }
+      }
+    };
+
+    checkUserRole();
+  }, [isLoggingIn, isLoaded, userId]);
+
   const onSelectAuth = async (strategy: Strategy) => {
     const selectedAuth = {
       [Strategy.Google]: googleAuth,
@@ -33,8 +76,8 @@ const Page = () => {
       const { createdSessionId, setActive } = await selectedAuth();
 
       if (createdSessionId) {
-        setActive!({ session: createdSessionId });
-        router.push('/(modals)/user/role-selection');
+        await setActive!({ session: createdSessionId });
+        setIsLoggingIn(true); // Set login state to true to trigger useEffect
       }
     } catch (err) {
       console.error('OAuth error', err);
@@ -54,21 +97,9 @@ const Page = () => {
       </TouchableOpacity>
 
       <View style={styles.seperatorView}>
-        <View
-          style={{
-            flex: 1,
-            borderBottomColor: 'black',
-            borderBottomWidth: StyleSheet.hairlineWidth,
-          }}
-        />
+        <View style={styles.line} />
         <Text style={styles.seperator}>{translate('common.or')}</Text>
-        <View
-          style={{
-            flex: 1,
-            borderBottomColor: 'black',
-            borderBottomWidth: StyleSheet.hairlineWidth,
-          }}
-        />
+        <View style={styles.line} />
       </View>
 
       <View style={{ gap: 20 }}>
@@ -99,6 +130,11 @@ const styles = StyleSheet.create({
     fontFamily: 'mon-sb',
     color: Colors.grey,
     fontSize: 16,
+  },
+  line: {
+    flex: 1,
+    borderBottomColor: 'black',
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   btnOutline: {
     backgroundColor: '#fff',

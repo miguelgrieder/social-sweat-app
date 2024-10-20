@@ -33,11 +33,7 @@ const HorizontalCards: React.FC<HorizontalCardsProps> = ({ userMetrics }) => {
         </View>
       </View>
       <View style={[styles.card, styles.participatingCard]}>
-        <Text
-          style={styles.cardTitle}
-          numberOfLines={2}
-          ellipsizeMode="tail"
-        >
+        <Text style={styles.cardTitle} numberOfLines={2} ellipsizeMode="tail">
           {translate('profile_screen.activities_participating')}
         </Text>
         <View style={styles.bottomContainer}>
@@ -48,11 +44,7 @@ const HorizontalCards: React.FC<HorizontalCardsProps> = ({ userMetrics }) => {
         </View>
       </View>
       <View style={[styles.card, styles.createdCard]}>
-        <Text
-          style={styles.cardTitle}
-          numberOfLines={2}
-          ellipsizeMode="tail"
-        >
+        <Text style={styles.cardTitle} numberOfLines={2} ellipsizeMode="tail">
           {translate('profile_screen.activities_created')}
         </Text>
         <View style={styles.bottomContainer}>
@@ -101,8 +93,8 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'left',
     marginBottom: spacing.xxs,
-    flexShrink: 1,  // Ensure the text shrinks within the container
-    maxWidth: '99%',  // Constrain the text width to prevent overflow
+    flexShrink: 1, // Ensure the text shrinks within the container
+    maxWidth: '99%', // Constrain the text width to prevent overflow
   },
   bottomContainer: {
     flexDirection: 'row',

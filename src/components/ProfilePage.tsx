@@ -5,13 +5,10 @@ import {
   StyleSheet,
   Image,
   ScrollView,
-  Button,
-  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
 import { useUser, useAuth } from '@clerk/clerk-expo';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
 
 import { translate } from '@/app/services/translate';
@@ -25,6 +22,7 @@ import SportTag from '@/components/SportTag';
 import NotLoggedInMessage from '@/components/NotLoggedInMessage';
 import SocialMediaButtons from '@/components/user/SocialMediaButtons';
 import HorizontalCards from '@/components/user/HorizontalCards';
+import Loading from '@/components/Loading';
 
 interface ProfilePageProps {
   profileUserId?: string;
@@ -38,9 +36,8 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchUserData = useCallback(async () => {
-    if (!isUserLoaded || !isAuthLoaded) {
-      // Auth state is still loading
-      return;
+    if (loading || !isAuthLoaded) {
+      return <Loading />;
     }
 
     const idToFetch = profileUserId || currentUserId;
@@ -75,24 +72,10 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
     }, [fetchUserData])
   );
 
-  if (loading) {
-    return (
-      <SafeAreaView style={defaultStyles.container}>
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={Colors.primary} />
-        </View>
-      </SafeAreaView>
-    );
-  }
-
   if (!user) {
     return (
       <SafeAreaView style={defaultStyles.container}>
-        {!isSignedIn ? (
-          <NotLoggedInMessage addLink={true} />
-        ) : (
-          <Text>{translate('common.loading')}</Text>
-        )}
+        {!isSignedIn ? <NotLoggedInMessage addLink={true} /> : <Loading />}
       </SafeAreaView>
     );
   }
@@ -235,10 +218,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: spacing.lg,
     paddingHorizontal: spacing.lg,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });

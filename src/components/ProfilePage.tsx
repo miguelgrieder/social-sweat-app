@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, Button, ActivityIndicator } from 'react-native';
 import { useUser, useAuth } from '@clerk/clerk-expo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { translate } from '@/app/services/translate';
 import { fetchUsers } from '@/api/fetchUsers';
@@ -27,7 +28,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
   const [isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
+  const fetchUserData = useCallback(async () => {
     if (!isUserLoaded || !isAuthLoaded) {
       // Auth state is still loading
       return;
@@ -43,25 +44,27 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
 
     setIsCurrentUser(currentUserId ? idToFetch === currentUserId : false);
 
-    const fetchUserData = async () => {
-      setLoading(true);
-      try {
-        const fetchedUsers = await fetchUsers({ id: idToFetch });
-        if (fetchedUsers && fetchedUsers.length > 0) {
-          setUser(fetchedUsers[0]);
-        } else {
-          setUser(null);
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
+    setLoading(true);
+    try {
+      const fetchedUsers = await fetchUsers({ id: idToFetch });
+      if (fetchedUsers && fetchedUsers.length > 0) {
+        setUser(fetchedUsers[0]);
+      } else {
         setUser(null);
-      } finally {
-        setLoading(false);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [profileUserId, currentUserId, isUserLoaded, isAuthLoaded]);
 
-    fetchUserData();
-  }, [profileUserId, currentUserId, isUserLoaded, isAuthLoaded, isSignedIn, authUser]);
+  useFocusEffect(
+    useCallback(() => {
+      fetchUserData();
+    }, [fetchUserData])
+  );
 
   if (loading) {
     return (

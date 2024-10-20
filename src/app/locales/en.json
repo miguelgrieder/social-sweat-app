@@ -88,12 +88,10 @@
     "activities-filter": {
       "any": "Any",
       "where": "Where",
-      "im_flexible": "I'm flexible",
-      "title_have_you_exercised": "Have you exercised today?",
       "when": "When",
       "whens_your_workout": "When's your workout?",
       "what": "What",
-      "what_activity_are_you_interested": "What activity are you interested?",
+      "what_activity_are_you_interested": "What activity type?",
       "clear_all": "Clear all",
       "search": "Search",
       "price": "Price",

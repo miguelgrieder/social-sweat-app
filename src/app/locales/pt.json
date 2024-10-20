@@ -88,12 +88,10 @@
     "activities-filter": {
       "any": "Qualquer",
       "where": "Onde",
-      "im_flexible": "Estou flexível",
-      "title_have_you_exercised": "Você se exercitou hoje?",
       "when": "Quando",
       "whens_your_workout": "Quando é o seu treino?",
       "what": "O quê",
-      "what_activity_are_you_interested": "Em qual atividade você está interessado?",
+      "what_activity_are_you_interested": "Qual tipo de atividade?",
       "clear_all": "Limpar tudo",
       "search": "Buscar",
       "price": "Preço",

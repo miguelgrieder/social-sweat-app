@@ -29,6 +29,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { fetchUsers } from '@/api/fetchUsers';
 import { Role, User } from '@/interfaces/user';
+import { countryNameToCountryType, CountryType } from '@/interfaces/country';
 
 Geocoder.init(process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY);
 
@@ -50,12 +51,12 @@ const CreateActivity = () => {
   const [priceUnit, setPriceUnit] = useState('$');
   const [datetimeStart, setDatetimeStart] = useState<Date | null>(null);
   const [datetimeFinish, setDatetimeFinish] = useState<Date | null>(null);
-  const [isDatePickerVisibleStart, setDatePickerVisibilityStart] = useState(false);
-  const [isDatePickerVisibleFinish, setDatePickerVisibilityFinish] = useState(false);
-  const [locationCountry, setLocationCountry] = useState('Brazil');
-  const [locationCity, setLocationCity] = useState(null);
-  const [locationSmartLocation, setLocationSmartLocation] = useState(null);
-  const [sport, setSport] = useState(SportType.Soccer);
+  const [isDatePickerVisibleStart, setDatePickerVisibilityStart] = useState<boolean>(false);
+  const [isDatePickerVisibleFinish, setDatePickerVisibilityFinish] = useState<boolean>(false);
+  const [locationCountry, setLocationCountry] = useState<CountryType>(CountryType.Brazil);
+  const [locationCity, setLocationCity] = useState<string | null>(null);
+  const [locationSmartLocation, setLocationSmartLocation] = useState<string | null>(null);
+  const [sport, setSport] = useState<SportType>(SportType.Soccer);
   const [image, setImage] = useState<string | null>(null);
   const [maxParticipants, setMaxParticipants] = useState(null);
 
@@ -115,6 +116,20 @@ const CreateActivity = () => {
     }
   };
 
+  // Create country items for the picker
+  const countryItems = Object.values(CountryType).map((countryTypeValue) => ({
+    label: capitalize(translate('country.' + countryTypeValue)),
+    value: countryTypeValue,
+  }));
+
+  // Function to map geocoded country name to CountryType enum
+  const mapCountryNameToCountryType = (countryName: string): CountryType | null => {
+    const mapping: { [key: string]: CountryType } = countryNameToCountryType;
+
+    const normalizedCountryName = countryName.toLowerCase();
+    return mapping[normalizedCountryName] || null;
+  };
+
   // Function to handle the map press and update the coordinates and location information
   const handleMapPress = async (e) => {
     const { latitude, longitude } = e.nativeEvent.coordinate;
@@ -138,7 +153,12 @@ const CreateActivity = () => {
 
         // Update the state with the fetched values
         setLocationCity(city);
-        setLocationCountry(country);
+        const countryType = mapCountryNameToCountryType(country);
+        if (countryType) {
+          setLocationCountry(countryType);
+        } else {
+          console.warn('Country from geocoding not in predefined list:', country);
+        }
         setLocationSmartLocation(smartLocation);
       } else {
         console.warn('No results found for reverse geocoding.');
@@ -552,14 +572,23 @@ const CreateActivity = () => {
             {translate('create_activity_screen.selected_coordinates')}: {coordinates.latitude},{' '}
             {coordinates.longitude}
           </Text>
-          {renderTitle('label_location')}
-          <TextInput
-            placeholder={translate('create_activity_screen.placeholder_country')}
-            placeholderTextColor={Colors.grey}
-            style={styles.input}
-            value={locationCountry}
-            onChangeText={setLocationCountry}
-          />
+          {/* Country Picker */}
+          {renderTitle('label_country')}
+          <View style={styles.pickerContainer}>
+            <RNPickerSelect
+              onValueChange={(itemValue) => setLocationCountry(itemValue)}
+              items={countryItems}
+              value={locationCountry}
+              style={pickerSelectStyles}
+              useNativeAndroidPickerStyle={false}
+              placeholder={{
+                label: translate('create_activity_screen.placeholder_country'),
+                value: null,
+              }}
+            />
+          </View>
+          {/* City Input */}
+          {renderTitle('label_city')}
           <TextInput
             placeholder={translate('create_activity_screen.placeholder_city')}
             placeholderTextColor={Colors.grey}
@@ -567,6 +596,8 @@ const CreateActivity = () => {
             value={locationCity}
             onChangeText={setLocationCity}
           />
+          {/* Smart Location Input */}
+          {renderTitle('label_smart_location')}
           <TextInput
             placeholder={translate('create_activity_screen.placeholder_smart_location')}
             placeholderTextColor={Colors.grey}

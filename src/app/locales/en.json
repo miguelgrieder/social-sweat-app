@@ -133,6 +133,16 @@
     "swim": "Swimming",
     "other": "Other"
   },
+  "country": {
+    "brazil": "Brazil",
+    "united_states": "United States",
+    "argentina": "Argentina",
+    "paraguai": "Paraguai",
+    "chile": "Chile",
+    "germany": "Germany",
+    "canada": "Canada",
+    "mexico": "Mexico"
+  },
   "activity_types": {
     "spot": "spot",
     "session": "session",

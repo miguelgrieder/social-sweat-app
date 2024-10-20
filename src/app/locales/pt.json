@@ -133,6 +133,16 @@
     "swim": "Natação",
     "other": "Outros"
   },
+  "country": {
+    "brazil": "Brasil",
+    "united_states": "Estados Unidos",
+    "argentina": "Argentina",
+    "paraguai": "Paraguai",
+    "chile": "Chile",
+    "germany": "Alemanha",
+    "canada": "Canadá",
+    "mexico": "México"
+  },
   "activity_types": {
     "spot": "local",
     "session": "sessão",

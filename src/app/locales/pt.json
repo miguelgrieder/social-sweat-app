@@ -32,7 +32,7 @@
     "unknown": "desconhecido",
     "not_logged_in": "Você não está em uma conta",
     "unauthorized": "Não autorizado",
-    "loading": "carregando"
+    "loading": "carregando..."
   },
   "profile_screen": {
     "header": "Perfil",

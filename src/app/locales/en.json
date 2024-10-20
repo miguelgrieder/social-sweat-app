@@ -32,7 +32,7 @@
     "unknown": "unknown",
     "not_logged_in": "You're not logged in",
     "unauthorized": "Unauthorized",
-    "loading": "loading"
+    "loading": "loading..."
   },
   "profile_screen": {
     "header": "Profile",

@@ -383,7 +383,7 @@ const ActivityDetailsScreen = () => {
                 </View>
               </>
             ) : (
-              <Text>{translate('activity_screen.loading_host_info')}</Text>
+              <Text>{translate('common.loading')}</Text>
             )}
           </View>
 

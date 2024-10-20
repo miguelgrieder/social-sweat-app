@@ -180,7 +180,7 @@ const ActivitiesFilter = () => {
                         activityType === type && styles.optionTextSelected,
                       ]}
                     >
-                      {translate(`activity_types.${type}`)}
+                      {capitalize(translate(`activity_types.${type}`))}
                     </Text>
                   </TouchableOpacity>
                 ))}

@@ -158,7 +158,6 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
                       <TouchableOpacity
                         key={`user_phone_phone`}
                         onPress={() => Linking.openURL(phoneUrl)}
-                        style={styles.socialMediaButton}
                       >
                         <Image
                           source={require('assets/images/phone_logo.png')}

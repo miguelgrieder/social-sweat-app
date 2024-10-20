@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  Linking,
-  Button,
-  ActivityIndicator,
-} from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, Button, ActivityIndicator } from 'react-native';
 import { useUser, useAuth } from '@clerk/clerk-expo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
@@ -23,6 +13,8 @@ import { defaultStyles } from '@/constants/Styles';
 import { spacing } from '@/constants/spacing';
 import SportTag from '@/components/SportTag';
 import NotLoggedInMessage from '@/components/NotLoggedInMessage';
+import SocialMediaButtons from '@/components/user/SocialMediaButtons';
+import HorizontalCards from '@/components/user/HorizontalCards';
 
 interface ProfilePageProps {
   profileUserId?: string;
@@ -140,117 +132,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
         )}
 
         {/* Social Media Buttons */}
-        <View style={styles.socialMediaContainer}>
-          {user.user_metadata.user_social_medias && (
-            <>
-              {/* Handle user_phone */}
-              {user.user_metadata.user_social_medias.user_phone &&
-                (() => {
-                  const value = user.user_metadata.user_social_medias.user_phone;
-                  const usePhone = user.user_metadata.user_social_medias.use_phone === true;
-                  const useSms = user.user_metadata.user_social_medias.use_sms === true;
-                  const useWhatsApp = user.user_metadata.user_social_medias.use_whatsapp === true;
-                  const phoneIcons = [];
-
-                  if (usePhone) {
-                    const phoneUrl = `tel:${value}`;
-                    phoneIcons.push(
-                      <TouchableOpacity
-                        key={`user_phone_phone`}
-                        onPress={() => Linking.openURL(phoneUrl)}
-                      >
-                        <Image
-                          source={require('assets/images/phone_logo.png')}
-                          style={styles.socialMediaIcon}
-                        />
-                      </TouchableOpacity>
-                    );
-                  }
-
-                  if (useSms) {
-                    const smsUrl = `sms:${value}`;
-                    phoneIcons.push(
-                      <TouchableOpacity
-                        key={`user_phone_sms`}
-                        onPress={() => Linking.openURL(smsUrl)}
-                      >
-                        <Image
-                          source={require('assets/images/sms_logo.png')}
-                          style={styles.socialMediaIcon}
-                        />
-                      </TouchableOpacity>
-                    );
-                  }
-
-                  if (useWhatsApp) {
-                    const whatsappUrl = `whatsapp://send?phone=${value}`;
-                    phoneIcons.push(
-                      <TouchableOpacity
-                        key={`user_phone_whatsapp`}
-                        onPress={() => Linking.openURL(whatsappUrl)}
-                      >
-                        <Image
-                          source={require('assets/images/whatsapp_logo.png')}
-                          style={styles.socialMediaIcon}
-                        />
-                      </TouchableOpacity>
-                    );
-                  }
-
-                  if (phoneIcons.length > 0) {
-                    return <>{phoneIcons}</>;
-                  } else {
-                    return null;
-                  }
-                })()}
-
-              {/* Handle other social media links */}
-              {Object.entries(user.user_metadata.user_social_medias).map(([key, value]) => {
-                if (
-                  value &&
-                  key !== 'user_phone' &&
-                  key !== 'use_phone' &&
-                  key !== 'use_sms' &&
-                  key !== 'use_whatsapp'
-                ) {
-                  let baseUrl = '';
-                  let iconSource = null;
-                  switch (key) {
-                    case 'user_youtube':
-                      baseUrl = 'https://youtube.com/channel/';
-                      iconSource = require('assets/images/youtube_logo.png');
-                      break;
-                    case 'user_instagram':
-                      baseUrl = 'https://instagram.com/';
-                      iconSource = require('assets/images/instagram_logo.png');
-                      break;
-                    case 'user_facebook':
-                      baseUrl = 'https://facebook.com/';
-                      iconSource = require('assets/images/facebook_logo.png');
-                      break;
-                    case 'user_tiktok':
-                      baseUrl = 'https://tiktok.com/@';
-                      iconSource = require('assets/images/tiktok_logo.png');
-                      break;
-                    case 'user_strava':
-                      baseUrl = 'https://www.strava.com/athletes/';
-                      iconSource = require('assets/images/strava_logo.png');
-                      break;
-                    default:
-                      break;
-                  }
-                  const url = baseUrl + value;
-                  return (
-                    <TouchableOpacity key={key} onPress={() => Linking.openURL(url)}>
-                      <Image source={iconSource} style={styles.socialMediaIcon} />
-                    </TouchableOpacity>
-                  );
-                }
-                return null;
-              })}
-            </>
-          )}
-        </View>
+        {user.user_metadata.user_social_medias && (
+          <SocialMediaButtons socialMedias={user.user_metadata.user_social_medias} />
+        )}
 
         {/* Profile Description */}
         {user.user_metadata.profile_description && (
@@ -258,30 +142,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
         )}
 
         {/* Horizontal Cards */}
-        <View style={styles.cardsContainer}>
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>
-              {translate('profile_screen.activities_participated')}
-            </Text>
-            <Text style={styles.cardValue}>
-              {user.user_metadata.user_metrics?.activities_participated}
-            </Text>
-          </View>
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>
-              {translate('profile_screen.activities_participating')}
-            </Text>
-            <Text style={styles.cardValue}>
-              {user.user_metadata.user_metrics?.activities_participating}
-            </Text>
-          </View>
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>{translate('profile_screen.activities_created')}</Text>
-            <Text style={styles.cardValue}>
-              {user.user_metadata.user_metrics?.activities_created}
-            </Text>
-          </View>
-        </View>
+        {user.user_metadata.user_metrics && (
+          <HorizontalCards userMetrics={user.user_metadata.user_metrics} />
+        )}
       </ScrollView>
 
       {/* Logout / Login Button */}
@@ -355,55 +218,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: spacing.lg,
   },
-  socialMediaContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    marginBottom: spacing.lg,
-    gap: spacing.sm,
-  },
-  socialMediaIcon: {
-    width: 40,
-    height: 40,
-  },
   profileDescription: {
     fontSize: 16,
     color: '#333',
     textAlign: 'center',
     marginBottom: spacing.lg,
     paddingHorizontal: spacing.lg,
-  },
-  cardsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    marginBottom: spacing.xs,
-  },
-  card: {
-    flex: 1,
-    backgroundColor: '#fff',
-    borderRadius: spacing.md,
-    marginHorizontal: spacing.xxs,
-    alignItems: 'center',
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    shadowOffset: {
-      width: 1,
-      height: 2,
-    },
-  },
-  cardTitle: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: spacing.sm,
-    textAlign: 'center',
-  },
-  cardValue: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: Colors.primary,
   },
   loadingContainer: {
     flex: 1,

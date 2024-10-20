@@ -13,6 +13,7 @@ import { useFilters } from '@/context/FilterActivityInputContext';
 import { translate } from '@/app/services/translate';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { spacing } from '@/constants/spacing';
+import Colors from '@/constants/Colors';
 
 interface ActivitiesPageProps {
   initialFilter?: FilterActivityInput;
@@ -87,7 +88,7 @@ export default function ActivitiesPage({
       <ActivitiesHeader onCategoryChanged={handleCategoryChange} />
       {loading ? (
         <View style={styles.loaderContainer}>
-          <ActivityIndicator size="large" color="#000" />
+          <ActivityIndicator size="large" color={Colors.primary} />
         </View>
       ) : (
         <GestureHandlerRootView style={styles.gestureHandlerContainer}>

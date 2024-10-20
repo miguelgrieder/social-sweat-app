@@ -306,6 +306,13 @@ const CreateActivity = () => {
     </Text>
   );
 
+  const sportTypes = Object.values(SportType);
+
+  const sportItems = sportTypes.map((sportTypeValue) => ({
+    label: capitalize(translate('activity_sports.' + sportTypeValue)),
+    value: sportTypeValue,
+  }));
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1, backgroundColor: Colors.background }}
@@ -387,14 +394,9 @@ const CreateActivity = () => {
           {/* Sport Type */}
           {renderTitle('label_sport')}
           <View style={styles.pickerContainer}>
-            <RNPickerSelect
+            <ji
               onValueChange={(itemValue) => setSport(itemValue)}
-              items={[
-                { label: translate('activity_sports.soccer'), value: SportType.Soccer },
-                { label: translate('activity_sports.baseball'), value: SportType.Baseball },
-                { label: translate('activity_sports.basketball'), value: SportType.Basketball },
-                { label: translate('activity_sports.swim'), value: SportType.Swim },
-              ]}
+              items={sportItems}
               value={sport}
               style={pickerSelectStyles}
               useNativeAndroidPickerStyle={false}

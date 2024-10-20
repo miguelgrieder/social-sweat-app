@@ -18,7 +18,13 @@ const HorizontalCards: React.FC<HorizontalCardsProps> = ({ userMetrics }) => {
   return (
     <View style={styles.cardsContainer}>
       <View style={[styles.card, styles.participatedCard]}>
-        <Text style={styles.cardTitle}>{translate('profile_screen.activities_participated')}</Text>
+        <Text
+          style={styles.cardTitle}
+          numberOfLines={2}
+          ellipsizeMode="tail" // Prevents text breaking and adds "..." if necessary
+        >
+          {translate('profile_screen.activities_participated')}
+        </Text>
         <View style={styles.bottomContainer}>
           <View style={styles.iconBackground}>
             <MaterialCommunityIcons name="check-outline" size={20} color="#fff" />
@@ -27,7 +33,13 @@ const HorizontalCards: React.FC<HorizontalCardsProps> = ({ userMetrics }) => {
         </View>
       </View>
       <View style={[styles.card, styles.participatingCard]}>
-        <Text style={styles.cardTitle}>{translate('profile_screen.activities_participating')}</Text>
+        <Text
+          style={styles.cardTitle}
+          numberOfLines={2}
+          ellipsizeMode="tail"
+        >
+          {translate('profile_screen.activities_participating')}
+        </Text>
         <View style={styles.bottomContainer}>
           <View style={styles.iconBackground}>
             <MaterialCommunityIcons name="run-fast" size={20} color="#fff" />
@@ -36,7 +48,13 @@ const HorizontalCards: React.FC<HorizontalCardsProps> = ({ userMetrics }) => {
         </View>
       </View>
       <View style={[styles.card, styles.createdCard]}>
-        <Text style={styles.cardTitle}>{translate('profile_screen.activities_created')}</Text>
+        <Text
+          style={styles.cardTitle}
+          numberOfLines={2}
+          ellipsizeMode="tail"
+        >
+          {translate('profile_screen.activities_created')}
+        </Text>
         <View style={styles.bottomContainer}>
           <View style={styles.iconBackground}>
             <MaterialCommunityIcons name="creation" size={20} color="#fff" />
@@ -78,11 +96,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#576574',
   },
   cardTitle: {
-    fontSize: 14,
+    fontSize: spacing.sm,
     fontFamily: 'mon-sb',
     color: '#fff',
     textAlign: 'left',
     marginBottom: spacing.xxs,
+    flexShrink: 1,  // Ensure the text shrinks within the container
+    maxWidth: '99%',  // Constrain the text width to prevent overflow
   },
   bottomContainer: {
     flexDirection: 'row',

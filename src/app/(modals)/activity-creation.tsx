@@ -43,12 +43,12 @@ const CreateActivity = () => {
   const { user: clerkUser, isLoaded, isSignedIn } = useUser(); // Fetch user using Clerk's useUser
   const [user, setUser] = useState<User | null>(null);
 
-  const [title, setTitle] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [description_private, setDescriptionPrivate] = useState(null);
-  const [activityType, setActivityType] = useState(ActivityType.Spot);
-  const [priceValue, setPriceValue] = useState(null);
-  const [priceUnit, setPriceUnit] = useState('$');
+  const [title, setTitle] = useState<string | null>(null);
+  const [description, setDescription] = useState<string | null>(null);
+  const [description_private, setDescriptionPrivate] = useState<string | null>(null);
+  const [activityType, setActivityType] = useState<ActivityType>(ActivityType.Spot);
+  const [priceValue, setPriceValue] = useState<string | null>(null);
+  const [priceUnit, setPriceUnit] = useState<string>('$');
   const [datetimeStart, setDatetimeStart] = useState<Date | null>(null);
   const [datetimeFinish, setDatetimeFinish] = useState<Date | null>(null);
   const [isDatePickerVisibleStart, setDatePickerVisibilityStart] = useState<boolean>(false);
@@ -58,10 +58,13 @@ const CreateActivity = () => {
   const [locationSmartLocation, setLocationSmartLocation] = useState<string | null>(null);
   const [sport, setSport] = useState<SportType>(SportType.Soccer);
   const [image, setImage] = useState<string | null>(null);
-  const [maxParticipants, setMaxParticipants] = useState(null);
+  const [maxParticipants, setMaxParticipants] = useState<string | null>(null);
 
   // State to store the selected coordinates
-  const [coordinates, setCoordinates] = useState({
+  const [coordinates, setCoordinates] = useState<{
+    latitude: number;
+    longitude: number;
+  }>({
     latitude: -27.598,
     longitude: -48.4892, // Default coordinates
   });
@@ -131,7 +134,7 @@ const CreateActivity = () => {
   };
 
   // Function to handle the map press and update the coordinates and location information
-  const handleMapPress = async (e) => {
+  const handleMapPress = async (e: any) => {
     const { latitude, longitude } = e.nativeEvent.coordinate;
     setCoordinates({ latitude, longitude });
 
@@ -147,8 +150,10 @@ const CreateActivity = () => {
         const addressComponents = response.results[0].address_components;
 
         // Extract city, country, and place name (smart location)
-        const city = addressComponents.find((c) => c.types.includes('locality'))?.long_name || '';
-        const country = addressComponents.find((c) => c.types.includes('country'))?.long_name || '';
+        const city =
+          addressComponents.find((c: any) => c.types.includes('locality'))?.long_name || '';
+        const country =
+          addressComponents.find((c: any) => c.types.includes('country'))?.long_name || '';
         const smartLocation = response.results[0].formatted_address || '';
 
         // Update the state with the fetched values
@@ -183,9 +188,9 @@ const CreateActivity = () => {
   };
 
   // Function to validate required fields
-  const validateRequiredFields = (fields) => {
-    const missingFields = [];
-    const tooShortFields = [];
+  const validateRequiredFields = (fields: { value: any; name: string; minLength?: number }[]) => {
+    const missingFields: string[] = [];
+    const tooShortFields: { name: string; minLength: number }[] = [];
 
     fields.forEach((field) => {
       if (!field.value) {
@@ -379,7 +384,7 @@ const CreateActivity = () => {
   };
 
   // Function to render titles for input sections
-  const renderTitle = (labelKey) => (
+  const renderTitle = (labelKey: string) => (
     <Text style={{ paddingLeft: spacing.xs, paddingBottom: spacing.xs, fontSize: spacing.md }}>
       {translate(`create_activity_screen.${labelKey}`)}
     </Text>

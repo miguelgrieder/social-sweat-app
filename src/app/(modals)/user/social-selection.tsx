@@ -25,16 +25,16 @@ const SocialSelectionScreen = () => {
   const { showBackButton } = useLocalSearchParams();
   const showBack = showBackButton === '1';
 
-  const [profileDescription, setProfileDescription] = useState('');
-  const [userPhone, setUserPhone] = useState('');
-  const [usePhone, setUsePhone] = useState(false);
-  const [useSMS, setUseSMS] = useState(false);
-  const [useWhatsApp, setUseWhatsApp] = useState(false);
-  const [userInstagram, setUserInstagram] = useState('');
-  const [userFacebook, setUserFacebook] = useState('');
-  const [userYouTube, setUserYouTube] = useState('');
-  const [userTikTok, setUserTikTok] = useState('');
-  const [userStrava, setUserStrava] = useState('');
+  const [profileDescription, setProfileDescription] = useState(null);
+  const [userPhone, setUserPhone] = useState(null);
+  const [usePhone, setUsePhone] = useState(null);
+  const [useSMS, setUseSMS] = useState(null);
+  const [useWhatsApp, setUseWhatsApp] = useState(null);
+  const [userInstagram, setUserInstagram] = useState(null);
+  const [userFacebook, setUserFacebook] = useState(null);
+  const [userYouTube, setUserYouTube] = useState(null);
+  const [userTikTok, setUserTikTok] = useState(null);
+  const [userStrava, setUserStrava] = useState(null);
   const [isButtonDisabled, setButtonDisabled] = useState(false);
 
   const handleSocialSelection = async () => {
@@ -46,9 +46,9 @@ const SocialSelectionScreen = () => {
             profile_description: profileDescription || undefined,
             user_social_medias: {
               user_phone: userPhone || undefined,
-              use_phone: usePhone,
-              use_sms: useSMS,
-              use_whatsapp: useWhatsApp,
+              use_phone: usePhone || undefined,
+              use_sms: useSMS || undefined,
+              use_whatsapp: useWhatsApp || undefined,
               user_instagram: userInstagram || undefined,
               user_facebook: userFacebook || undefined,
               user_youtube: userYouTube || undefined,

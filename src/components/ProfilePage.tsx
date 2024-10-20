@@ -1,5 +1,14 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, Button, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  Button,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
 import { useUser, useAuth } from '@clerk/clerk-expo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
@@ -154,18 +163,17 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
       {isCurrentUser && (
         <>
           {isSignedIn ? (
-            <Button
-              title={translate('common.logout')}
+            <TouchableOpacity
+              style={[defaultStyles.btn, { margin: spacing.xs }]}
               onPress={() => {
                 signOut();
                 setUser(null); // Reset the user state upon sign out
               }}
-              color={Colors.dark}
-            />
+            >
+              <Text style={defaultStyles.btnText}>{translate('common.logout')}</Text>
+            </TouchableOpacity>
           ) : (
-            <Link href={'/(modals)/user/login'} asChild>
-              <Button title={translate('common.login')} color={Colors.dark} />
-            </Link>
+            <></>
           )}
         </>
       )}

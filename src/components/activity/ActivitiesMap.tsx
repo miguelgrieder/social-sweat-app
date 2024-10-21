@@ -59,7 +59,7 @@ const ActivitiesMap = memo(({ activities }: Props) => {
   } else if (activities.length === 0) {
     console.log('No activities available:', activities);
   } else {
-    console.log('Activities loaded for the map:', activities.length);
+    console.log('ActivitiesBottomSheetList loaded for the map:', activities.length);
   }
 
   return (

@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useMemo, useRef, useState } from 'react';
 import { Activity } from '@/interfaces/activity';
 import BottomSheet from '@gorhom/bottom-sheet';
-import Activities from '@/components/activity/Activities';
+import ActivitiesBottomSheetList from '@/components/activity/ActivitiesBottomSheetList';
 import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { translate } from '@/app/services/translate';
@@ -39,7 +39,7 @@ const ActivitiesBottomSheet = ({ activities, category }: Props) => {
             <Text style={styles.emptyText}>{translate('activity_screen.no_activities')}</Text>
           </View>
         ) : (
-          <Activities activities={activities} category={category} refresh={refresh} />
+          <ActivitiesBottomSheetList activities={activities} category={category} refresh={refresh} />
         )}
         <View style={styles.absoluteView}>
           <TouchableOpacity style={styles.btn} onPress={onShowMap}>

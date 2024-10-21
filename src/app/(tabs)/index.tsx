@@ -57,14 +57,14 @@ const Home = () => {
           </TouchableOpacity>
         </Link>
 
-        {/* My Activities Button */}
+        {/* My ActivitiesBottomSheetList Button */}
         <Link href={'/(modals)/hosted-activities'} asChild>
           <TouchableOpacity style={defaultStyles.btn}>
             <Text style={defaultStyles.btnText}>{translate('home_screen.hosted_activities')}</Text>
           </TouchableOpacity>
         </Link>
 
-        {/* Next Activities Button */}
+        {/* Next ActivitiesBottomSheetList Button */}
         <Link href={'/(modals)/my-next-activities'} asChild>
           <TouchableOpacity style={defaultStyles.btn}>
             <Text style={defaultStyles.btnText}>

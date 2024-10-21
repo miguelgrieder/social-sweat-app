@@ -39,7 +39,11 @@ const ActivitiesBottomSheet = ({ activities, category }: Props) => {
             <Text style={styles.emptyText}>{translate('activity_screen.no_activities')}</Text>
           </View>
         ) : (
-          <ActivitiesBottomSheetList activities={activities} category={category} refresh={refresh} />
+          <ActivitiesBottomSheetList
+            activities={activities}
+            category={category}
+            refresh={refresh}
+          />
         )}
         <View style={styles.absoluteView}>
           <TouchableOpacity style={styles.btn} onPress={onShowMap}>

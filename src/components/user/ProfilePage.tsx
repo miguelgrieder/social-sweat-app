@@ -1,3 +1,5 @@
+// src/components/user/ProfilePage.tsx
+
 import React, { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { useUser, useAuth } from '@clerk/clerk-expo';
@@ -16,6 +18,7 @@ import NotLoggedInMessage from '@/components/NotLoggedInMessage';
 import SocialMediaButtons from '@/components/user/SocialMediaButtons';
 import HorizontalCards from '@/components/user/HorizontalCards';
 import Loading from '@/components/Loading';
+import ActivitiesList from '@/components/activity/ActivitiesList';
 
 interface ProfilePageProps {
   profileUserId?: string;
@@ -28,12 +31,12 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
   const [isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const idToFetch = profileUserId || currentUserId;
+
   const fetchUserData = useCallback(async () => {
     if (loading || !isAuthLoaded) {
       return <Loading />;
     }
-
-    const idToFetch = profileUserId || currentUserId;
 
     if (!idToFetch) {
       setUser(null);
@@ -133,25 +136,22 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
         {user.user_metadata.user_metrics && (
           <HorizontalCards userMetrics={user.user_metadata.user_metrics} />
         )}
+
+        {/* ActivitiesBottomSheetList List */}
+        {idToFetch && <ActivitiesList userId={idToFetch} />}
       </ScrollView>
 
       {/* Logout / Login Button */}
-      {isCurrentUser && (
-        <>
-          {isSignedIn ? (
-            <TouchableOpacity
-              style={[defaultStyles.btn, { margin: spacing.xs }]}
-              onPress={() => {
-                signOut();
-                setUser(null); // Reset the user state upon sign out
-              }}
-            >
-              <Text style={defaultStyles.btnText}>{translate('common.logout')}</Text>
-            </TouchableOpacity>
-          ) : (
-            <></>
-          )}
-        </>
+      {isCurrentUser && isSignedIn && (
+        <TouchableOpacity
+          style={[defaultStyles.btn, { margin: spacing.xs }]}
+          onPress={() => {
+            signOut();
+            setUser(null); // Reset the user state upon sign out
+          }}
+        >
+          <Text style={defaultStyles.btnText}>{translate('common.logout')}</Text>
+        </TouchableOpacity>
       )}
     </SafeAreaView>
   );
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     color: '#00C853',
   },
   username: {
-    fontWeight: 'semibold',
+    fontWeight: '600',
     fontSize: spacing.md,
     color: '#6F7F92',
     marginBottom: spacing.sm,

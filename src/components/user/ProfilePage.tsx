@@ -82,61 +82,62 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
     <SafeAreaView style={defaultStyles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
         {/* Profile Image */}
-        <View style={styles.profileImageContainer}>
-          <Image
-            source={
-              user.image_url
-                ? { uri: user.image_url }
-                : require('assets/images/user_default_image.jpg')
-            }
-            style={styles.profileImage}
-          />
-        </View>
-
-        {/* User Role */}
-        <Text style={styles.userRole}>
-          {capitalize(translate(`role_selection.role_${user.user_metadata.role}`))}
-        </Text>
-
-        {/* Name */}
-        {user.first_name && (
-          <Text style={styles.name}>
-            {user.first_name} {user.last_name}
-          </Text>
-        )}
-
-        {/* Username */}
-        {user.username && <Text style={styles.username}>@{user.username}</Text>}
-
-        {/* Since Date */}
-        <Text style={styles.userSince}>
-          {capitalize(translate('profile_screen.since'))} {formattedDate}
-        </Text>
-
-        {/* Sports List */}
-        {user.user_metadata.sports && user.user_metadata.sports.length > 0 && (
-          <View style={styles.sportsContainer}>
-            {user.user_metadata.sports.map((sport, index) => (
-              <SportTag key={index} sport={sport} />
-            ))}
+        <View style={styles.profileContainer}>
+          <View style={styles.profileImageContainer}>
+            <Image
+              source={
+                user.image_url
+                  ? { uri: user.image_url }
+                  : require('assets/images/user_default_image.jpg')
+              }
+              style={styles.profileImage}
+            />
           </View>
-        )}
 
-        {/* Social Media Buttons */}
-        {user.user_metadata.user_social_medias && (
-          <SocialMediaButtons socialMedias={user.user_metadata.user_social_medias} />
-        )}
+          {/* User Role */}
+          <Text style={styles.userRole}>
+            {capitalize(translate(`role_selection.role_${user.user_metadata.role}`))}
+          </Text>
 
-        {/* Profile Description */}
-        {user.user_metadata.profile_description && (
-          <Text style={styles.profileDescription}>{user.user_metadata.profile_description}</Text>
-        )}
+          {/* Name */}
+          {user.first_name && (
+            <Text style={styles.name}>
+              {user.first_name} {user.last_name}
+            </Text>
+          )}
 
-        {/* Horizontal Cards */}
-        {user.user_metadata.user_metrics && (
-          <HorizontalCards userMetrics={user.user_metadata.user_metrics} />
-        )}
+          {/* Username */}
+          {user.username && <Text style={styles.username}>@{user.username}</Text>}
 
+          {/* Since Date */}
+          <Text style={styles.userSince}>
+            {capitalize(translate('profile_screen.since'))} {formattedDate}
+          </Text>
+
+          {/* Sports List */}
+          {user.user_metadata.sports && user.user_metadata.sports.length > 0 && (
+            <View style={styles.sportsContainer}>
+              {user.user_metadata.sports.map((sport, index) => (
+                <SportTag key={index} sport={sport} />
+              ))}
+            </View>
+          )}
+
+          {/* Social Media Buttons */}
+          {user.user_metadata.user_social_medias && (
+            <SocialMediaButtons socialMedias={user.user_metadata.user_social_medias} />
+          )}
+
+          {/* Profile Description */}
+          {user.user_metadata.profile_description && (
+            <Text style={styles.profileDescription}>{user.user_metadata.profile_description}</Text>
+          )}
+
+          {/* Horizontal Cards */}
+          {user.user_metadata.user_metrics && (
+            <HorizontalCards userMetrics={user.user_metadata.user_metrics} />
+          )}
+        </View>
         {/* ActivitiesBottomSheetList List */}
         {idToFetch && <ActivitiesList userId={idToFetch} />}
       </ScrollView>
@@ -165,9 +166,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   contentContainer: {
+    paddingTop: spacing.lg,
+  },
+  profileContainer: {
     alignItems: 'center',
-    paddingHorizontal: spacing.sm,
     paddingVertical: spacing.lg,
+    paddingHorizontal: spacing.sm,
   },
   profileImageContainer: {
     alignItems: 'center',

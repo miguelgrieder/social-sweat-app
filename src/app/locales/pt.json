@@ -34,7 +34,8 @@
     "unauthorized": "Não autorizado",
     "loading": "carregando...",
     "min": "min",
-    "characters": "caracteres"
+    "characters": "caracteres",
+    "free": "grátis"
   },
   "profile_screen": {
     "header": "Perfil",

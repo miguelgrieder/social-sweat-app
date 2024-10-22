@@ -35,7 +35,7 @@ import { userInteractActivity } from '@/api/userInteractActivity';
 import { updateActivityState } from '@/api/activity/updateActivityState';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MapView, { Marker } from 'react-native-maps';
-import { capitalize, formatDateTime } from '@/utils/utils';
+import { capitalize, formatDateTime, uppercaseAll } from '@/utils/utils';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
@@ -450,8 +450,9 @@ const ActivityDetailsScreen = () => {
         <View style={styles.footerContainer}>
           <TouchableOpacity style={styles.footerText}>
             <Text style={styles.footerPrice}>
-              {activity.price.unit}
-              {activity.price.value}
+              {activity.price.value === 0
+                ? uppercaseAll(translate('common.free'))
+                : `${activity.price.unit} ${activity.price.value}`}
             </Text>
             <Text>{translate('activity_screen.registration')}</Text>
           </TouchableOpacity>

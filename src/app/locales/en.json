@@ -34,7 +34,8 @@
     "unauthorized": "Unauthorized",
     "loading": "loading...",
     "min": "min",
-    "characters": "characters"
+    "characters": "characters",
+    "free": "free"
   },
   "profile_screen": {
     "header": "Profile",

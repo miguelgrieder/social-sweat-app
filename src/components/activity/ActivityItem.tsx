@@ -6,7 +6,7 @@ import { Link } from 'expo-router';
 import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
 import { spacing } from '@/constants/spacing';
-import { capitalize, formatDateTime } from '@/utils/utils';
+import { capitalize, formatDateTime, uppercaseAll } from '@/utils/utils';
 import { translate } from '@/app/services/translate';
 import { Activity } from '@/interfaces/activity';
 import Colors from '@/constants/Colors';
@@ -51,7 +51,9 @@ const ActivityItem: React.FC<ActivityItemProps> = ({ activity }) => {
           {/* Price - Activity Type and Sport Type */}
           <View style={styles.detailsContainer}>
             <Text style={styles.priceText}>
-              {activity.price.unit} {activity.price.value}
+              {activity.price.value === 0
+                ? uppercaseAll(translate('common.free'))
+                : `${activity.price.unit} ${activity.price.value}`}
             </Text>
             <Text style={styles.typeText}>
               {capitalize(translate(`activity_types.${activity.activity_type.toLowerCase()}`))}

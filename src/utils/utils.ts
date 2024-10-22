@@ -2,6 +2,10 @@ export const capitalize = (text: string): string => {
   return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 };
 
+export const uppercaseAll = (text: string): string => {
+  return text.toUpperCase();
+};
+
 export const formatDateTime = (datetime: string | null | undefined): string | null => {
   if (!datetime) return null;
 

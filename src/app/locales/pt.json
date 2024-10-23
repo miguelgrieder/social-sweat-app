@@ -166,7 +166,8 @@
     "datetime_finish": "Fim",
     "no_description_private": "Nenhuma descrição privada",
     "enable": "Ativar",
-    "disable": "Desativar"
+    "disable": "Desativar",
+    "edit": "Editar"
   },
   "create_activity_screen": {
     "title": "Criar Atividade",

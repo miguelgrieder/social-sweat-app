@@ -1,3 +1,5 @@
+import { CountryType } from '@/interfaces/country';
+
 export interface Activity {
   id: string;
   name: string;
@@ -98,3 +100,44 @@ export type FilterActivityInput = {
   datetime_start?: string; // ISO 8601 date-time string
   datetime_finish?: string; // ISO 8601 date-time string
 };
+
+export interface UpdateActivityInput {
+  id: string;
+  update_activity_data?: UpdateActivityData;
+  max_participants?: number;
+}
+
+export interface UpdateActivityData {
+  name?: string;
+  description?: string;
+  description_private?: string;
+  activity_type?: ActivityType;
+  sport_type?: SportType;
+  price?: Price;
+  pictures?: string[];
+  location?: Location;
+  datetimes?: Datetimes;
+}
+
+export interface Price {
+  value: number;
+  unit: '$' | 'R$' | '€';
+}
+
+export interface Location {
+  country?: CountryType;
+  city?: string;
+  smart_location?: string;
+  geometry?: {
+    type: 'Point';
+    coordinates: {
+      latitude: number;
+      longitude: number;
+    };
+  };
+}
+
+export interface Datetimes {
+  datetime_start?: string;
+  datetime_finish?: string;
+}

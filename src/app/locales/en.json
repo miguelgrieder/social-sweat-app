@@ -166,7 +166,8 @@
     "datetime_finish": "Finish at",
     "no_description_private": "No private description",
     "enable": "Enable",
-    "disable": "Disable"
+    "disable": "Disable",
+    "edit": "Edit data"
   },
   "create_activity_screen": {
     "title": "Create Activity",

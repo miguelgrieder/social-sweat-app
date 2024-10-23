@@ -1,4 +1,4 @@
-import { useLocalSearchParams, useNavigation } from 'expo-router';
+import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
   View,
@@ -82,6 +82,8 @@ const dummy_listing: Activity = {
 
 const ActivityDetailsScreen = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const router = useRouter();
+
   const [activity, setActivity] = useState<Activity>(dummy_listing);
   const [hostUser, setHostUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
@@ -429,19 +431,30 @@ const ActivityDetailsScreen = () => {
           </View>
 
           {userId === activity.host.host_user_id && (
-            <TouchableOpacity
-              style={[
-                defaultStyles.btn,
-                { marginVertical: spacing.md, backgroundColor: Colors.grey },
-              ]}
-              onPress={handleUpdateActivityState}
-            >
-              <Text style={defaultStyles.btnText}>
-                {activity.enabled
-                  ? translate('activity_screen.disable')
-                  : translate('activity_screen.enable')}
-              </Text>
-            </TouchableOpacity>
+            <>
+              <TouchableOpacity
+                style={[
+                  defaultStyles.btn,
+                  { marginVertical: spacing.md, backgroundColor: Colors.grey },
+                ]}
+                onPress={handleUpdateActivityState}
+              >
+                <Text style={defaultStyles.btnText}>
+                  {activity.enabled
+                    ? translate('activity_screen.disable')
+                    : translate('activity_screen.enable')}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  defaultStyles.btn,
+                  { marginVertical: spacing.md, backgroundColor: Colors.primary_light },
+                ]}
+                onPress={() => router.push(`(modals)/activity/activity-update`)}
+              >
+                <Text style={defaultStyles.btnText}>translate('activity_screen.edit')</Text>
+              </TouchableOpacity>
+            </>
           )}
         </View>
       </Animated.ScrollView>

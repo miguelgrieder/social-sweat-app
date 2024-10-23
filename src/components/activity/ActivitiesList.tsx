@@ -24,7 +24,7 @@ const ActivitiesList = ({ userId }: ActivitiesListProps) => {
     setError(null);
     try {
       const filterBody = {
-        user_id: userId,
+        host_user_id: userId,
       };
       const fetchedActivities = await fetchActivities(filterBody);
       setActivities(fetchedActivities);

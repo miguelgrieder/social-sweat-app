@@ -452,7 +452,7 @@ const ActivityDetailsScreen = () => {
                 ]}
                 onPress={() => router.push(`(modals)/activity/activity-update`)}
               >
-                <Text style={defaultStyles.btnText}>translate('activity_screen.edit')</Text>
+                <Text style={defaultStyles.btnText}>{translate('activity_screen.edit')}</Text>
               </TouchableOpacity>
             </>
           )}

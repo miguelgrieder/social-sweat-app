@@ -130,7 +130,7 @@
     "ski": "Skiing",
     "ski_water": "Water Skiing",
     "skateboard": "Skateboarding",
-    "esports": "Esports",
+    "esports": "eSports",
     "swim": "Swimming",
     "other": "Other"
   },
@@ -157,7 +157,7 @@
     "join_now": "Join Now",
     "registration": "Registration",
     "joined": "Joined",
-    "leave_now": "Leave Now",
+    "leave_now": "Leave",
     "no_activities": "No activities available.",
     "hosted_activities": "Hosted Activities",
     "my_next_activities": "My next Activities",
@@ -167,7 +167,7 @@
     "no_description_private": "No private description",
     "enable": "Enable",
     "disable": "Disable",
-    "edit": "Edit data"
+    "edit": "Edit"
   },
   "create_activity_screen": {
     "title": "Create Activity",
@@ -175,6 +175,7 @@
     "label_image": "Image",
     "label_smart_location": "Smart Location",
     "label_city": "City",
+    "label_country": "Country",
     "label_title": "Title",
     "placeholder_title": "Enter the activity title",
     "label_description": "Description",

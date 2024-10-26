@@ -25,7 +25,7 @@ import { useAuth, useUser } from '@clerk/clerk-expo';
 import { translate } from '@/app/services/translate';
 import { capitalize } from '@/utils/utils';
 import { defaultStyles } from '@/constants/Styles';
-import { useNavigation } from 'expo-router';
+import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { ActivityType, SportType } from '@/interfaces/activity';
 import RNPickerSelect from 'react-native-picker-select';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -37,7 +37,7 @@ Geocoder.init(process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY);
 
 const UpdateActivityPage = () => {
   const navigation = useNavigation();
-  const activityId = '1727582865955'; // Ensure you pass activityId when navigating to this screen
+  const { activityId } = useLocalSearchParams<{ id: string }>();
 
   useEffect(() => {
     navigation.setOptions({ title: translate('create_activity_screen.title') });
@@ -83,7 +83,7 @@ const UpdateActivityPage = () => {
 
       try {
         const filterBody = {
-          id: activityId,
+          activity_id: activityId,
         };
         const activities = await fetchActivities(filterBody);
 

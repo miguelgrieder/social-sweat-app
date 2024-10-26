@@ -447,7 +447,7 @@ const ActivityDetailsScreen = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={[defaultStyles.btn, { marginVertical: spacing.md }]}
-                onPress={() => router.push(`(modals)/activity/activity-update`)}
+                onPress={() => router.push(`/(modals)/activity/activity-update?activityId=${id}`)}
               >
                 <Text style={defaultStyles.btnText}>{translate('activity_screen.edit')}</Text>
               </TouchableOpacity>

@@ -210,7 +210,9 @@
     "datetime_finish_after_start": "Finish date & time must be after start date & time.",
     "required_fields_missing": "The required fields are missing",
     "fields_too_short": "These fields are too short",
-    "unauthorized_activity_type": "You cannot create this type of activity."
+    "unauthorized_activity_type": "You cannot create this type of activity.",
+    "activity_not_found": "Activity not found.",
+    "update": "Update"
   },
   "social_selection_screen": {
     "header": "Connect with Others",

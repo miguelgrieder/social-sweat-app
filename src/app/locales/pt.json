@@ -214,7 +214,9 @@
     "unauthorized_activity_type": "Você não pode criar este tipo de atividade.",
     "activity_not_found": "Atividade não encontrada.",
     "update": "Atualizar",
-    "failed_to_update": "Problema ao atualizar"
+    "failed_to_update": "Problema ao atualizar",
+    "error_fetching_activity": "Problema ao buscar atividade",
+    "activity_updated_success": "Atualizado com sucesso"
   },
   "social_selection_screen": {
     "header": "Conecte-se com outros",

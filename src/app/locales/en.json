@@ -214,7 +214,9 @@
     "unauthorized_activity_type": "You cannot create this type of activity.",
     "activity_not_found": "Activity not found.",
     "update": "Update",
-    "failed_to_update": "Failed to update"
+    "failed_to_update": "Failed to update",
+    "error_fetching_activity": "Error to fetch activity",
+    "activity_updated_success": "Updated successfully"
   },
   "social_selection_screen": {
     "header": "Connect with Others",

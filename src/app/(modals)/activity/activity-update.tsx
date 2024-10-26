@@ -83,7 +83,7 @@ const UpdateActivityPage = () => {
 
       try {
         const filterBody = {
-          activity_id: activityId,
+          id: activityId,
         };
         const activities = await fetchActivities(filterBody);
 
@@ -679,8 +679,6 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
     borderRadius: spacing.sm,
     borderWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: Platform.OS === 'ios' ? spacing.xs : 0,
   },
   mapContainer: {
     height: 300,

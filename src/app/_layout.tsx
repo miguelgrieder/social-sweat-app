@@ -117,6 +117,11 @@ function RootLayoutNav() {
     <Stack
       screenOptions={{
         animation: 'ios',
+        // Conditionally apply styles for iOS
+        ...(Platform.OS === 'ios' && {
+          headerBackTitleVisible: false, // Hides the back button text
+          headerTintColor: 'black', // Changes the back button color to black
+        }),
       }}
     >
       <Stack.Screen

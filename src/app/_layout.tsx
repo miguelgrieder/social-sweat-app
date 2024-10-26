@@ -132,12 +132,11 @@ function RootLayoutNav() {
           headerTitleStyle: {
             fontFamily: 'mon-sb',
           },
-          headerLeft: () =>
-            Platform.OS === 'android' ? (
-              <TouchableOpacity onPress={() => router.push(`/(tabs)`)}>
-                <Ionicons name="close-outline" size={28} />
-              </TouchableOpacity>
-            ) : null,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.push(`/(tabs)`)}>
+              <Ionicons name="close-outline" size={28} />
+            </TouchableOpacity>
+          ),
         }}
       />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

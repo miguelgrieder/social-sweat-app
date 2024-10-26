@@ -151,6 +151,7 @@
     "event": "evento"
   },
   "activity_screen": {
+    "share": "Olhe esta atividade",
     "activities": "Atividades",
     "hosted_by": "Organizado por",
     "no_image": "Sem imagem",

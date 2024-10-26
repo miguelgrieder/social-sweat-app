@@ -126,15 +126,20 @@ const ActivityDetailsScreen = () => {
     getData();
   }, [id]);
 
-  const shareListing = async () => {
-    // Share functionality of header share button
+  const shareActivity = async () => {
     try {
-      await Share.share({
-        title: activity.name,
-        url: activity.pictures[0] || '',
-      });
+      const message = `${translate('activity_screen.share')}: ${activity.name}`;
+      const imageUrl = activity.pictures[0] || '';
+
+      // Combine message and image URL
+      const shareOptions = {
+        message: Platform.OS === 'android' ? `${message}\n${imageUrl}` : message,
+        url: imageUrl, // iOS can handle 'url' separately
+      };
+
+      await Share.share(shareOptions);
     } catch (err) {
-      console.log(err);
+      console.log('Error sharing activity:', err);
     }
   };
 
@@ -148,7 +153,7 @@ const ActivityDetailsScreen = () => {
       ), // Header opacity effect
       headerRight: () => (
         <View style={styles.bar}>
-          <TouchableOpacity style={styles.roundButton} onPress={shareListing}>
+          <TouchableOpacity style={styles.roundButton} onPress={shareActivity}>
             <Ionicons name="share-outline" size={22} color={'#000'} />
           </TouchableOpacity>
         </View> // Header share and hearth button
@@ -159,7 +164,7 @@ const ActivityDetailsScreen = () => {
         </TouchableOpacity> // Header back button
       ),
     });
-  }, [navigation, shareListing, headerAnimatedStyle]);
+  }, [navigation, shareActivity, headerAnimatedStyle]);
 
   // Use useSharedValue and useAnimatedScrollHandler
   const scrollY = useSharedValue(0);

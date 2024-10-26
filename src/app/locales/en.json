@@ -151,6 +151,7 @@
     "event": "event"
   },
   "activity_screen": {
+    "share": "Look at this activity",
     "hosted_by": "Hosted by",
     "no_image": "No image",
     "participants": "Participants",

@@ -213,7 +213,8 @@
     "fields_too_short": "Estes campos estão muito curtos",
     "unauthorized_activity_type": "Você não pode criar este tipo de atividade.",
     "activity_not_found": "Atividade não encontrada.",
-    "update": "Atualizar"
+    "update": "Atualizar",
+    "failed_to_update": "Problema ao atualizar"
   },
   "social_selection_screen": {
     "header": "Conecte-se com outros",

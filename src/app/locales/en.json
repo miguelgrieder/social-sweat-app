@@ -89,6 +89,7 @@
       "map": "Map"
     },
     "activities-filter": {
+      "title": "Filter",
       "any": "Any",
       "where": "Where",
       "when": "When",

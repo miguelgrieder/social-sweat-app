@@ -89,6 +89,7 @@
       "map": "Mapa"
     },
     "activities-filter": {
+      "title": "Filtros",
       "any": "Qualquer",
       "where": "Onde",
       "when": "Quando",

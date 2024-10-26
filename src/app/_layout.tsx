@@ -144,7 +144,7 @@ function RootLayoutNav() {
           presentation: 'transparentModal',
           animation: 'fade',
           headerTransparent: true,
-          headerTitle: 'Filters',
+          title: translate('explorer_screen.activities-filter.title'),
           headerTitleAlign: 'center',
           headerLeft: () => (
             <TouchableOpacity

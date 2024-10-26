@@ -6,7 +6,7 @@ import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
 import * as SecureStore from 'expo-secure-store';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
-import { TouchableOpacity } from 'react-native';
+import { Platform, TouchableOpacity } from 'react-native';
 import { translate } from '@/app/services/translate';
 import { FilterActivityInputProvider } from '@/context/FilterActivityInputContext';
 import * as NavigationBar from 'expo-navigation-bar'; // Import NavigationBar
@@ -127,11 +127,12 @@ function RootLayoutNav() {
           headerTitleStyle: {
             fontFamily: 'mon-sb',
           },
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => router.push(`/(tabs)`)}>
-              <Ionicons name="close-outline" size={28} />
-            </TouchableOpacity>
-          ),
+          headerLeft: () =>
+            Platform.OS === 'android' ? (
+              <TouchableOpacity onPress={() => router.push(`/(tabs)`)}>
+                <Ionicons name="close-outline" size={28} />
+              </TouchableOpacity>
+            ) : null,
         }}
       />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

@@ -94,6 +94,7 @@ const UpdateActivityPage = () => {
           setDescription(activityData.description || null);
           setDescriptionPrivate(activityData.description_private || null);
           setSport(activityData.sport_type || null);
+          setActivityType(activityData.activity_type || null);
           setPriceValue(activityData.price?.value?.toString() || null);
           setPriceUnit(activityData.price?.unit || null);
           setMaxParticipants(activityData.participants?.max?.toString() || null);

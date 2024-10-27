@@ -69,7 +69,7 @@ export default function ActivitiesPage({
   };
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top }]}>
+    <View style={[styles.container]}>
       <Stack.Screen
         options={{
           headerShown: true,

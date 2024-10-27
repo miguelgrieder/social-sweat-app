@@ -70,7 +70,6 @@ const ActivitiesHeader: React.FC<Props> = ({ onCategoryChanged }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.background,
-    position: 'absolute',
     elevation: 5,
     shadowColor: '#000',
     shadowOpacity: 0.1,

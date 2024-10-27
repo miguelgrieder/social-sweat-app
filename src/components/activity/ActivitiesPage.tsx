@@ -7,7 +7,6 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { fetchActivities } from '@/api/fetchActivities';
 import { useFocusEffect } from '@react-navigation/native';
 import { View, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FilterActivityInput, SportType } from '@/interfaces/activity';
 import { useFilters } from '@/context/FilterActivityInputContext';
 import { translate } from '@/app/services/translate';
@@ -27,7 +26,6 @@ export default function ActivitiesPage({
   const [category, setCategory] = useState<string>('trending-up'); // Default to 'Trending'
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const insets = useSafeAreaInsets();
 
   const { filters } = useFilters();
 
@@ -85,7 +83,9 @@ export default function ActivitiesPage({
           ),
         }}
       />
-      <ActivitiesHeader onCategoryChanged={handleCategoryChange} />
+      <View style={{ position: 'absolute' }}>
+        <ActivitiesHeader onCategoryChanged={handleCategoryChange} />
+      </View>
       {loading ? (
         <View style={styles.loaderContainer}>
           <ActivityIndicator size="large" color={Colors.primary} />

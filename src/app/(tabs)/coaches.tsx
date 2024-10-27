@@ -15,7 +15,6 @@ import { User } from '@/interfaces/user';
 import { capitalize } from '@/utils/utils';
 import { spacing } from '@/constants/spacing';
 import ActivitiesHeader from '@/components/activity/ActivitiesHeader';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Colors from '@/constants/Colors';
 import SportTag from '@/components/SportTag';
 
@@ -23,7 +22,6 @@ const Coaches = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-  const insets = useSafeAreaInsets();
   const [category, setCategory] = useState<string | null>(null);
 
   useEffect(() => {
@@ -96,7 +94,7 @@ const Coaches = () => {
   };
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top + 22 }]}>
+    <View style={[styles.container]}>
       <ActivitiesHeader onCategoryChanged={handleCategoryChange} />
       {loading ? (
         <View style={styles.loadingContainer}>

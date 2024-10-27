@@ -7,16 +7,18 @@ export const uppercaseAll = (text: string): string => {
 };
 
 export const formatDateTime = (datetime: string | null | undefined): string | null => {
+  console.log(datetime);
+
   if (!datetime) return null;
 
   const date = new Date(datetime);
   if (isNaN(date.getTime())) return null; // Invalid date
 
-  const hours = date.getUTCHours().toString().padStart(2, '0');
-  const minutes = date.getUTCMinutes().toString().padStart(2, '0');
-  const day = date.getUTCDate().toString().padStart(2, '0');
-  const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
-  const year = date.getUTCFullYear();
+  const hours = date.getHours().toString().padStart(2, '0'); // Local hours
+  const minutes = date.getMinutes().toString().padStart(2, '0'); // Local minutes
+  const day = date.getDate().toString().padStart(2, '0'); // Local day
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Local month (0-based)
+  const year = date.getFullYear(); // Local year
 
   return `${hours}:${minutes} ${day}/${month}/${year}`;
 };

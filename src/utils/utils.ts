@@ -7,8 +7,6 @@ export const uppercaseAll = (text: string): string => {
 };
 
 export const formatDateTime = (datetime: string | null | undefined): string | null => {
-  console.log(datetime);
-
   if (!datetime) return null;
 
   const date = new Date(datetime);

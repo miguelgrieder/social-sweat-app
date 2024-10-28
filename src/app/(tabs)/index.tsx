@@ -6,6 +6,7 @@ import { defaultStyles } from '@/constants/Styles';
 import { spacing } from '@/constants/spacing';
 import i18next from 'i18next';
 import RNPickerSelect from 'react-native-picker-select';
+import Colors from '@/constants/Colors';
 
 const Home = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(i18next.language); // Get the current language
@@ -72,6 +73,11 @@ const Home = () => {
             </Text>
           </TouchableOpacity>
         </Link>
+        <View style={{ justifyContent: 'flex-end', alignItems: 'center' }}>
+          <Text style={{ color: Colors.grey, fontSize: spacing.xs }}>
+            server: {process.env.EXPO_PUBLIC_API_MICROSERVICE}
+          </Text>
+        </View>
       </View>
     </View>
   );

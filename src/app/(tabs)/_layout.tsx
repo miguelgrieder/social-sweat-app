@@ -28,7 +28,6 @@ const Layout = () => {
             fontFamily: 'mon-b',
             fontWeight: 'bold',
             fontStyle: 'italic',
-            fontSize: spacing.lg,
           },
           tabBarLabel: translate('navbar.home'),
           tabBarIcon: ({ size, color }) => (

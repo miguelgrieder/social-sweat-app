@@ -7,6 +7,7 @@ export default ({ config }) => ({
     apiMicroserviceUrl: process.env.EXPO_PUBLIC_API_MICROSERVICE,
     clerkPublishableKey: process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY,
     googleMapsApiKey: process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY,
+    expoPublicVersion: process.env.EXPO_PUBLIC_VERSION,
   },
   updates: {
     url: "https://u.expo.dev/1937b145-840a-46f9-9132-a4d3fe42925f",

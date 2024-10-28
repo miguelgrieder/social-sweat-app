@@ -77,6 +77,9 @@ const Home = () => {
           <Text style={{ color: Colors.grey, fontSize: spacing.xs }}>
             server: {process.env.EXPO_PUBLIC_API_MICROSERVICE}
           </Text>
+          <Text style={{ color: Colors.grey, fontSize: spacing.xs }}>
+            {process.env.EXPO_PUBLIC_VERSION}
+          </Text>
         </View>
       </View>
     </View>

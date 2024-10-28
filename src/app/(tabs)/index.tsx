@@ -75,7 +75,7 @@ const Home = () => {
         </Link>
         <View style={{ justifyContent: 'flex-end', alignItems: 'center' }}>
           <Text style={{ color: Colors.grey, fontSize: spacing.xs }}>
-            server: '{process.env.EXPO_PUBLIC_API_MICROSERVICE}'
+            server: {process.env.EXPO_PUBLIC_API_MICROSERVICE}
           </Text>
           <Text style={{ color: Colors.grey, fontSize: spacing.xs }}>
             {process.env.EXPO_PUBLIC_VERSION}

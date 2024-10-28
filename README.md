@@ -1,6 +1,6 @@
 # Social Sweat App
 
-Project and case guide:
+Project and case guide: (2024-09-21)
 
 ```
 .

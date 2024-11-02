@@ -461,7 +461,7 @@ const ActivityDetailsScreen = () => {
         </View>
       </Animated.ScrollView>
 
-      <View style={[defaultStyles.footer, { height: 70, marginBottom: insets.bottom }]}>
+      <View style={[defaultStyles.footer, { height: 70 + insets.bottom }]}>
         <View style={styles.footerContainer}>
           <TouchableOpacity style={styles.footerText}>
             <Text style={styles.footerPrice}>

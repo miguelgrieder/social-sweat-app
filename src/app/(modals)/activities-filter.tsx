@@ -21,6 +21,7 @@ import { translate } from '@/app/services/translate';
 import DatePicker from 'react-native-modern-datepicker';
 import { spacing } from '@/constants/spacing';
 import { capitalize } from '@/utils/utils';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
@@ -37,6 +38,8 @@ const ActivitiesFilter = () => {
   const [datetimeStart, setDatetimeStart] = useState<string>(''); // ISO 8601 date-time string
 
   const today = new Date().toISOString().substring(0, 10);
+
+  const insets = useSafeAreaInsets();
 
   const onClearAll = () => {
     setActivityType('');
@@ -308,7 +311,7 @@ const ActivitiesFilter = () => {
 
       {/* Footer */}
       <Animated.View
-        style={[defaultStyles.footer, { height: 70 }]}
+        style={[defaultStyles.footer, { height: 70 + insets.bottom }]}
         entering={SlideInDown.delay(200)}
       >
         <View

@@ -150,7 +150,6 @@ function RootLayoutNav() {
         }}
       />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="oauth-native-callback" options={{ headerShown: false }} />
       <Stack.Screen name="activity/[id]" options={{ headerTitle: '', headerTransparent: true }} />
       <Stack.Screen name="user/[id]" options={{ headerTitle: '', headerTransparent: true }} />
       <Stack.Screen

@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar'; // Updated import
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
+import { ClerkLoaded, ClerkProvider, useAuth } from '@clerk/clerk-expo';
 import * as SecureStore from 'expo-secure-store';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
@@ -87,11 +87,13 @@ export default function RootLayout() {
 
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY!} tokenCache={tokenCache}>
-      <FilterActivityInputProvider>
-        {/* Status Bar Configuration */}
-        <StatusBar style="dark" backgroundColor={Colors.background} />
-        <RootLayoutNav />
-      </FilterActivityInputProvider>
+      <ClerkLoaded>
+        <FilterActivityInputProvider>
+          {/* Status Bar Configuration */}
+          <StatusBar style="dark" backgroundColor={Colors.background} />
+          <RootLayoutNav />
+        </FilterActivityInputProvider>
+      </ClerkLoaded>
     </ClerkProvider>
   );
 }

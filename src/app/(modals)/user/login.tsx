@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  StyleSheet,
-  TextInput,
-  Text,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useOAuth, useAuth } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -86,22 +79,6 @@ const Page = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        autoCapitalize="none"
-        placeholder={translate('common.email')}
-        style={[defaultStyles.inputField, { marginBottom: 30 }]}
-      />
-
-      <TouchableOpacity style={defaultStyles.btn}>
-        <Text style={defaultStyles.btnText}>{translate('common.continue')}</Text>
-      </TouchableOpacity>
-
-      <View style={styles.seperatorView}>
-        <View style={styles.line} />
-        <Text style={styles.seperator}>{translate('common.or')}</Text>
-        <View style={styles.line} />
-      </View>
-
       <View style={{ gap: 20 }}>
         <TouchableOpacity style={styles.btnOutline} onPress={() => onSelectAuth(Strategy.Google)}>
           <Ionicons name="logo-google" size={24} style={defaultStyles.btnIcon} />

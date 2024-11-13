@@ -48,7 +48,10 @@
   },
   "login_modal": {
     "header": "Log in or sign up",
-    "continue_with": "Continue with"
+    "continue_with": "Continue with",
+    "greeting": "Hello",
+    "sign_in": "Sign In",
+    "sign_up": "Sign Up"
   },
   "role_selection": {
     "header": "SocialSweat",
@@ -267,5 +270,54 @@
     "failed_to_disable_activity": "Failed to disable the activity.",
     "must_login_to_modify": "You must be logged in to modify the activity.",
     "max_selection_reached": "Maximum selection limit reached."
+  },
+  "sign_up_screen": {
+    "title": "Create an Account",
+    "titleVerify": "Verify Your Email",
+    "placeholder": {
+      "username": "Username",
+      "email": "Email",
+      "password": "Password",
+      "verificationCode": "Verification Code"
+    },
+    "button": {
+      "signUp": "Sign Up",
+      "verifyEmail": "Verify Email"
+    },
+    "footerText": "Already have an account?",
+    "footerLink": {
+      "signIn": "Sign In"
+    },
+    "error": {
+      "invalidUsername": "Username must be 3-20 characters and can include letters, numbers, and underscores.",
+      "invalidEmail": "Please enter a valid email address.",
+      "invalidPassword": "Password must be at least 6 characters long.",
+      "emptyCode": "Please enter the verification code.",
+      "verificationIncomplete": "Verification incomplete. Please check the code and try again.",
+      "unexpected": "An unexpected error occurred. Please try again."
+    }
+  },
+  "sign_in_screen": {
+    "title": "Welcome Back",
+    "placeholder": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "button": {
+      "signIn": "Sign In"
+    },
+    "link": {
+      "forgotPassword": "Forgot Password? Contact @social_sweat on Instagram"
+    },
+    "footerText": "Don't have an account?",
+    "footerLink": {
+      "signUp": "Sign Up"
+    },
+    "error": {
+      "invalidEmail": "Please enter a valid email address.",
+      "invalidPassword": "Password must be at least 6 characters long.",
+      "signInIncomplete": "Sign-in incomplete. Please check your credentials and try again.",
+      "unexpected": "An unexpected error occurred. Please try again."
+    }
   }
 }

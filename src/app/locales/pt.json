@@ -48,7 +48,11 @@
   },
   "login_modal": {
     "header": "Entrar ou cadastrar-se",
-    "continue_with": "Continuar com"
+    "greeting": "Olá",
+    "continue_with": "Continuar com",
+
+    "sign_in": "Entrar",
+    "sign_up": "Cadastrar-se"
   },
   "role_selection": {
     "header": "SocialSweat",
@@ -266,5 +270,54 @@
     "failed_to_disable_activity": "Falha ao desativar a atividade.",
     "must_login_to_modify": "Você precisa estar logado para modificar a atividade.",
     "max_selection_reached": "Limite máximo de items atingido"
+  },
+  "sign_up_screen": {
+    "title": "Criar uma Conta",
+    "titleVerify": "Verifique Seu Email",
+    "placeholder": {
+      "username": "Nome de Usuário",
+      "email": "Email",
+      "password": "Senha",
+      "verificationCode": "Código de Verificação"
+    },
+    "button": {
+      "signUp": "Cadastrar",
+      "verifyEmail": "Verificar Email"
+    },
+    "footerText": "Já tem uma conta?",
+    "footerLink": {
+      "signIn": "Entrar"
+    },
+    "error": {
+      "invalidUsername": "O nome de usuário deve ter entre 4 e 25 caracteres e pode incluir letras, números e sublinhados.",
+      "invalidEmail": "Por favor, insira um endereço de email válido.",
+      "invalidPassword": "A senha deve ter pelo menos 8 caracteres.",
+      "emptyCode": "Por favor, insira o código de verificação.",
+      "verificationIncomplete": "Verificação incompleta. Verifique o código e tente novamente.",
+      "unexpected": "Ocorreu um erro inesperado. Por favor, tente novamente."
+    }
+  },
+  "sign_in_screen": {
+    "title": "Bem-vindo de Volta",
+    "placeholder": {
+      "email": "Email",
+      "password": "Senha"
+    },
+    "button": {
+      "signIn": "Entrar"
+    },
+    "link": {
+      "forgotPassword": "Esqueceu a Senha? Contacte @social_sweat no Instagram"
+    },
+    "footerText": "Não tem uma conta?",
+    "footerLink": {
+      "signUp": "Cadastrar"
+    },
+    "error": {
+      "invalidEmail": "Por favor, insira um endereço de email válido.",
+      "invalidPassword": "A senha deve ter pelo menos 6 caracteres.",
+      "signInIncomplete": "Login incompleto. Verifique suas credenciais e tente novamente.",
+      "unexpected": "Ocorreu um erro inesperado. Por favor, tente novamente."
+    }
   }
 }

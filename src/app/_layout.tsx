@@ -138,7 +138,7 @@ function RootLayoutNav() {
         name="(modals)/user/login"
         options={{
           presentation: 'modal',
-          title: translate('login_modal.header'),
+          title: translate('login_modal.sign_in'),
           headerTitleStyle: {
             fontFamily: 'mon-sb',
           },
@@ -151,11 +151,7 @@ function RootLayoutNav() {
       />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen
-        name="(auth)/sign-in"
-        options={{ headerTitle: translate('login_modal.sign_in') }}
-      />
-      <Stack.Screen
-        name="(auth)/sign-up"
+        name="(modals)/user/sign-up"
         options={{ headerTitle: translate('login_modal.sign_up') }}
       />
       <Stack.Screen name="activity/[id]" options={{ headerTitle: '', headerTransparent: true }} />

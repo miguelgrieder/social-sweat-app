@@ -271,7 +271,7 @@ export default function SignUpScreen() {
         {!pendingVerification && (
           <>
             <Text style={styles.footerText}>{translate('sign_up_screen.footerText')}</Text>
-            <TouchableOpacity onPress={() => router.push('/(auth)/sign-in')}>
+            <TouchableOpacity onPress={() => router.push('/(modals)/user/login')}>
               <Text style={styles.footerLink}>
                 {' '}
                 {translate('sign_up_screen.footerLink.signIn')}

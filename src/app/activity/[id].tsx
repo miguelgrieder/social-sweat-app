@@ -377,7 +377,10 @@ const ActivityDetailsScreen = () => {
 
           <View style={styles.hostView}>
             {hostUser ? (
-              <>
+              <TouchableOpacity
+                style={styles.hostView}
+                onPress={() => router.push(`/user/${activity.host.host_user_id}`)}
+              >
                 <Image source={{ uri: hostUser.image_url || '' }} style={styles.host} />
                 <View>
                   <Text style={styles.hostedByText}>
@@ -388,7 +391,7 @@ const ActivityDetailsScreen = () => {
                     {translate('activity_screen.host_since')} {formatDate(hostUser.created_at)}
                   </Text>
                 </View>
-              </>
+              </TouchableOpacity>
             ) : (
               <Text>{translate('common.loading')}</Text>
             )}

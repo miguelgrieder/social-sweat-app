@@ -73,7 +73,13 @@
     "placeholder": "Username",
     "too-short": "Too short",
     "invalid": "Invalid Username",
-    "description": "Here, you can personalize your profile with a picture that represents you. Simply select an image from your device, and we'll handle the rest. Make sure your photo reflects who you are, whether it's a selfie, a favorite snapshot, or an image that resonates with you. Let's make your profile uniquely yours!"
+    "description": "Here, you can personalize your profile with a picture that represents you. Simply select an image from your device, and we'll handle the rest. Make sure your photo reflects who you are, whether it's a selfie, a favorite snapshot, or an image that resonates with you. Let's make your profile uniquely yours!",
+    "first-name-label": "First Name",
+    "first-name-placeholder": "Enter your first name",
+    "first-name-error": "First name cannot be empty.",
+    "last-name-label": "Last Name",
+    "last-name-placeholder": "Enter your last name",
+    "last-name-error": "Last name cannot be empty."
   },
   "birthdate-selection": {
     "header": "Your birthdate",

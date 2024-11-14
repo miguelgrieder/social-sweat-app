@@ -50,7 +50,6 @@
     "header": "Entrar ou cadastrar-se",
     "greeting": "Olá",
     "continue_with": "Continuar com",
-
     "sign_in": "Entrar",
     "sign_up": "Cadastrar-se"
   },
@@ -74,7 +73,13 @@
     "placeholder": "Nome de usuário",
     "too-short": "Muito curto",
     "invalid": "Nome de usuário inválido",
-    "description": "Aqui, você pode personalizar seu perfil com uma foto que te represente. Simplesmente selecione uma imagem do seu dispositivo, e nós cuidamos do resto. Certifique-se de que sua foto reflete quem você é, seja um selfie, uma foto favorita ou uma imagem com a qual você se identifique. Vamos tornar seu perfil único!"
+    "description": "Aqui, você pode personalizar seu perfil com uma foto que te represente. Simplesmente selecione uma imagem do seu dispositivo, e nós cuidamos do resto. Certifique-se de que sua foto reflete quem você é, seja um selfie, uma foto favorita ou uma imagem com a qual você se identifique. Vamos tornar seu perfil único!",
+    "first-name-label": "Nome",
+    "first-name-placeholder": "Insira seu nome",
+    "first-name-error": "O nome não pode estar vazio.",
+    "last-name-label": "Sobrenome",
+    "last-name-placeholder": "Insira seu sobrenome",
+    "last-name-error": "O sobrenome não pode estar vazio."
   },
   "birthdate-selection": {
     "header": "Sua Data de Nascimento",

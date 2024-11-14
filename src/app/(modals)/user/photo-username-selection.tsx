@@ -9,6 +9,9 @@ import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -33,9 +36,25 @@ const UsernameSetupScreen = () => {
   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(null);
   const [isValidatingUsername, setIsValidatingUsername] = useState(false);
 
+  const [firstName, setFirstName] = useState('');
+  const [isFirstNameValid, setIsFirstNameValid] = useState<boolean | null>(null);
+  const [firstNameErrorMessage, setFirstNameErrorMessage] = useState('');
+
+  const [lastName, setLastName] = useState('');
+  const [isLastNameValid, setIsLastNameValid] = useState<boolean | null>(null);
+  const [lastNameErrorMessage, setLastNameErrorMessage] = useState('');
+
   useEffect(() => {
-    if (user?.username) {
-      setUsername(user.username);
+    if (user) {
+      if (user.username) {
+        setUsername(user.username);
+      }
+      if (user.firstName) {
+        setFirstName(user.firstName);
+      }
+      if (user.lastName) {
+        setLastName(user.lastName);
+      }
     }
   }, [user]);
 
@@ -91,13 +110,39 @@ const UsernameSetupScreen = () => {
     return () => clearTimeout(timeout);
   }, [username]);
 
+  // Validation for first name
+  useEffect(() => {
+    if (firstName.trim() === '') {
+      setIsFirstNameValid(false);
+      setFirstNameErrorMessage(translate('photo-username-selection.first-name-error'));
+    } else {
+      setIsFirstNameValid(true);
+      setFirstNameErrorMessage('');
+    }
+  }, [firstName]);
+
+  // Validation for last name
+  useEffect(() => {
+    if (lastName.trim() === '') {
+      setIsLastNameValid(false);
+      setLastNameErrorMessage(translate('photo-username-selection.last-name-error'));
+    } else {
+      setIsLastNameValid(true);
+      setLastNameErrorMessage('');
+    }
+  }, [lastName]);
+
   const handleContinue = async () => {
-    if (isUsernameValid) {
+    if (isUsernameValid && isFirstNameValid && isLastNameValid) {
       try {
-        await user?.update({ username });
+        await user?.update({
+          username,
+          firstName,
+          lastName,
+        });
         router.push('/(modals)/user/birthdate-selection');
       } catch (error) {
-        console.error('Error updating username:', error);
+        console.error('Error updating user profile:', error);
       }
     }
   };
@@ -112,49 +157,111 @@ const UsernameSetupScreen = () => {
           headerLeft: () => (
             <TouchableOpacity style={styles.roundButton} onPress={() => router.back()}>
               <Ionicons name="chevron-back" size={24} color={'#000'} />
-            </TouchableOpacity> // Header back button
+            </TouchableOpacity>
           ),
         }}
       />
-      <Text style={styles.header}>{translate('photo-username-selection.header')}</Text>
-      {user && (
-        <TouchableOpacity onPress={handleImageCapture}>
-          <Image source={{ uri: user?.imageUrl }} style={styles.avatar} />
-        </TouchableOpacity>
-      )}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>{translate('photo-username-selection.input-label')}</Text>
-        <View style={[styles.inputWrapper, isUsernameValid === false && styles.invalidInput]}>
-          <TextInput
-            style={styles.input}
-            value={username}
-            onChangeText={setUsername}
-            placeholder={translate('photo-username-selection.placeholder')}
-            autoCapitalize="none"
-            textAlign="center"
-            editable={true}
-          />
-          {isValidatingUsername && (
-            <ActivityIndicator
-              style={styles.loadingIndicator}
-              size="small"
-              color={Colors.primary}
-            />
-          )}
-        </View>
-        {isUsernameValid === false && <Text style={styles.errorMessage}>{errorMessage}</Text>}
-      </View>
-      <Text style={styles.description}>{translate('photo-username-selection.description')}</Text>
-      <TouchableOpacity
-        style={[
-          defaultStyles.btn,
-          { width: '100%', opacity: isUsernameValid && !isValidatingUsername ? 1 : 0.5 },
-        ]}
-        onPress={isUsernameValid && !isValidatingUsername ? handleContinue : undefined}
-        disabled={!isUsernameValid || isValidatingUsername}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{ flex: 1 }}
       >
-        <Text style={defaultStyles.btnText}>{translate('common.continue')}</Text>
-      </TouchableOpacity>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <Text style={styles.header}>{translate('photo-username-selection.header')}</Text>
+          {user && (
+            <TouchableOpacity onPress={handleImageCapture}>
+              <Image source={{ uri: user?.imageUrl }} style={styles.avatar} />
+            </TouchableOpacity>
+          )}
+          {/* First Name Input */}
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>
+              {translate('photo-username-selection.first-name-label')}
+            </Text>
+            <View style={[styles.inputWrapper, isFirstNameValid === false && styles.invalidInput]}>
+              <TextInput
+                style={styles.input}
+                value={firstName}
+                onChangeText={setFirstName}
+                placeholder={translate('photo-username-selection.first-name-placeholder')}
+                autoCapitalize="words"
+                textAlign="center"
+                editable={true}
+              />
+            </View>
+            {isFirstNameValid === false && (
+              <Text style={styles.errorMessage}>{firstNameErrorMessage}</Text>
+            )}
+          </View>
+          {/* Last Name Input */}
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>
+              {translate('photo-username-selection.last-name-label')}
+            </Text>
+            <View style={[styles.inputWrapper, isLastNameValid === false && styles.invalidInput]}>
+              <TextInput
+                style={styles.input}
+                value={lastName}
+                onChangeText={setLastName}
+                placeholder={translate('photo-username-selection.last-name-placeholder')}
+                autoCapitalize="words"
+                textAlign="center"
+                editable={true}
+              />
+            </View>
+            {isLastNameValid === false && (
+              <Text style={styles.errorMessage}>{lastNameErrorMessage}</Text>
+            )}
+          </View>
+          {/* Username Input */}
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>{translate('photo-username-selection.input-label')}</Text>
+            <View style={[styles.inputWrapper, isUsernameValid === false && styles.invalidInput]}>
+              <TextInput
+                style={styles.input}
+                value={username}
+                onChangeText={setUsername}
+                placeholder={translate('photo-username-selection.placeholder')}
+                autoCapitalize="none"
+                textAlign="center"
+                editable={true}
+              />
+              {isValidatingUsername && (
+                <ActivityIndicator
+                  style={styles.loadingIndicator}
+                  size="small"
+                  color={Colors.primary}
+                />
+              )}
+            </View>
+            {isUsernameValid === false && <Text style={styles.errorMessage}>{errorMessage}</Text>}
+          </View>
+          <Text style={styles.description}>
+            {translate('photo-username-selection.description')}
+          </Text>
+          <TouchableOpacity
+            style={[
+              defaultStyles.btn,
+              {
+                width: '100%',
+                opacity:
+                  isUsernameValid && !isValidatingUsername && isFirstNameValid && isLastNameValid
+                    ? 1
+                    : 0.5,
+              },
+            ]}
+            onPress={
+              isUsernameValid && !isValidatingUsername && isFirstNameValid && isLastNameValid
+                ? handleContinue
+                : undefined
+            }
+            disabled={
+              !isUsernameValid || isValidatingUsername || !isFirstNameValid || !isLastNameValid
+            }
+          >
+            <Text style={defaultStyles.btnText}>{translate('common.continue')}</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -164,12 +271,15 @@ export default UsernameSetupScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
     paddingHorizontal: 26,
     paddingVertical: 20,
     gap: spacing.xl,
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    justifyContent: 'flex-start',
   },
   header: {
     paddingTop: spacing.xl,

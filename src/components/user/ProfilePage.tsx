@@ -69,6 +69,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
   );
 
   if (!user) {
+    if (loading) {
+      return <Loading />;
+    }
     return (
       <SafeAreaView style={defaultStyles.container}>
         {!isSignedIn ? <NotLoggedInMessage addLink={true} /> : <Loading />}

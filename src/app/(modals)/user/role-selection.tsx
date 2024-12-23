@@ -1,5 +1,3 @@
-// src/app/(modals)/user/role-selection.tsx
-
 import React, { useState, useEffect, useRef } from 'react';
 import {
   View,

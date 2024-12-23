@@ -264,8 +264,8 @@ const styles = StyleSheet.create({
     borderRadius: spacing.sm,
     padding: spacing.sm,
     fontSize: spacing.md,
-    height: 100, // Set a fixed height for the description input
-    textAlignVertical: 'top', // Ensure text starts at the top-left corner
+    height: 100,
+    textAlignVertical: 'top',
   },
   switchContainer: {
     flexDirection: 'row',

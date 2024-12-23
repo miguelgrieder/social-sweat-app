@@ -1,5 +1,3 @@
-// src/components/activity/ActivitiesBottomSheetList.tsx
-
 import { View, Text, ListRenderItem, StyleSheet } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { defaultStyles } from '@/constants/Styles';

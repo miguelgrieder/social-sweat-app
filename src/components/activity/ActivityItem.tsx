@@ -1,5 +1,3 @@
-// src/components/activity/ActivityItem.tsx
-
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Link } from 'expo-router';

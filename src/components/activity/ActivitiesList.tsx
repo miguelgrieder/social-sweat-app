@@ -1,5 +1,3 @@
-// src/components/activity/ActivitiesList.tsx
-
 import React, { useState, useCallback } from 'react';
 import { View, StyleSheet, ActivityIndicator, Text, FlatList } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';

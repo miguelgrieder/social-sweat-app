@@ -3,7 +3,7 @@ import ActivitiesPage from '@/components/activity/ActivitiesPage';
 import { useUser } from '@clerk/clerk-expo';
 import { useFilters } from '@/context/FilterActivityInputContext';
 import NotLoggedInMessage from '@/components/NotLoggedInMessage';
-import { Stack } from 'expo-router'; // Import Stack for screen options
+import { Stack } from 'expo-router';
 import { translate } from '@/app/services/translate';
 
 export default function HostedActivitiesTab() {

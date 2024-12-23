@@ -1,4 +1,4 @@
-import { StatusBar } from 'expo-status-bar'; // Updated import
+import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
@@ -9,7 +9,7 @@ import Colors from '@/constants/Colors';
 import { Platform, TouchableOpacity } from 'react-native';
 import { translate } from '@/app/services/translate';
 import { FilterActivityInputProvider } from '@/context/FilterActivityInputContext';
-import * as NavigationBar from 'expo-navigation-bar'; // Import NavigationBar
+import * as NavigationBar from 'expo-navigation-bar';
 import { initI18next } from '@/app/services/i18next';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;

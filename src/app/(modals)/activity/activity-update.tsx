@@ -1,5 +1,3 @@
-// src/app/(modals)/activity-update.tsx
-
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -31,7 +29,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { countryNameToCountryType, CountryType } from '@/interfaces/country';
-import { UpdateActivityInput, UpdateActivityData } from '@/interfaces/activity'; // Import interfaces
+import { UpdateActivityInput, UpdateActivityData } from '@/interfaces/activity';
 
 Geocoder.init(process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY);
 
@@ -46,7 +44,6 @@ const UpdateActivityPage = () => {
   const { userId } = useAuth();
   const { isLoaded } = useUser();
 
-  // Form state variables with correct types
   const [title, setTitle] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
   const [description_private, setDescriptionPrivate] = useState<string | null>(null);

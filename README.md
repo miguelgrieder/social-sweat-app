@@ -14,6 +14,8 @@
 
 ## App Overview
 
+You can find more information in the Instagram page: https://www.instagram.com/social_sweat/
+
 Social Sweat is a mobile application for iOS and Android that tackles modern challenges of **sedentary behavior** and **social isolation** by making it easier for anyone to find and participate in physical activities, meet like-minded fitness enthusiasts, and connect with professionals. Its main objectives include:
 
 You can find more information in the Instagram page: https://www.instagram.com/social_sweat/

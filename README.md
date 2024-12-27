@@ -1,10 +1,20 @@
 # Social Sweat App
 
-Project and case guide: (2024-09-21)
+Project and case guide: (2024-x-X)
 
 ```
 .
+├── app.config.js            # Env and id configs for expo eas
+├── app.json                 # App configuration for Expo
 ├── assets                   # Static assets like data, fonts, images
+├── babel.config.js          # Babel configuration file
+├── eas.json                 # Configs for expo eas
+├── env.d.ts                 # Typing configs for env 
+├── eslint.config.js         # ESLint configuration file
+├── expo-env.d.ts            # TypeScript declarations for Expo environment variables
+├── package.json             # NPM package configuration and dependencies
+├── package-lock.json        # Lock file for package versions
+├── README.md                # Project documentation
 ├── src                      # Source code for the application
 │   ├── api                  # API functions and services - camelCase
 │   ├── app                  # Main application logic and screens - kebab-case
@@ -22,12 +32,5 @@ Project and case guide: (2024-09-21)
 ├── .gitignore               # Git ignore rules
 ├── .prettierignore          # Prettier ignore rules
 ├── .prettierrc.json         # Prettier configuration file
-├── app.json                 # App configuration for Expo
-├── babel.config.js          # Babel configuration file
-├── eslint.config.js         # ESLint configuration file
-├── expo-env.d.ts            # TypeScript declarations for Expo environment variables
-├── package.json             # NPM package configuration and dependencies
-├── package-lock.json        # Lock file for package versions
-├── README.md                # Project documentation
 └── tsconfig.json            # TypeScript compiler configuration
 ```

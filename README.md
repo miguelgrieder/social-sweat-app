@@ -22,9 +22,11 @@ Project and case guide: (2024-x-X)
 │   │   ├── (tabs)           # Tab navigation screens
 │   │   ├── activity         # Screens related to activities
 │   │   ├── locales          # JSON translation files for i18n
-│   │   └── services         # Application-wide services like i18n
+│   │   ├── services         # Application-wide services like i18n
+│   │   └── user             # Screens related to users
 │   ├── components           # Reusable UI components - PascalCase
 │   ├── constants            # Global constants for styling and settings - PascalCase and camelCase
+│   ├── context              # Context variables - PascalCase
 │   ├── hooks                # Custom React hooks - camelCase
 │   ├── interfaces           # TypeScript interfaces and data models - kebab-case
 │   └── utils                # General utility functions and helpers - camelCase

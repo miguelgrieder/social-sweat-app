@@ -3,6 +3,7 @@
   "displayName": "ExpoRouterDemo",
   "expo": {
     "name": "social-sweat-app",
+    "newArchEnabled": true,
     "slug": "social-sweat-app",
     "version": "1.0.0",
     "orientation": "portrait",

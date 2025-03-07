@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { View, StyleSheet, ActivityIndicator, Text, FlatList } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from 'expo-router';
 import { fetchActivities } from '@/api/fetchActivities';
 import { Activity } from '@/interfaces/activity';
 import ActivityItem from '@/components/activity/ActivityItem';

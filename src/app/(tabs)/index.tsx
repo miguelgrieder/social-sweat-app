@@ -29,7 +29,7 @@ const Home = () => {
     <View style={styles.container}>
       {/* Language Switcher */}
       <Text style={styles.languageLabel}>{translate('common.language')}</Text>
-      <View style={styles.languageSwitcher}>
+      <View style={defaultStyles.btnViewPickerSelectStyles}>
         <CustomPickerSelect
           onValueChange={(itemValue) => changeLanguage(itemValue)}
           items={[
@@ -37,7 +37,7 @@ const Home = () => {
             { label: 'Português', value: 'pt' },
           ]}
           value={selectedLanguage}
-          style={pickerSelectStyles}
+          style={defaultStyles.pickerSelectStyles}
           placeholder={{ label: translate('common.language'), value: null }}
         />
       </View>
@@ -93,37 +93,10 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: spacing.md,
   },
-  languageSwitcher: {
-    marginBottom: spacing.md,
-    borderWidth: 1,
-    borderColor: '#ABABAB',
-    borderRadius: spacing.xs,
-    paddingHorizontal: spacing.xxs,
-    paddingVertical: spacing.xxs,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-  },
   languageLabel: {
     fontSize: 16,
   },
   buttonsContainer: {
     gap: spacing.xs,
-  },
-});
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    fontSize: 16,
-    paddingVertical: spacing.sm,
-    paddingHorizontal: spacing.xs,
-    color: 'black',
-    paddingRight: spacing.lg,
-  },
-  inputAndroid: {
-    fontSize: 16,
-    paddingHorizontal: spacing.xs,
-    paddingVertical: spacing.sm,
-    color: 'black',
-    paddingRight: spacing.lg,
   },
 });

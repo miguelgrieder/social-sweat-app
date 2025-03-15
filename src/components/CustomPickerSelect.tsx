@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Platform, ActionSheetIOS, TouchableOpacity, Text } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
+import Colors from '@/constants/Colors';
 
 class CustomPickerSelect extends Component {
   constructor(props) {

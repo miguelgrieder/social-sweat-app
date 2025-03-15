@@ -121,22 +121,22 @@ const RoleSelectionScreen = () => {
         <View style={styles.formContainer}>
           <Text style={styles.aboutYou}>{translate('role_selection.about_you')}</Text>
           <Text style={styles.description}>{translate('role_selection.description')}</Text>
-
-          <CustomPickerSelect
-            onValueChange={(itemValue) => setSelectedRole(itemValue || '')}
-            items={[
-              { label: translate('role_selection.role_user'), value: Role.User },
-              { label: translate('role_selection.role_coach'), value: Role.Coach },
-              { label: translate('role_selection.role_company'), value: Role.Company },
-            ]}
-            placeholder={{
-              label: translate('role_selection.select_your_role'),
-              value: null,
-              color: '#9EA0A4',
-            }}
-            style={pickerSelectStyles}
-          />
-
+          <View style={defaultStyles.btnViewPickerSelectStyles}>
+            <CustomPickerSelect
+              onValueChange={(itemValue) => setSelectedRole(itemValue || '')}
+              items={[
+                { label: translate('role_selection.role_user'), value: Role.User },
+                { label: translate('role_selection.role_coach'), value: Role.Coach },
+                { label: translate('role_selection.role_company'), value: Role.Company },
+              ]}
+              placeholder={{
+                label: translate('role_selection.select_your_role'),
+                value: null,
+                color: '#9EA0A4',
+              }}
+              style={defaultStyles.pickerSelectStyles}
+            />
+          </View>
           {selectedRole && (
             <Animated.View style={{ opacity: fadeAnim }}>
               <SportsList
@@ -219,28 +219,5 @@ const styles = StyleSheet.create({
   },
   disabledBtn: {
     backgroundColor: '#ccc',
-  },
-});
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    fontSize: 16,
-    paddingVertical: spacing.sm,
-    paddingHorizontal: 10,
-    color: '#6C6C6C',
-    paddingRight: 30,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#c2c2c2',
-    borderRadius: 10,
-  },
-  inputAndroid: {
-    fontSize: 16,
-    paddingHorizontal: 10,
-    paddingVertical: spacing.xs,
-    color: '#6C6C6C',
-    paddingRight: 30,
-    borderColor: '#c2c2c2',
-    borderRadius: 10,
-    borderWidth: StyleSheet.hairlineWidth,
   },
 });

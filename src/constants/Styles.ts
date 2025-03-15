@@ -1,5 +1,6 @@
 import Colors from '@/constants/Colors';
 import { StyleSheet } from 'react-native';
+import { spacing } from '@/constants/spacing';
 
 export const defaultStyles = StyleSheet.create({
   container: {
@@ -41,5 +42,23 @@ export const defaultStyles = StyleSheet.create({
     paddingHorizontal: 20,
     borderTopColor: Colors.grey,
     borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  pickerSelectStyles: {
+    inputIOS: {
+      fontSize: 16,
+      paddingVertical: spacing.xxs,
+      color: Colors.grey,
+    },
+    placeholder: {
+      color: Colors.grey,
+    },
+  },
+  btnViewPickerSelectStyles: {
+    borderWidth: 1,
+    height: 50,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'left',
+    marginVertical: spacing.sm,
   },
 });

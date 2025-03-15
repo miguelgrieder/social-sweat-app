@@ -487,13 +487,13 @@ const UpdateActivityPage = () => {
               onValueChange={(itemValue) => setSport(itemValue)}
               items={sportItems}
               value={sport}
-              style={pickerSelectStyles}
+              style={styles.pickerSelectStyles}
               placeholder={{}}
             />
           </View>
           {/* Price */}
           {renderTitle('label_price')}
-          <View style={[styles.pickerContainer, { borderTopWidth: 0 }]}>
+          <View style={[styles.pickerContainer]}>
             <TextInput
               placeholder="0"
               placeholderTextColor={Colors.grey}
@@ -510,7 +510,7 @@ const UpdateActivityPage = () => {
                 { label: `R$ - ${capitalize(translate('common.real'))}`, value: 'R$' },
               ]}
               value={priceUnit}
-              style={pickerSelectStyles}
+              style={styles.pickerSelectStyles}
               placeholder={{}}
             />
           </View>
@@ -587,7 +587,7 @@ const UpdateActivityPage = () => {
               onValueChange={(itemValue) => setLocationCountry(itemValue)}
               items={countryItems}
               value={locationCountry}
-              style={pickerSelectStyles}
+              style={styles.pickerSelectStyles}
               placeholder={{
                 label: translate('create_activity_screen.placeholder_country'),
                 value: null,
@@ -668,11 +668,12 @@ const styles = StyleSheet.create({
     fontFamily: 'mon',
   },
   pickerContainer: {
-    width: '100%',
+    padding: spacing.xxs,
     borderColor: Colors.grey,
-    marginBottom: spacing.md,
     borderRadius: spacing.sm,
+    marginBottom: spacing.md,
     borderWidth: StyleSheet.hairlineWidth,
+    justifyContent: 'center',
   },
   mapContainer: {
     height: 300,
@@ -697,23 +698,14 @@ const styles = StyleSheet.create({
     borderColor: Colors.grey,
     justifyContent: 'center',
   },
-});
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    height: 54,
-    borderRadius: 10,
-    color: Colors.grey,
-    paddingHorizontal: spacing.sm,
-    paddingRight: spacing.lg,
-    paddingVertical: spacing.xs,
-  },
-  inputAndroid: {
-    height: 54,
-    borderRadius: 10,
-    color: Colors.grey,
-    paddingHorizontal: spacing.sm,
-    paddingRight: spacing.lg,
-    paddingVertical: spacing.xs,
+  pickerSelectStyles: {
+    inputIOS: {
+      color: Colors.grey,
+    },
+    inputAndroid: {
+      color: Colors.grey,
+      textAlignVertical: 'center',
+      fontSize: 16,
+    },
   },
 });

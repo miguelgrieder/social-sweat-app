@@ -127,6 +127,7 @@ function RootLayoutNav() {
     <Stack
       screenOptions={{
         animation: 'ios_from_right',
+        headerBackButtonDisplayMode: "minimal", // Hides the back button text (again...)
         // Conditionally apply styles for iOS
         ...(Platform.OS === 'ios' && {
           headerBackTitleVisible: false, // Hides the back button text

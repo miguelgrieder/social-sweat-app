@@ -24,7 +24,7 @@ import { capitalize } from '@/utils/utils';
 import { defaultStyles } from '@/constants/Styles';
 import { useNavigation } from 'expo-router';
 import { ActivityType, SportType } from '@/interfaces/activity';
-import RNPickerSelect from 'react-native-picker-select';
+import CustomPickerSelect from '@/components/CustomPickerSelect';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { fetchUsers } from '@/api/fetchUsers';
@@ -347,7 +347,7 @@ const CreateActivity = () => {
           max: max,
         },
         reviews: {
-          number_of_reviews: 0, // Default values for testing
+          number_of_reviews: 0,
           review_scores_rating: 0,
         },
         pictures: image ? [image] : [],
@@ -459,7 +459,7 @@ const CreateActivity = () => {
           {/* Activity Type */}
           {renderTitle('label_activity_type')}
           <View style={styles.pickerContainer}>
-            <RNPickerSelect
+            <CustomPickerSelect
               onValueChange={(itemValue) => setActivityType(itemValue)}
               items={[
                 { label: capitalize(translate('activity_types.spot')), value: ActivityType.Spot },
@@ -471,19 +471,17 @@ const CreateActivity = () => {
               ]}
               value={activityType}
               style={pickerSelectStyles}
-              useNativeAndroidPickerStyle={false}
               placeholder={{}}
             />
           </View>
           {/* Sport Type */}
           {renderTitle('label_sport')}
           <View style={styles.pickerContainer}>
-            <RNPickerSelect
+            <CustomPickerSelect
               onValueChange={(itemValue) => setSport(itemValue)}
               items={sportItems}
               value={sport}
               style={pickerSelectStyles}
-              useNativeAndroidPickerStyle={false}
               placeholder={{}}
             />
           </View>
@@ -498,7 +496,7 @@ const CreateActivity = () => {
               value={priceValue}
               onChangeText={(text) => setPriceValue(text.replace(/[^0-9.]/g, ''))}
             />
-            <RNPickerSelect
+            <CustomPickerSelect
               onValueChange={(itemValue) => setPriceUnit(itemValue)}
               items={[
                 { label: `$ - ${capitalize(translate('common.dollar'))}`, value: '$' },
@@ -507,7 +505,6 @@ const CreateActivity = () => {
               ]}
               value={priceUnit}
               style={pickerSelectStyles}
-              useNativeAndroidPickerStyle={false}
               placeholder={{}}
             />
           </View>
@@ -580,12 +577,11 @@ const CreateActivity = () => {
           {/* Country Picker */}
           {renderTitle('label_country')}
           <View style={styles.pickerContainer}>
-            <RNPickerSelect
+            <CustomPickerSelect
               onValueChange={(itemValue) => setLocationCountry(itemValue)}
               items={countryItems}
               value={locationCountry}
               style={pickerSelectStyles}
-              useNativeAndroidPickerStyle={false}
               placeholder={{
                 label: translate('create_activity_screen.placeholder_country'),
                 value: null,
@@ -642,7 +638,7 @@ const styles = StyleSheet.create({
     borderRadius: spacing.sm,
     marginBottom: spacing.md,
     borderWidth: StyleSheet.hairlineWidth,
-    justifyContent: 'center', //  new
+    justifyContent: 'center',
   },
   imageUpload: {
     height: 240,

@@ -13,7 +13,7 @@ import { useAuth } from '@clerk/clerk-expo';
 import { defaultStyles } from '@/constants/Styles';
 import { translate } from '@/app/services/translate';
 import { spacing } from '@/constants/spacing';
-import RNPickerSelect from 'react-native-picker-select';
+import CustomPickerSelect from '@/components/CustomPickerSelect';
 import SportsList from '@/components/SportsList';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { updateUser } from '@/api/updateUser';
@@ -122,22 +122,19 @@ const RoleSelectionScreen = () => {
           <Text style={styles.aboutYou}>{translate('role_selection.about_you')}</Text>
           <Text style={styles.description}>{translate('role_selection.description')}</Text>
 
-          <RNPickerSelect
+          <CustomPickerSelect
             onValueChange={(itemValue) => setSelectedRole(itemValue || '')}
             items={[
               { label: translate('role_selection.role_user'), value: Role.User },
               { label: translate('role_selection.role_coach'), value: Role.Coach },
               { label: translate('role_selection.role_company'), value: Role.Company },
             ]}
-            value={selectedRole || null}
-            style={pickerSelectStyles}
             placeholder={{
               label: translate('role_selection.select_your_role'),
               value: null,
               color: '#9EA0A4',
             }}
-            useNativeAndroidPickerStyle={false}
-            Icon={() => <View style={styles.iconContainer} />}
+            style={pickerSelectStyles}
           />
 
           {selectedRole && (
@@ -211,13 +208,6 @@ const styles = StyleSheet.create({
     color: '#6C6C6C',
     fontFamily: 'mon-sb',
   },
-  iconContainer: {
-    top: 20,
-    right: 10,
-  },
-  disabledBtn: {
-    backgroundColor: '#ccc',
-  },
   roundButton: {
     width: 40,
     height: 40,
@@ -226,6 +216,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     color: Colors.primary,
+  },
+  disabledBtn: {
+    backgroundColor: '#ccc',
   },
 });
 

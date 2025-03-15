@@ -5,7 +5,7 @@ import { Link } from 'expo-router';
 import { defaultStyles } from '@/constants/Styles';
 import { spacing } from '@/constants/spacing';
 import i18next from 'i18next';
-import RNPickerSelect from 'react-native-picker-select';
+import CustomPickerSelect from '@/components/CustomPickerSelect';
 import Colors from '@/constants/Colors';
 
 const Home = () => {
@@ -30,7 +30,7 @@ const Home = () => {
       {/* Language Switcher */}
       <Text style={styles.languageLabel}>{translate('common.language')}</Text>
       <View style={styles.languageSwitcher}>
-        <RNPickerSelect
+        <CustomPickerSelect
           onValueChange={(itemValue) => changeLanguage(itemValue)}
           items={[
             { label: 'English', value: 'en' },

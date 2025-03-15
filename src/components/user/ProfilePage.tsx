@@ -82,7 +82,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profileUserId }) => {
   const formattedDate = new Date(user.created_at).toLocaleDateString();
 
   return (
-    <SafeAreaView style={defaultStyles.container}>
+    <SafeAreaView style={defaultStyles.container} edges={['top', 'left', 'right']}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
         {/* Profile Image */}
         <View style={styles.profileContainer}>

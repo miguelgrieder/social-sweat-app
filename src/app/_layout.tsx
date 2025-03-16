@@ -138,16 +138,10 @@ function RootLayoutNav() {
       <Stack.Screen
         name="(modals)/user/login"
         options={{
-          presentation: 'modal',
           title: translate('login_modal.sign_in'),
           headerTitleStyle: {
             fontFamily: 'mon-sb',
           },
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => router.push(`/(tabs)`)}>
-              <Ionicons name="close-outline" size={28} />
-            </TouchableOpacity>
-          ),
         }}
       />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

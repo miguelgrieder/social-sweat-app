@@ -36,6 +36,7 @@ const DateInputField = ({ onDateSelected }: DateInputFieldProps) => {
             }
             style={styles.textInput}
             placeholder={translate('birthdate-selection.inputPlaceholder')}
+            placeholderTextColor={Colors.grey}
           />
           <Ionicons name="calendar-outline" style={styles.textInputIcon} />
         </TouchableOpacity>

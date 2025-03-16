@@ -110,6 +110,7 @@ const SocialSelectionScreen = () => {
           <TextInput
             style={styles.descriptionInput}
             placeholder={translate('social_selection_screen.enter_profile_description')}
+            placeholderTextColor={Colors.grey}
             value={profileDescription}
             onChangeText={setProfileDescription}
             multiline
@@ -120,6 +121,7 @@ const SocialSelectionScreen = () => {
           <TextInput
             style={styles.input}
             placeholder={translate('social_selection_screen.enter_phone')}
+            placeholderTextColor={Colors.grey}
             keyboardType="phone-pad"
             value={userPhone}
             onChangeText={setUserPhone}
@@ -154,6 +156,7 @@ const SocialSelectionScreen = () => {
           <TextInput
             style={styles.input}
             placeholder={translate('social_selection_screen.enter_instagram')}
+            placeholderTextColor={Colors.grey}
             value={userInstagram}
             onChangeText={setUserInstagram}
           />
@@ -162,6 +165,7 @@ const SocialSelectionScreen = () => {
           <TextInput
             style={styles.input}
             placeholder={translate('social_selection_screen.enter_facebook')}
+            placeholderTextColor={Colors.grey}
             value={userFacebook}
             onChangeText={setUserFacebook}
           />
@@ -170,6 +174,7 @@ const SocialSelectionScreen = () => {
           <TextInput
             style={styles.input}
             placeholder={translate('social_selection_screen.enter_youtube')}
+            placeholderTextColor={Colors.grey}
             value={userYouTube}
             onChangeText={setUserYouTube}
           />
@@ -178,6 +183,7 @@ const SocialSelectionScreen = () => {
           <TextInput
             style={styles.input}
             placeholder={translate('social_selection_screen.enter_tiktok')}
+            placeholderTextColor={Colors.grey}
             value={userTikTok}
             onChangeText={setUserTikTok}
           />
@@ -186,6 +192,7 @@ const SocialSelectionScreen = () => {
           <TextInput
             style={styles.input}
             placeholder={translate('social_selection_screen.enter_strava')}
+            placeholderTextColor={Colors.grey}
             value={userStrava}
             onChangeText={setUserStrava}
           />

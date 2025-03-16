@@ -101,6 +101,7 @@ export default function SignInScreen() {
         autoCapitalize="none"
         value={emailAddress}
         placeholder={translate('sign_in_screen.placeholder.email')}
+        placeholderTextColor={Colors.grey}
         keyboardType="email-address"
         onChangeText={(email) => setEmailAddress(email)}
         editable={!isSubmitting}
@@ -110,6 +111,7 @@ export default function SignInScreen() {
         style={styles.input}
         value={password}
         placeholder={translate('sign_in_screen.placeholder.password')}
+        placeholderTextColor={Colors.grey}
         secureTextEntry={true}
         onChangeText={(password) => setPassword(password)}
         editable={!isSubmitting}

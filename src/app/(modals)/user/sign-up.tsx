@@ -189,6 +189,7 @@ export default function SignUpScreen() {
             autoCapitalize="none"
             value={username}
             placeholder={translate('sign_up_screen.placeholder.username')}
+            placeholderTextColor={Colors.grey}
             onChangeText={(text) => setUsername(text)}
             editable={!isSubmitting}
             textContentType="username"
@@ -198,6 +199,7 @@ export default function SignUpScreen() {
             autoCapitalize="none"
             value={emailAddress}
             placeholder={translate('sign_up_screen.placeholder.email')}
+            placeholderTextColor={Colors.grey}
             keyboardType="email-address"
             onChangeText={(email) => setEmailAddress(email)}
             editable={!isSubmitting}
@@ -207,6 +209,7 @@ export default function SignUpScreen() {
             style={styles.input}
             value={password}
             placeholder={translate('sign_up_screen.placeholder.password')}
+            placeholderTextColor={Colors.grey}
             secureTextEntry={true}
             onChangeText={(password) => setPassword(password)}
             editable={!isSubmitting}

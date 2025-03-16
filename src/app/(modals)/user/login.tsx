@@ -15,6 +15,7 @@ import { defaultStyles } from '@/constants/Styles';
 import Colors from '@/constants/Colors';
 import { spacing } from '@/constants/spacing';
 import { translate } from '@/app/services/translate';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function SignInScreen() {
   const { signIn, setActive, isLoaded } = useSignIn();
@@ -90,7 +91,7 @@ export default function SignInScreen() {
   }, [isLoaded, emailAddress, password, signIn, setActive, router]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>{translate('sign_in_screen.title')}</Text>
 
       {/* Display Error Message */}
@@ -146,7 +147,7 @@ export default function SignInScreen() {
           <Text style={styles.footerLink}> {translate('sign_in_screen.footerLink.signUp')}</Text>
         </Link>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

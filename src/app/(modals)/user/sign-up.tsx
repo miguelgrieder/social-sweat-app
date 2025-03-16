@@ -16,6 +16,7 @@ import Colors from '@/constants/Colors';
 import { spacing } from '@/constants/spacing';
 import { fetchUsers } from '@/api/fetchUsers';
 import { translate } from '@/app/services/translate';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -176,7 +177,7 @@ export default function SignUpScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {!pendingVerification ? (
         <>
           <Text style={styles.title}>{translate('sign_up_screen.title')}</Text>
@@ -283,7 +284,7 @@ export default function SignUpScreen() {
           </>
         )}
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
